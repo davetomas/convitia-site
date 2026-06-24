@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Julia &amp; Martín — Muestra de diseño Moderna Minimal | Convitia</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAF8; --panel:#FFFFFF; --ink:#141414; --ink-soft:#6B6B68;
+    --accent:#D14829; --line:rgba(20,20,20,.12);
+    --font-d:'Space Grotesk',Arial,sans-serif; --font-b:'Jost',Arial,sans-serif;
+    --ease:cubic-bezier(.16,.84,.32,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--font-b);background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  .container{max-width:840px;margin:0 auto;padding:0 26px;}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:50;padding:18px 0;background:rgba(250,250,248,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .topbar .container{display:flex;align-items:center;justify-content:space-between;}
+  .back{font-size:13px;color:var(--ink-soft);font-family:var(--font-d);}
+  .back:hover{color:var(--ink);}
+  .sample-badge{font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:var(--ink);color:var(--bg);padding:6px 12px;}
+
+  .hero{padding:150px 0 60px;border-bottom:1px solid var(--line);}
+  .hero .eyebrow{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600;font-family:var(--font-d);}
+  .hero h1{
+    font-family:var(--font-d);font-weight:700;font-size:clamp(48px,11vw,128px);line-height:.95;letter-spacing:-.02em;
+    margin:18px 0 0;text-transform:uppercase;
+  }
+  .hero h1 span{display:block;}
+  .hero h1 .amp{color:var(--accent);font-size:.5em;vertical-align:middle;}
+  .hero-meta{display:flex;justify-content:space-between;align-items:flex-end;margin-top:34px;flex-wrap:wrap;gap:16px;}
+  .hero-meta .date{font-family:var(--font-d);font-size:20px;font-weight:600;}
+  .hero-meta .venue{font-size:13.5px;color:var(--ink-soft);text-align:right;}
+
+  .strip{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line);}
+  .strip div{padding:30px 26px;border-right:1px solid var(--line);text-align:center;}
+  .strip div:last-child{border-right:none;}
+  .strip b{display:block;font-family:var(--font-d);font-size:34px;font-weight:600;}
+  .strip span{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
+
+  .grid2{display:grid;grid-template-columns:.7fr 1.3fr;gap:0;border-bottom:1px solid var(--line);}
+  .grid2 .label{padding:60px 26px 60px 0;border-right:1px solid var(--line);}
+  .grid2 .label span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;font-family:var(--font-d);}
+  .grid2 .label h2{font-family:var(--font-d);font-weight:600;font-size:30px;margin-top:14px;}
+  .grid2 .content{padding:60px 0 60px 40px;}
+
+  .row{display:flex;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--line);font-size:14.5px;}
+  .row:last-child{border-bottom:none;}
+  .row b{font-family:var(--font-d);font-weight:600;}
+
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:30px;}
+  .twocol h3{font-family:var(--font-d);font-size:16px;font-weight:600;margin-bottom:8px;}
+  .twocol p{font-size:13.5px;color:var(--ink-soft);}
+
+  .tag{display:inline-flex;border:1px solid var(--ink);padding:8px 18px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-top:6px;}
+
+  .rsvp{padding:64px 0;display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap;border-bottom:1px solid var(--line);}
+  .rsvp h2{font-family:var(--font-d);font-size:30px;font-weight:600;max-width:380px;}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:16px 30px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--bg);font-family:var(--font-d);font-weight:600;transition:opacity .3s var(--ease);}
+  .btn:hover{opacity:.78;}
+
+  footer{padding:50px 0;}
+  footer .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;}
+  footer p{font-size:13.5px;color:var(--ink-soft);max-width:360px;}
+  .btn-outline{border:1px solid var(--ink);background:none;color:var(--ink);}
+  .btn-outline:hover{background:var(--ink);color:var(--bg);opacity:1;}
+  small{display:block;margin-top:30px;font-size:11.5px;color:var(--ink-soft);text-align:center;}
+
+  @media (max-width:720px){
+    .strip{grid-template-columns:repeat(2,1fr);}
+    .strip div:nth-child(2){border-right:none;}
+    .grid2{grid-template-columns:1fr;}
+    .grid2 .label{border-right:none;padding:40px 0 0;}
+    .grid2 .content{padding:30px 0 50px;}
+    .twocol{grid-template-columns:1fr;gap:24px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <a class="back" href="../index.html">← CONVITIA</a>
+    <span class="sample-badge">Muestra de diseño</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">Save the date</div>
+    <h1><span>Julia</span><span><span class="amp">&amp;</span> Martín</span></h1>
+    <div class="hero-meta">
+      <div class="date">06 · 03 · 2027</div>
+      <div class="venue">Espacio Darwin — Palermo, Buenos Aires</div>
+    </div>
+  </div>
+</section>
+
+<div class="strip" id="countdown">
+  <div><b id="cd-d">00</b><span>Días</span></div>
+  <div><b id="cd-h">00</b><span>Horas</span></div>
+  <div><b id="cd-m">00</b><span>Min</span></div>
+  <div><b id="cd-s">00</b><span>Seg</span></div>
+</div>
+
+<div class="grid2">
+  <div class="label">
+    <span>Programa</span>
+    <h2>Cómo va a ser el día</h2>
+  </div>
+  <div class="content container" style="padding:60px 0;">
+    <div class="row"><span>Ceremonia civil</span><b>17:30</b></div>
+    <div class="row"><span>Cocktail de bienvenida</span><b>18:30</b></div>
+    <div class="row"><span>Cena</span><b>20:30</b></div>
+    <div class="row"><span>Fiesta</span><b>23:00 — 05:00</b></div>
+  </div>
+</div>
+
+<div class="grid2">
+  <div class="label">
+    <span>Detalles</span>
+    <h2>Lo que necesitás saber</h2>
+  </div>
+  <div class="content container" style="padding:60px 0;">
+    <div class="twocol">
+      <div>
+        <h3>Ubicación</h3>
+        <p>Espacio Darwin, Niceto Vega 5400, Palermo Hollywood. Estacionamiento con valet disponible.</p>
+      </div>
+      <div>
+        <h3>Dress code</h3>
+        <p>Formal, sin código de color estricto.</p>
+        <div class="tag">Formal</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container rsvp">
+  <h2>¿Vas a poder acompañarnos?</h2>
+  <a class="btn" href="#" onclick="alert('Esto es una invitación de muestra — el RSVP real se activa en tu invitación.'); return false;">Confirmar asistencia</a>
+</div>
+
+<footer>
+  <div class="container">
+    <p>Este estilo te gustó? Lo adaptamos a tu boda: tu tipografía, tu paleta, tu lugar.</p>
+    <a class="btn btn-outline" href="https://wa.me/5492944152161?text=Hola!%20Me%20gust%C3%B3%20el%20estilo%20Moderna%20Minimal%2C%20quiero%20mi%20invitaci%C3%B3n" target="_blank" rel="noopener">Quiero esta, a mi medida</a>
+  </div>
+  <small>Diseño de muestra — Convitia, un estudio de Flesh Studio</small>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  try{
+    var target = new Date("2027-03-06T17:30:00-03:00").getTime();
+    function tick(){
+      var diff = target - Date.now();
+      if(diff < 0) diff = 0;
+      var d = Math.floor(diff/86400000);
+      var h = Math.floor((diff%86400000)/3600000);
+      var m = Math.floor((diff%3600000)/60000);
+      var s = Math.floor((diff%60000)/1000);
+      var el = function(id,v){ var node=document.getElementById(id); if(node) node.textContent = String(v).padStart(2,"0"); };
+      el("cd-d", d); el("cd-h", h); el("cd-m", m); el("cd-s", s);
+    }
+    tick();
+    setInterval(tick, 1000);
+  }catch(e){ console.warn("countdown failed", e); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coti &amp; Iván — Muestra de diseño Boho Romántico | Convitia</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF5EC; --paper:#FFFCF6; --ink:#3A332C; --ink-soft:#7A6F62;
+    --terracotta:#C1714C; --terracotta-d:#9C5536; --sage:#8C9A7C; --sage-d:#677459;
+    --line:rgba(58,51,44,.14);
+    --font-script:'Cormorant Garamond',Georgia,serif; --font-b:'Quicksand',Arial,sans-serif;
+    --ease:cubic-bezier(.16,.84,.32,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--font-b);background:var(--cream);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;font-weight:500;}
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  .container{max-width:740px;margin:0 auto;padding:0 26px;}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:50;padding:16px 0;background:rgba(251,245,236,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .topbar .container{display:flex;align-items:center;justify-content:space-between;}
+  .back{font-size:13px;color:var(--ink-soft);}
+  .back:hover{color:var(--ink);}
+  .sample-badge{font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:var(--terracotta-d);color:#fff;padding:6px 14px;border-radius:999px;}
+
+  .hero{padding:150px 0 50px;text-align:center;position:relative;overflow:hidden;}
+  .blob{position:absolute;border-radius:50%;filter:blur(4px);pointer-events:none;}
+  .blob.b1{top:-140px;left:-100px;width:340px;height:340px;background:radial-gradient(circle,rgba(140,154,124,.32),transparent 70%);}
+  .blob.b2{top:-60px;right:-140px;width:300px;height:300px;background:radial-gradient(circle,rgba(193,113,76,.28),transparent 70%);}
+  .leaf{margin:0 auto 10px;width:46px;color:var(--sage-d);}
+  .eyebrow{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta-d);font-weight:600;position:relative;z-index:2;}
+  .hero h1{font-family:var(--font-script);font-style:italic;font-weight:600;font-size:clamp(46px,9vw,90px);margin:14px 0 8px;position:relative;z-index:2;}
+  .hero h1 .amp{color:var(--sage-d);}
+  .hero .date{font-size:16px;font-weight:600;color:var(--ink);margin-top:8px;position:relative;z-index:2;}
+  .hero .venue{font-size:14px;color:var(--ink-soft);margin-top:4px;position:relative;z-index:2;}
+
+  .note{
+    text-align:center;font-family:var(--font-script);font-style:italic;font-size:23px;line-height:1.55;
+    color:var(--ink);margin:46px 0;padding:0 6px;
+  }
+  .note span{color:var(--terracotta-d);}
+
+  .countdown{display:flex;justify-content:center;gap:14px;margin:46px 0;flex-wrap:wrap;}
+  .countdown div{
+    text-align:center;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px 22px;min-width:78px;
+  }
+  .countdown b{display:block;font-family:var(--font-script);font-style:italic;font-size:30px;color:var(--terracotta-d);}
+  .countdown span{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+
+  .panel{
+    background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:44px 36px;margin-bottom:34px;
+  }
+  .panel .tag-eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage-d);font-weight:700;display:block;text-align:center;margin-bottom:10px;}
+  .panel h2{font-family:var(--font-script);font-style:italic;font-weight:600;font-size:30px;text-align:center;margin-bottom:26px;}
+
+  .timeline{display:grid;gap:16px;max-width:420px;margin:0 auto;}
+  .timeline .row{display:flex;align-items:center;gap:14px;font-size:14.5px;}
+  .timeline .row .dot{width:9px;height:9px;border-radius:50%;background:var(--sage);flex-shrink:0;}
+  .timeline .row b{font-family:var(--font-script);font-style:italic;font-size:17px;color:var(--terracotta-d);margin-left:auto;}
+
+  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .detail-grid .d{text-align:center;}
+  .detail-grid .d h3{font-family:var(--font-script);font-style:italic;font-size:19px;margin-bottom:6px;color:var(--ink);}
+  .detail-grid .d p{font-size:13.5px;color:var(--ink-soft);}
+
+  .dresscode{
+    display:flex;justify-content:center;gap:10px;margin-top:22px;flex-wrap:wrap;
+  }
+  .swatch{display:inline-flex;align-items:center;gap:8px;background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:12.5px;color:var(--ink-soft);}
+  .swatch .c{width:14px;height:14px;border-radius:50%;}
+
+  .rsvp{text-align:center;padding:50px 0;}
+  .rsvp h2{font-family:var(--font-script);font-style:italic;font-weight:600;font-size:32px;margin-bottom:12px;}
+  .rsvp p{color:var(--ink-soft);font-size:14px;margin-bottom:24px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:999px;font-size:14px;font-weight:600;
+    background:var(--terracotta);color:#fff;box-shadow:0 14px 28px -10px rgba(193,113,76,.55);transition:transform .3s var(--ease);
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .rsvp-note{font-size:12px;color:var(--ink-soft);margin-top:14px;font-style:italic;font-family:var(--font-script);}
+
+  footer{background:var(--sage-d);color:rgba(255,255,255,.92);padding:54px 0;text-align:center;border-radius:40px 40px 0 0;margin-top:20px;}
+  footer .container{display:flex;flex-direction:column;align-items:center;gap:18px;}
+  footer p{font-size:14px;max-width:380px;color:rgba(255,255,255,.85);}
+  .btn-light{background:#fff;color:var(--sage-d);box-shadow:none;}
+  .btn-light:hover{transform:translateY(-2px);}
+  footer small{color:rgba(255,255,255,.6);font-size:12px;}
+
+  @media (max-width:560px){
+    .detail-grid{grid-template-columns:1fr;}
+    .countdown div{min-width:64px;padding:14px 14px;}
+    .countdown b{font-size:24px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <a class="back" href="../index.html">← Convitia</a>
+    <span class="sample-badge">Muestra de diseño</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="container">
+    <svg class="leaf" viewBox="0 0 48 48" fill="none"><path d="M24 4C14 10 8 20 8 30c0 8 7 14 16 14s16-6 16-14c0-10-6-20-16-26Z" stroke="currentColor" stroke-width="1.4"/><path d="M24 8v34" stroke="currentColor" stroke-width="1.2"/></svg>
+    <div class="eyebrow">Nos casamos al aire libre</div>
+    <h1>Coti <span class="amp">&amp;</span> Iván</h1>
+    <div class="date">28 de Noviembre, 2026</div>
+    <div class="venue">Finca Las Acacias — Sierras de Córdoba</div>
+  </div>
+</section>
+
+<div class="container">
+  <p class="note">"Encontramos nuestro lugar <span>bajo los árboles</span>, y ahí queremos celebrar."</p>
+
+  <div class="countdown" id="countdown">
+    <div><b id="cd-d">00</b><span>Días</span></div>
+    <div><b id="cd-h">00</b><span>Hs</span></div>
+    <div><b id="cd-m">00</b><span>Min</span></div>
+    <div><b id="cd-s">00</b><span>Seg</span></div>
+  </div>
+
+  <div class="panel">
+    <span class="tag-eyebrow">El día</span>
+    <h2>Cómo va a ser</h2>
+    <div class="timeline">
+      <div class="row"><span class="dot"></span><span>Ceremonia entre los árboles</span><b>17:00</b></div>
+      <div class="row"><span class="dot"></span><span>Brindis al atardecer</span><b>18:30</b></div>
+      <div class="row"><span class="dot"></span><span>Cena bajo las luces</span><b>20:30</b></div>
+      <div class="row"><span class="dot"></span><span>Música y baile</span><b>22:30</b></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <span class="tag-eyebrow">Detalles</span>
+    <h2>Para tener en cuenta</h2>
+    <div class="detail-grid">
+      <div class="d">
+        <h3>Ubicación</h3>
+        <p>Finca Las Acacias, Ruta E-66 km 14. Terreno natural — recomendamos calzado cómodo.</p>
+      </div>
+      <div class="d">
+        <h3>Clima</h3>
+        <p>Ceremonia al aire libre; en caso de lluvia, nos mudamos al galpón de la finca.</p>
+      </div>
+    </div>
+    <div class="dresscode">
+      <span class="swatch"><span class="c" style="background:var(--terracotta)"></span>Colores tierra</span>
+      <span class="swatch"><span class="c" style="background:var(--sage)"></span>Tonos verdes</span>
+      <span class="swatch"><span class="c" style="background:#E4D4A7"></span>Calzado cómodo</span>
+    </div>
+  </div>
+
+  <div class="rsvp">
+    <h2>¿Nos acompañás?</h2>
+    <p>Confirmá tu asistencia antes del 1 de Octubre, 2026.</p>
+    <a class="btn" href="#" onclick="alert('Esto es una invitación de muestra — el RSVP real se activa en tu invitación.'); return false;">Sí, ahí estaré 🌿</a>
+    <p class="rsvp-note">Esta es una invitación de muestra del estilo "Boho Romántico".</p>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p>¿Tu boda tiene esta onda? Armamos tu invitación con tu paleta, tu lugar y tu historia.</p>
+    <a class="btn btn-light" href="https://wa.me/5492944152161?text=Hola!%20Me%20gust%C3%B3%20el%20estilo%20Boho%20Rom%C3%A1ntico%2C%20quiero%20mi%20invitaci%C3%B3n" target="_blank" rel="noopener">Quiero esta, a mi medida</a>
+    <small>Diseño de muestra — Convitia, un estudio de Flesh Studio</small>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  try{
+    var target = new Date("2026-11-28T17:00:00-03:00").getTime();
+    function tick(){
+      var diff = target - Date.now();
+      if(diff < 0) diff = 0;
+      var d = Math.floor(diff/86400000);
+      var h = Math.floor((diff%86400000)/3600000);
+      var m = Math.floor((diff%3600000)/60000);
+      var s = Math.floor((diff%60000)/1000);
+      var el = function(id,v){ var node=document.getElementById(id); if(node) node.textContent = String(v).padStart(2,"0"); };
+      el("cd-d", d); el("cd-h", h); el("cd-m", m); el("cd-s", s);
+    }
+    tick();
+    setInterval(tick, 1000);
+  }catch(e){ console.warn("countdown failed", e); }
+})();
+</script>
+</body>
+</html>

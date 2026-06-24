@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentina &amp; Bruno — Muestra de diseño Clásica Elegante | Convitia</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF6EE; --paper:#FFFDF9; --ink:#2B2420; --ink-soft:#6E6258;
+    --gold:#C9A24B; --gold-d:#9C7A2F; --line:rgba(43,36,32,.15);
+    --font-d:'Cormorant Garamond',Georgia,serif; --font-b:'Jost',Arial,sans-serif;
+    --ease:cubic-bezier(.16,.84,.32,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--font-b);background:var(--cream);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  .container{max-width:760px;margin:0 auto;padding:0 26px;}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:50;padding:16px 0;background:rgba(251,246,238,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .topbar .container{display:flex;align-items:center;justify-content:space-between;}
+  .back{font-size:13px;color:var(--ink-soft);display:inline-flex;align-items:center;gap:6px;}
+  .back:hover{color:var(--ink);}
+  .sample-badge{font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:var(--ink);color:var(--cream);padding:6px 12px;border-radius:999px;}
+
+  .hero{padding:150px 0 70px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{
+    content:"";position:absolute;top:-220px;left:50%;transform:translateX(-50%);width:680px;height:680px;border-radius:50%;
+    background:radial-gradient(circle,rgba(201,162,75,.22),transparent 65%);pointer-events:none;
+  }
+  .ornament{font-size:22px;color:var(--gold-d);letter-spacing:.4em;}
+  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-d);font-weight:600;margin-top:18px;}
+  .hero h1{font-family:var(--font-d);font-weight:500;font-size:clamp(44px,8vw,84px);margin:16px 0 6px;position:relative;z-index:2;}
+  .hero .amp{color:var(--gold-d);font-style:italic;}
+  .hero .date{font-family:var(--font-d);font-size:22px;letter-spacing:.06em;color:var(--ink-soft);margin-top:10px;}
+  .hero .venue{font-size:14px;color:var(--ink-soft);margin-top:6px;letter-spacing:.04em;}
+
+  .divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:50px 0;color:var(--gold-d);}
+  .divider::before,.divider::after{content:"";width:60px;height:1px;background:var(--line);}
+
+  .note{text-align:center;font-family:var(--font-d);font-style:italic;font-size:24px;line-height:1.5;color:var(--ink);padding:0 10px;}
+  .note span{color:var(--gold-d);}
+
+  .countdown{display:flex;justify-content:center;gap:30px;margin:54px 0;flex-wrap:wrap;}
+  .countdown div{text-align:center;}
+  .countdown b{display:block;font-family:var(--font-d);font-size:40px;color:var(--ink);}
+  .countdown span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
+
+  .panel{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:46px 40px;margin-bottom:40px;text-align:center;}
+  .panel h2{font-family:var(--font-d);font-weight:500;font-size:30px;margin-bottom:28px;}
+  .timeline{display:grid;gap:22px;max-width:420px;margin:0 auto;}
+  .timeline .row{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:14px;font-size:14.5px;}
+  .timeline .row b{font-family:var(--font-d);font-size:17px;color:var(--gold-d);}
+  .timeline .row:last-child{border-bottom:none;}
+
+  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:10px;}
+  .detail-grid .d h3{font-family:var(--font-d);font-size:18px;margin-bottom:6px;}
+  .detail-grid .d p{font-size:13.5px;color:var(--ink-soft);}
+
+  .dresscode{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--gold);color:var(--gold-d);padding:10px 22px;border-radius:999px;font-size:13px;letter-spacing:.06em;margin-top:6px;}
+
+  .rsvp{text-align:center;padding:60px 0;}
+  .rsvp h2{font-family:var(--font-d);font-size:32px;font-weight:500;margin-bottom:14px;}
+  .rsvp p{color:var(--ink-soft);font-size:14.5px;margin-bottom:26px;}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:2px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--ink);transition:all .3s var(--ease);}
+  .btn:hover{background:var(--ink);color:var(--cream);}
+  .rsvp-note{font-size:12px;color:var(--ink-soft);margin-top:16px;font-style:italic;}
+
+  footer{background:var(--ink);color:rgba(251,246,238,.85);padding:54px 0;text-align:center;}
+  footer .container{display:flex;flex-direction:column;align-items:center;gap:18px;}
+  footer p{font-size:14px;max-width:380px;color:rgba(251,246,238,.7);}
+  footer .btn-light{border:1px solid rgba(251,246,238,.4);color:#fff;}
+  footer .btn-light:hover{background:#fff;color:var(--ink);}
+  footer small{color:rgba(251,246,238,.45);font-size:12px;}
+
+  @media (max-width:560px){
+    .detail-grid{grid-template-columns:1fr;}
+    .countdown{gap:18px;}
+    .countdown b{font-size:32px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <a class="back" href="../index.html">← Convitia</a>
+    <span class="sample-badge">Muestra de diseño</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="container">
+    <div class="ornament">✺ ✺ ✺</div>
+    <div class="eyebrow">Nos casamos</div>
+    <h1>Valentina <span class="amp">&amp;</span> Bruno</h1>
+    <div class="date">12 de Diciembre, 2026</div>
+    <div class="venue">Estancia Las Magnolias — Córdoba, Argentina</div>
+  </div>
+</section>
+
+<div class="container">
+  <p class="note">"Después de tantos años buscándonos, <span>elegimos quedarnos</span>."</p>
+
+  <div class="countdown" id="countdown">
+    <div><b id="cd-d">00</b><span>Días</span></div>
+    <div><b id="cd-h">00</b><span>Horas</span></div>
+    <div><b id="cd-m">00</b><span>Min</span></div>
+    <div><b id="cd-s">00</b><span>Seg</span></div>
+  </div>
+
+  <div class="divider">✺</div>
+
+  <div class="panel">
+    <h2>Programa</h2>
+    <div class="timeline">
+      <div class="row"><span>Ceremonia religiosa</span><b>18:00 hs</b></div>
+      <div class="row"><span>Recepción y brindis</span><b>19:30 hs</b></div>
+      <div class="row"><span>Cena</span><b>21:00 hs</b></div>
+      <div class="row"><span>Fiesta</span><b>23:00 hs</b></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Detalles</h2>
+    <div class="detail-grid">
+      <div class="d">
+        <h3>Ceremonia</h3>
+        <p>Capilla Las Magnolias, dentro de la estancia. A 12 min del salón principal.</p>
+      </div>
+      <div class="d">
+        <h3>Recepción</h3>
+        <p>Salón principal, Estancia Las Magnolias, Camino a San Roque km 8.</p>
+      </div>
+    </div>
+    <div style="margin-top:30px;">
+      <div class="dresscode">Código de vestimenta — Formal / Etiqueta</div>
+    </div>
+  </div>
+
+  <div class="rsvp">
+    <h2>Confirmar asistencia</h2>
+    <p>Por favor confirmá antes del 1 de Noviembre, 2026.</p>
+    <a class="btn" href="#" onclick="alert('Esto es una invitación de muestra — el RSVP real se activa en tu invitación.'); return false;">Confirmar mi asistencia</a>
+    <p class="rsvp-note">Esta es una invitación de muestra del estilo "Clásica Elegante".</p>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p>¿Te imaginás tu boda con este estilo? Lo armamos a tu medida: tus colores, tu historia, tu lugar.</p>
+    <a class="btn btn-light" href="https://wa.me/5492944152161?text=Hola!%20Me%20gust%C3%B3%20el%20estilo%20Cl%C3%A1sica%20Elegante%2C%20quiero%20mi%20invitaci%C3%B3n" target="_blank" rel="noopener">Quiero esta, a mi medida</a>
+    <small>Diseño de muestra — Convitia, un estudio de Flesh Studio</small>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  try{
+    var target = new Date("2026-12-12T18:00:00-03:00").getTime();
+    function tick(){
+      var diff = target - Date.now();
+      if(diff < 0) diff = 0;
+      var d = Math.floor(diff/86400000);
+      var h = Math.floor((diff%86400000)/3600000);
+      var m = Math.floor((diff%3600000)/60000);
+      var s = Math.floor((diff%60000)/1000);
+      var el = function(id,v){ var node=document.getElementById(id); if(node) node.textContent = String(v).padStart(2,"0"); };
+      el("cd-d", d); el("cd-h", h); el("cd-m", m); el("cd-s", s);
+    }
+    tick();
+    setInterval(tick, 1000);
+  }catch(e){ console.warn("countdown failed", e); }
+})();
+</script>
+</body>
+</html>
