@@ -1,0 +1,18 @@
+<!-- Square avatar version — ready for Instagram / TikTok / WhatsApp profile photo (export to PNG at 512x512+) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBF6EE"/>
+      <stop offset="100%" stop-color="#F3EAD9"/>
+    </linearGradient>
+    <linearGradient id="sealGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C9784F"/>
+      <stop offset="100%" stop-color="#8F4B34"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#bgGrad)"/>
+  <circle cx="256" cy="256" r="148" fill="url(#sealGrad2)"/>
+  <circle cx="256" cy="256" r="148" fill="none" stroke="#C9A24B" stroke-width="3" opacity="0.55"/>
+  <text x="258" y="298" font-family="Georgia, 'Cormorant Garamond', serif" font-style="italic" font-size="156" fill="#FBF6EE" text-anchor="middle">C</text>
+  <circle cx="368" cy="138" r="14" fill="#C9A24B"/>
+</svg>
