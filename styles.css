@@ -1,0 +1,433 @@
+/* ============================================================
+   CONVITIA — Invitaciones digitales de boda
+   Stylesheet — Light Editorial Cream archetype
+   Structure replicates the Framer "Miles" template's rhythm
+   (giant wordmark hero, full-bleed work grid, sticky-label
+   sections, fanned card deck, full-bleed teaser, minimal footer)
+   ============================================================ */
+
+:root{
+  --cream:        #FBF6EE;
+  --cream-soft:   #F3EAD9;
+  --paper:        #FFFDF9;
+  --ink:          #2B2420;
+  --ink-soft:     #6B5F55;
+  --terracotta:   #B5654A;
+  --terracotta-d: #8F4B34;
+  --gold:         #C9A24B;
+  --gold-soft:    #E4D4A7;
+  --sage:         #8A9683;
+  --line:         rgba(43,36,32,0.12);
+
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Jost', 'Helvetica Neue', Arial, sans-serif;
+
+  --container: 1180px;
+  --radius: 18px;
+  --ease: cubic-bezier(.16,.84,.32,1);
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  font-family:var(--font-body);
+  background:var(--cream);
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img,svg{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+ul{ list-style:none; }
+button{ font-family:inherit; cursor:pointer; border:none; background:none; }
+
+.container{ width:100%; max-width:var(--container); margin:0 auto; padding:0 28px; }
+.center{ text-align:center; }
+
+/* full-bleed escape hatch — relies on body{overflow-x:hidden} above */
+.bleed{ width:100vw; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; }
+
+h1,h2,h3,h4{ font-family:var(--font-display); font-weight:500; line-height:1.12; letter-spacing:.2px; }
+.eyebrow{
+  font-family:var(--font-body); font-size:13px; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--terracotta-d); font-weight:600; display:inline-flex; align-items:center; gap:10px;
+}
+.eyebrow::before{ content:""; width:22px; height:1px; background:var(--terracotta-d); display:inline-block; }
+
+.lede{ color:var(--ink-soft); font-size:18px; max-width:520px; }
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; gap:10px; padding:15px 28px; border-radius:999px;
+  font-size:15px; font-weight:500; letter-spacing:.01em; transition:transform .35s var(--ease), box-shadow .35s var(--ease), background .3s;
+  white-space:nowrap;
+}
+.btn-primary{ background:var(--terracotta); color:#fff; box-shadow:0 10px 24px -8px rgba(181,101,74,.55); }
+.btn-primary:hover{ transform:translateY(-2px); box-shadow:0 16px 30px -8px rgba(181,101,74,.65); }
+.btn-ghost{ border:1px solid var(--line); color:var(--ink); background:rgba(255,255,255,.4); }
+.btn-ghost:hover{ background:rgba(255,255,255,.85); transform:translateY(-2px); }
+.btn-sm{ padding:10px 20px; font-size:13px; }
+
+/* ---------- Header ---------- */
+.site-header{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  padding:18px 0;
+  transition:background .4s var(--ease), padding .4s var(--ease), box-shadow .4s var(--ease);
+}
+.site-header.scrolled{
+  background:rgba(251,246,238,.86); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  padding:12px 0; box-shadow:0 1px 0 var(--line);
+}
+.site-header .container{ display:flex; align-items:center; justify-content:space-between; gap:18px; }
+
+.brand{ display:flex; align-items:center; gap:10px; }
+.brand-mark{ width:36px; height:36px; }
+.brand-word{ font-family:var(--font-display); font-size:22px; font-weight:600; letter-spacing:.01em; }
+
+.main-nav{ display:flex; align-items:center; gap:30px; }
+.main-nav a{
+  font-size:14px; color:var(--ink-soft); position:relative; padding:4px 0; transition:color .25s;
+}
+.main-nav a:hover, .main-nav a.active{ color:var(--ink); }
+.main-nav a::after{
+  content:""; position:absolute; left:0; bottom:-2px; width:0; height:1px; background:var(--terracotta);
+  transition:width .3s var(--ease);
+}
+.main-nav a:hover::after, .main-nav a.active::after{ width:100%; }
+
+.header-actions{ display:flex; align-items:center; gap:16px; }
+.lang-toggle{
+  display:flex; align-items:center; border:1px solid var(--line); border-radius:999px; padding:3px; font-size:12px; font-weight:600;
+}
+.lang-toggle button{ padding:6px 12px; border-radius:999px; color:var(--ink-soft); transition:background .25s,color .25s; }
+.lang-toggle button.active{ background:var(--ink); color:var(--cream); }
+
+.nav-toggle{ display:none; width:38px; height:38px; border-radius:50%; align-items:center; justify-content:center; border:1px solid var(--line); }
+.nav-toggle span{ display:block; width:16px; height:1px; background:var(--ink); position:relative; }
+.nav-toggle span::before,.nav-toggle span::after{ content:""; position:absolute; left:0; width:16px; height:1px; background:var(--ink); }
+.nav-toggle span::before{ top:-5px; } .nav-toggle span::after{ top:5px; }
+
+/* ---------- Custom cursor (desktop / fine-pointer only — added by JS) ---------- */
+body.has-custom-cursor, body.has-custom-cursor a, body.has-custom-cursor button{ cursor:none; }
+.cursor-dot, .cursor-ring{
+  position:fixed; top:0; left:0; border-radius:50%; pointer-events:none; z-index:9999;
+  will-change:transform; transform:translate(-50%,-50%);
+}
+.cursor-dot{ width:7px; height:7px; background:var(--terracotta); transition:opacity .25s, background .25s; }
+.cursor-ring{
+  width:38px; height:38px; border:1px solid var(--terracotta-d); opacity:.55;
+  transition:width .3s var(--ease), height .3s var(--ease), opacity .3s, border-color .3s, background .3s;
+}
+.cursor-ring.hover{ width:68px; height:68px; opacity:.9; background:rgba(181,101,74,.07); border-color:var(--gold); }
+@media (pointer:coarse){ .cursor-dot, .cursor-ring{ display:none !important; } }
+
+/* ---------- Cursor design trail (hero only, fine-pointer) ----------
+   As the mouse moves inside the hero, a card pops in just to the RIGHT
+   of the cursor (not centered on it) and cycles through Convitia's
+   real case + 3 sample styles, leaving a fading trail of designs
+   behind the pointer as it moves — showing the variety of
+   wedding-invitation designs the service offers. Pure CSS mockups
+   (no external images); each card is its own element spawned by
+   initCursorGallery in main.js and removed once it fades out. */
+.cg-card{
+  position:fixed; top:0; left:0; width:178px; pointer-events:none; z-index:80;
+  background:var(--paper); border-radius:16px; padding:20px 18px; border:1px solid var(--line);
+  box-shadow:0 30px 60px -24px rgba(43,36,32,.4);
+  opacity:0; transform:translate(22px, -50%) scale(.88) rotate(3deg);
+  transition:opacity .4s var(--ease), transform .4s var(--ease);
+}
+.cg-card.cg-in{
+  opacity:1; transform:translate(22px, -50%) scale(1) rotate(0deg);
+}
+.cg-card.cg-out{
+  opacity:0; transform:translate(46px, -60%) scale(.92) rotate(-3deg);
+  transition-duration:.6s;
+}
+.cg-card .seal{
+  width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  color:#fff; font-family:var(--font-display); font-size:12px; margin-bottom:10px;
+  background:linear-gradient(160deg,var(--terracotta),var(--terracotta-d));
+}
+.cg-card h4{ font-family:var(--font-display); font-style:italic; font-weight:600; font-size:18px; margin-bottom:4px; }
+.cg-card .cg-venue{ font-size:10.5px; letter-spacing:.04em; color:var(--ink-soft); text-transform:uppercase; }
+.cg-card .cg-tag{ display:inline-block; margin-top:10px; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--terracotta-d); font-weight:600; }
+
+.cg-card.style-real .seal{ background:linear-gradient(160deg,#7B1F35,#4c1320); }
+.cg-card.style-clasica{ background:linear-gradient(160deg,var(--gold-soft),#fff); }
+.cg-card.style-clasica .seal{ background:linear-gradient(160deg,var(--gold),#a87f2e); }
+.cg-card.style-moderna{ background:#21201e; border-color:rgba(255,255,255,.1); }
+.cg-card.style-moderna h4, .cg-card.style-moderna .cg-tag{ color:#fff; }
+.cg-card.style-moderna .cg-venue{ color:rgba(255,255,255,.55); }
+.cg-card.style-moderna .seal{ background:#fff; color:#21201e; }
+.cg-card.style-boho{ background:linear-gradient(160deg,#fff,var(--cream-soft)); }
+.cg-card.style-boho .seal{ background:linear-gradient(160deg,var(--sage),#5f6b58); }
+
+@media (pointer:coarse){ .cg-card{ display:none !important; } }
+
+/* ---------- Hero — giant centered wordmark (Miles-style) ---------- */
+.hero-giant{ position:relative; padding:200px 0 90px; overflow:hidden; }
+.hero-giant .container{ position:relative; z-index:2; text-align:center; }
+.hero-giant .lede{ margin:18px auto 0; }
+.hero-giant .hero-cta-row, .hero-giant .hero-trust{ justify-content:center; }
+
+.hero-bg-blob{
+  --px:0px; --py:0px;
+  position:absolute; top:-180px; right:-160px; width:680px; height:680px; border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, rgba(201,162,75,.35), rgba(181,101,74,.18) 55%, transparent 75%);
+  filter:blur(10px); animation:float-blob 16s ease-in-out infinite; pointer-events:none;
+  transform:translate(var(--px),var(--py));
+}
+.hero-bg-blob.two{
+  top:auto; bottom:-220px; left:-200px; right:auto; width:520px; height:520px;
+  background:radial-gradient(circle at 60% 40%, rgba(138,150,131,.28), transparent 70%);
+  animation-duration:20s; animation-delay:-4s;
+}
+/* JS (initHeroParallax) writes --px/--py per-frame on scroll/mousemove; the
+   keyframe below reads them via var() so idle float + parallax compose
+   instead of fighting over the transform property. */
+@keyframes float-blob{
+  0%,100%{ transform:translate(var(--px),var(--py)) scale(1); }
+  50%{ transform:translate(calc(var(--px) - 30px),calc(var(--py) + 40px)) scale(1.07); }
+}
+
+.giant-word{
+  font-family:var(--font-display); font-weight:600; font-style:italic;
+  font-size:clamp(72px,15vw,190px); line-height:.9; margin:18px 0 24px; color:var(--ink); letter-spacing:-.01em;
+}
+.giant-word.reveal{ filter:blur(8px); transition:opacity 1s var(--ease), transform 1s var(--ease), filter 1s var(--ease); }
+.giant-word.reveal.is-visible{ filter:blur(0); }
+
+.hero-cta-row{ display:flex; align-items:center; gap:22px; margin-top:8px; flex-wrap:wrap; }
+.hero-trust{ display:flex; gap:26px; margin-top:46px; flex-wrap:wrap; }
+.hero-trust div{ font-size:13px; color:var(--ink-soft); display:flex; align-items:center; gap:8px; }
+.hero-trust b{ color:var(--ink); font-family:var(--font-display); font-size:15px; }
+
+/* ---------- Invite-card mockup (reused inside the works grid) ---------- */
+.invite-card{
+  position:relative; background:var(--paper); border-radius:22px; padding:42px 34px;
+  box-shadow:0 40px 80px -30px rgba(43,36,32,.28); border:1px solid var(--line);
+  transform:rotate(2.5deg); width:300px;
+}
+.invite-card .seal{
+  width:52px; height:52px; border-radius:50%; background:linear-gradient(160deg,var(--terracotta),var(--terracotta-d));
+  display:flex; align-items:center; justify-content:center; color:#fff; font-family:var(--font-display); font-size:18px;
+  margin:0 auto 22px; box-shadow:0 8px 20px -6px rgba(181,101,74,.6);
+}
+.invite-card h3{ text-align:center; font-size:30px; }
+.invite-card .names{ text-align:center; font-size:13px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); margin-top:6px; }
+.invite-card hr{ border:none; height:1px; background:var(--line); margin:22px 0; }
+.invite-card .detail-row{ display:flex; justify-content:space-between; font-size:12px; color:var(--ink-soft); margin-bottom:8px; }
+.invite-card .rsvp-chip{
+  margin-top:18px; text-align:center; font-size:12px; padding:10px; border-radius:999px; background:var(--cream-soft); color:var(--ink-soft);
+}
+.invite-card.mini{ transform:scale(.6) rotate(-3deg); pointer-events:none; }
+
+/* ---------- Marquee ---------- */
+.marquee-wrap{ border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:22px 0; overflow:hidden; background:var(--cream-soft); }
+.marquee{ display:flex; align-items:center; gap:48px; white-space:nowrap; animation:marquee 26s linear infinite; width:max-content; }
+.marquee[hidden]{ display:none; }
+.marquee .tag{ font-family:var(--font-display); font-style:italic; font-size:20px; color:var(--ink-soft); display:inline-flex; align-items:center; gap:48px; }
+.marquee .tag::after{ content:"✺"; color:var(--gold); font-size:14px; }
+@keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
+/* ---------- Section generic ---------- */
+section{ padding:120px 0; position:relative; }
+.section-head{ max-width:640px; margin-bottom:64px; }
+.section-head h2{ font-size:clamp(30px,3.6vw,44px); margin-top:16px; }
+.section-head .lede{ margin-top:16px; }
+.section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+
+/* ---------- Page intro (lightweight heading for /disenos/, /contacto/) ---------- */
+.page-intro{ padding:170px 0 50px; }
+.page-intro h1{ font-size:clamp(38px,5.2vw,62px); margin:16px 0 14px; }
+.page-intro .lede{ margin-top:4px; }
+
+/* ---------- Works grid — full-bleed (Miles "Works" page pattern) ---------- */
+.works-section{ padding-bottom:0; }
+.works-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:2px; background:var(--ink); perspective:1200px; }
+.work-tile{
+  position:relative; aspect-ratio:1.15; display:flex; align-items:flex-end; overflow:hidden;
+  transition:transform .35s var(--ease); transform-style:preserve-3d; will-change:transform;
+}
+.work-tile::after{
+  content:""; position:absolute; inset:0; z-index:1;
+  background:linear-gradient(to top, rgba(0,0,0,.62), transparent 55%);
+}
+.work-visual, .work-ornament{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  transition:transform .6s var(--ease);
+}
+.work-ornament{ font-size:140px; opacity:.16; color:#fff; }
+.work-tile:hover .work-visual, .work-tile:hover .work-ornament{ transform:scale(1.07); }
+.work-name{
+  position:relative; z-index:2; font-family:var(--font-display); font-style:italic;
+  font-size:clamp(22px,3vw,36px); color:#fff; padding:0 0 26px 30px;
+}
+.work-tag{
+  position:absolute; right:28px; bottom:32px; z-index:2; font-size:11.5px; font-weight:600;
+  letter-spacing:.04em; color:#fff; text-align:right; max-width:170px; text-transform:uppercase;
+}
+
+.thumb-real{ background:linear-gradient(155deg,#7B1F35,#4c1320); }
+.thumb-1{ background:linear-gradient(155deg,var(--gold-soft),var(--gold)); }
+.thumb-2{ background:linear-gradient(155deg,#2B2420,#534840); }
+.thumb-3{ background:linear-gradient(155deg,var(--sage),#5f6b58); }
+
+/* ---------- Full-bleed type break ---------- */
+.type-break{ background:var(--ink); color:var(--cream); padding:100px 0; text-align:center; }
+.type-break p{ font-family:var(--font-display); font-style:italic; font-weight:500; font-size:clamp(26px,4vw,52px); max-width:900px; margin:0 auto; line-height:1.3; }
+.type-break em{ color:var(--gold); font-style:italic; }
+
+/* ---------- Sticky-label sections (Miles Capabilities/Process pattern) ---------- */
+.sticky-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:60px; align-items:start; }
+.sticky-grid.mirror{ grid-template-columns:1.15fr .85fr; }
+.sticky-label{ position:sticky; top:140px; }
+.sticky-list{ display:flex; flex-direction:column; }
+.sticky-row{ display:flex; gap:24px; padding:26px 0; border-bottom:1px solid var(--line); }
+.sticky-row:first-child{ border-top:1px solid var(--line); }
+.row-num{ font-family:var(--font-display); font-size:14px; color:var(--gold); letter-spacing:.1em; flex-shrink:0; padding-top:4px; }
+.sticky-row h3{ font-size:19px; margin-bottom:6px; }
+.sticky-row p{ color:var(--ink-soft); font-size:14.5px; }
+
+/* ---------- Stats band ---------- */
+.stats-band{ background:var(--ink); padding:0; }
+.stats-grid{ display:grid; grid-template-columns:repeat(4,1fr); max-width:var(--container); margin:0 auto; }
+.stats-grid div{ padding:60px 30px; text-align:center; border-right:1px solid rgba(251,246,238,.14); }
+.stats-grid div:last-child{ border-right:none; }
+.stats-grid b{ display:block; font-family:var(--font-display); font-size:40px; color:var(--gold); }
+.stats-grid span{ font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:rgba(251,246,238,.65); margin-top:8px; display:block; }
+
+/* ---------- Designs — flat drag-fan, drag to spin ----------
+   The 4 cards sit flat in a fan — all 4 always visible, tilted via
+   rotateY, never hidden behind one another (matches the reference's
+   look). Each card's transform/opacity/z-index is a pure function of
+   its own slot value (see initDesignsBook in main.js) — no shared
+   parent transform, no per-card transform set here in CSS. With only
+   4 real cards and no spares waiting off-screen, a flat layout that
+   spins forever has exactly one seam per card per revolution; it's
+   made invisible by fading opacity to exactly 0 right at the seam, so
+   the one frame a card's position jumps, it can't be seen. */
+.book-deck{
+  position:relative; width:100%; max-width:920px; height:320px; margin:54px auto 0;
+  touch-action:none; user-select:none; perspective:1200px;
+}
+.book-track{
+  position:absolute; inset:0;
+}
+.book-card{
+  position:absolute; top:50%; left:50%; width:230px; height:260px; margin:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+  box-shadow:0 30px 60px -24px rgba(43,36,32,.35); text-align:center; padding:26px 20px;
+  cursor:grab; text-decoration:none; color:var(--ink); backface-visibility:hidden;
+  transition:transform .5s var(--ease);
+  will-change:transform;
+}
+.book-deck.is-dragging .book-card{ transition:none; cursor:grabbing; }
+.book-card .invite-card.mini{ transform:scale(.55); margin-bottom:-6px; }
+.book-ornament{ font-size:64px; color:var(--gold); opacity:.6; margin-bottom:8px; }
+.book-card h3{ font-size:19px; margin:6px 0; }
+.book-tag{ font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--terracotta-d); font-weight:600; margin-top:6px; }
+.book-card.style-real .book-tag{ color:#7B1F35; }
+.book-hint{ text-align:center; margin-top:18px; font-size:12.5px; letter-spacing:.04em; color:var(--ink-soft); }
+
+/* ---------- CTA band — full-bleed ---------- */
+.cta-band{
+  background:linear-gradient(155deg,var(--terracotta),var(--terracotta-d)); color:#fff; padding:90px 0;
+  text-align:center; overflow:hidden;
+}
+.cta-band::after{ content:"✺"; position:absolute; right:-10px; bottom:-60px; font-size:240px; color:rgba(255,255,255,.08); }
+.cta-band h2{ color:#fff; font-size:clamp(28px,3.6vw,42px); max-width:680px; margin:0 auto 30px; position:relative; z-index:2; }
+.cta-band .btn-ghost{ background:#fff; color:var(--terracotta-d); border:none; position:relative; z-index:2; }
+
+/* ---------- FAQ ---------- */
+.faq-list{ border-top:1px solid var(--line); }
+.faq-item{ border-bottom:1px solid var(--line); }
+.faq-q{
+  display:flex; align-items:center; justify-content:space-between; gap:20px; padding:24px 4px; font-size:17px;
+  font-family:var(--font-display); width:100%; text-align:left; color:var(--ink);
+}
+.faq-q .plus{ font-size:20px; color:var(--terracotta); transition:transform .35s var(--ease); flex-shrink:0; }
+.faq-item.open .faq-q .plus{ transform:rotate(45deg); }
+.faq-a{ max-height:0; overflow:hidden; transition:max-height .4s var(--ease); }
+.faq-a p{ padding:0 4px 24px; color:var(--ink-soft); font-size:14.5px; max-width:680px; }
+
+/* ---------- All-works teaser (Miles "All works" pattern) ---------- */
+.all-works-teaser{
+  display:flex; align-items:center; justify-content:center; height:340px; position:relative; overflow:hidden;
+  background:radial-gradient(circle at 30% 20%, rgba(201,162,75,.35), transparent 60%), linear-gradient(155deg,#3a2f26,#181410);
+}
+.all-works-teaser::before{ content:"✺"; position:absolute; font-size:260px; color:rgba(255,255,255,.05); }
+.teaser-text{ position:relative; z-index:2; font-family:var(--font-display); font-style:italic; font-size:clamp(32px,5vw,64px); color:#fff; transition:transform .4s var(--ease); }
+.all-works-teaser:hover .teaser-text{ transform:scale(1.05); }
+
+/* ---------- Footer — minimal, stacked links (Miles pattern) ---------- */
+footer{ background:var(--ink); color:rgba(251,246,238,.78); padding:90px 0 30px; text-align:center; }
+.footer-brand-row{ display:flex; flex-direction:column; align-items:center; gap:14px; margin-bottom:50px; }
+.footer-brand-row .brand-word{ color:var(--cream); font-size:26px; }
+.footer-brand-row p{ font-size:14px; color:rgba(251,246,238,.55); }
+.footer-links{ display:flex; flex-direction:column; align-items:center; gap:18px; margin-bottom:50px; }
+.footer-links a, .footer-links span{ font-family:var(--font-display); font-size:22px; color:rgba(251,246,238,.85); }
+.footer-links a:hover{ color:var(--gold); }
+.footer-bottom{ display:flex; justify-content:center; gap:18px; padding-top:26px; border-top:1px solid rgba(251,246,238,.12); font-size:12.5px; color:rgba(251,246,238,.5); flex-wrap:wrap; }
+.footer-bottom a{ color:rgba(251,246,238,.7); }
+
+/* ---------- Reveal animations ---------- */
+.reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
+.reveal.is-visible{ opacity:1; transform:none; }
+.reveal[data-split]{ opacity:1; transform:none; } /* defensive: never hide content if JS fails */
+
+/* ---------- Cascade stagger for repeated items (sticky rows, value cards,
+   stat columns, FAQ entries) — each item's reveal fires a touch later than
+   the one before it, instead of a flat all-at-once fade. ---------- */
+.sticky-row:nth-child(1){ transition-delay:.02s; } .sticky-row:nth-child(2){ transition-delay:.08s; }
+.sticky-row:nth-child(3){ transition-delay:.14s; } .sticky-row:nth-child(4){ transition-delay:.20s; }
+.sticky-row:nth-child(5){ transition-delay:.26s; } .sticky-row:nth-child(6){ transition-delay:.32s; }
+.sticky-row:nth-child(7){ transition-delay:.38s; } .sticky-row:nth-child(8){ transition-delay:.44s; }
+.faq-item:nth-child(1){ transition-delay:.02s; } .faq-item:nth-child(2){ transition-delay:.07s; }
+.faq-item:nth-child(3){ transition-delay:.12s; } .faq-item:nth-child(4){ transition-delay:.17s; }
+.faq-item:nth-child(5){ transition-delay:.22s; } .faq-item:nth-child(6){ transition-delay:.27s; }
+.faq-item:nth-child(7){ transition-delay:.32s; }
+.stats-grid div:nth-child(1){ transition-delay:.02s; } .stats-grid div:nth-child(2){ transition-delay:.1s; }
+.stats-grid div:nth-child(3){ transition-delay:.18s; } .stats-grid div:nth-child(4){ transition-delay:.26s; }
+
+/* ---------- i18n ----------
+   Bilingual content uses the native [hidden] attribute (toggled via main.js).
+   [data-en] elements ship with `hidden` in the markup so Spanish shows by
+   default even if JS fails to load (rule: hardcode content, JS only enriches). */
+[data-es], [data-en]{ }
+
+/* ---------- Responsive ---------- */
+@media (max-width:980px){
+  .sticky-grid, .sticky-grid.mirror{ grid-template-columns:1fr; gap:36px; }
+  .sticky-label{ position:static; top:auto; }
+  .sticky-grid.mirror .sticky-label{ order:-1; }
+  .stats-grid{ grid-template-columns:repeat(2,1fr); }
+  .stats-grid div:nth-child(2n){ border-right:none; }
+  .stats-grid div:nth-child(3), .stats-grid div:nth-child(4){ border-bottom:none; }
+  .stats-grid div:nth-child(1), .stats-grid div:nth-child(2){ border-bottom:1px solid rgba(251,246,238,.14); }
+}
+@media (max-width:720px){
+  .main-nav, .header-actions .btn{ display:none; }
+  .nav-toggle{ display:flex; }
+  .works-grid{ grid-template-columns:1fr; }
+  .work-tile{ aspect-ratio:1.3; }
+  .book-deck{ height:260px; }
+  .book-card{ width:150px; height:200px; padding:18px 14px; }
+  .book-card .invite-card.mini{ transform:scale(.4); margin-bottom:-4px; }
+  .book-ornament{ font-size:48px; }
+  .cta-band{ padding:60px 28px; }
+  section{ padding:80px 0; }
+  .hero-giant{ padding:150px 0 60px; }
+  .footer-links a, .footer-links span{ font-size:18px; }
+  .all-works-teaser{ height:240px; }
+}
+
+/* Mobile nav drawer */
+.mobile-nav{
+  position:fixed; inset:0; background:var(--cream); z-index:99; padding:120px 32px 40px; display:none; flex-direction:column; gap:26px; overflow-y:auto;
+}
+.mobile-nav.open{ display:flex; }
+.mobile-nav a{ font-family:var(--font-display); font-size:24px; }
+.mobile-nav .lang-toggle{ align-self:flex-start; }
