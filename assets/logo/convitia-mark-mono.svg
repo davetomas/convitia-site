@@ -1,6 +1,6 @@
-<!-- Mark v2 (2026-06-27) — open italic "C" + signature line-and-gold-dot motif, replacing the old circular terracotta seal per Dave's new logo design. Transparent background. -->
+<!-- One-color (mono) version — for single-color stamps, embossing, fax/B&W printing, or watermarks. Solid ink only, no gold. Mark v2 (2026-06-27). -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <text x="32" y="40" font-family="Georgia, 'Cormorant Garamond', serif" font-style="italic" font-size="34" fill="#2B2420" text-anchor="middle">C</text>
   <path d="M13 49 L32 57 L51 49" fill="none" stroke="#2B2420" stroke-width="1.4" stroke-linecap="round"/>
-  <circle cx="32" cy="57" r="3.3" fill="#C9A24B"/>
+  <circle cx="32" cy="57" r="3.3" fill="#2B2420"/>
 </svg>

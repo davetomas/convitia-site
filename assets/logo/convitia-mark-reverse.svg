@@ -1,0 +1,6 @@
+<!-- Reverse version — for dark or strongly colored backgrounds (the terracotta CTA band, dark photo overlays). Gold-foil treatment, matching the dark variant of the new mark. Mark v2 (2026-06-27). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <text x="32" y="40" font-family="Georgia, 'Cormorant Garamond', serif" font-style="italic" font-size="34" fill="#C9A24B" text-anchor="middle">C</text>
+  <path d="M13 49 L32 57 L51 49" fill="none" stroke="#C9A24B" stroke-width="1.4" stroke-linecap="round" opacity="0.85"/>
+  <circle cx="32" cy="57" r="3.3" fill="#C9A24B"/>
+</svg>

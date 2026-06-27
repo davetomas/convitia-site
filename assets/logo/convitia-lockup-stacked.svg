@@ -1,0 +1,7 @@
+<!-- Stacked lockup v2 (2026-06-27): mark above wordmark, centered, with the signature line-and-gold-dot motif beneath the wordmark. Use for square/vertical contexts — cover pages, packaging, social bios, title slides. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 210" width="240" height="210">
+  <text x="120" y="92" font-family="Georgia, 'Cormorant Garamond', serif" font-style="italic" font-size="68" fill="#2B2420" text-anchor="middle">C</text>
+  <text x="120" y="168" font-family="Georgia, 'Cormorant Garamond', serif" font-size="40" font-weight="600" fill="#2B2420" text-anchor="middle">Convitia</text>
+  <path d="M90 182 L120 192 L150 182" fill="none" stroke="#2B2420" stroke-width="1.4" stroke-linecap="round"/>
+  <circle cx="120" cy="192" r="3.6" fill="#C9A24B"/>
+</svg>

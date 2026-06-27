@@ -5,14 +5,9 @@
       <stop offset="0%" stop-color="#FBF6EE"/>
       <stop offset="100%" stop-color="#F3EAD9"/>
     </linearGradient>
-    <linearGradient id="sealGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#C9784F"/>
-      <stop offset="100%" stop-color="#8F4B34"/>
-    </linearGradient>
   </defs>
   <rect width="512" height="512" fill="url(#bgGrad)"/>
-  <circle cx="256" cy="256" r="148" fill="url(#sealGrad2)"/>
-  <circle cx="256" cy="256" r="148" fill="none" stroke="#C9A24B" stroke-width="3" opacity="0.55"/>
-  <text x="258" y="298" font-family="Georgia, 'Cormorant Garamond', serif" font-style="italic" font-size="156" fill="#FBF6EE" text-anchor="middle">C</text>
-  <circle cx="368" cy="138" r="14" fill="#C9A24B"/>
+  <text x="256" y="320" font-family="Georgia, 'Cormorant Garamond', serif" font-style="italic" font-size="272" fill="#2B2420" text-anchor="middle">C</text>
+  <path d="M104 392 L256 456 L408 392" fill="none" stroke="#2B2420" stroke-width="11" stroke-linecap="round"/>
+  <circle cx="256" cy="456" r="26.4" fill="#C9A24B"/>
 </svg>
