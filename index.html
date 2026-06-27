@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=20260627d">
+<link rel="stylesheet" href="styles.css?v=20260627e">
 </head>
 <body>
 
@@ -123,55 +123,17 @@
       <div class="hero-right reveal">
         <!-- Self-contained dark "3D gallery" panel — inspired by a 21st.dev
              flying-photo component Dave shared, scoped to just this column
-             (left column/copy stays untouched). Cards recreate the real
-             invitation designs (Quimey & Nacho — the real client site — plus
-             the 3 sample designs) as CSS mini-mockups: no image-export tool
-             is available to grab literal screenshots, so each card faithfully
-             reproduces the real names/dates/colors/typography instead. Pure
-             CSS loop (@keyframes g3d-fly below) — no JS needed. -->
+             (left column/copy stays untouched). Dave said the first pure-CSS
+             pass didn't match the reference's feel, so this is now a real
+             Three.js scene (perspective camera, canvas-textured planes) —
+             see initG3DGallery() in main.js. Each card's texture is drawn
+             from the real invitation copy/colors (Quimey & Nacho — the real
+             client site — plus the 3 sample designs): no tool is available
+             to export a literal screenshot, so the real names/dates/colors
+             are painted onto canvas instead of a generic photo. -->
         <div class="g3d-stage" aria-hidden="true">
           <span class="g3d-tag">Nuestros diseños</span>
-          <div class="g3d-cards">
-            <div class="g3d-card c1">
-              <div class="inv-mini style-real">
-                <span class="im-mark">Q&amp;N</span>
-                <span class="im-label">Nos casamos</span>
-                <strong class="im-names">Quimey &amp; Nacho</strong>
-                <span class="im-date">27 · Marzo · 2027</span>
-              </div>
-            </div>
-            <div class="g3d-card c2">
-              <div class="inv-mini style-clasica">
-                <span class="im-orn">✺</span>
-                <span class="im-label">Nos casamos</span>
-                <strong class="im-names">Valentina <em>&amp;</em> Bruno</strong>
-                <span class="im-date">12 Dic 2026</span>
-              </div>
-            </div>
-            <div class="g3d-card c3">
-              <div class="inv-mini style-moderna">
-                <span class="im-label">Save the date</span>
-                <strong class="im-names">Julia <em>&amp;</em> Martín</strong>
-                <span class="im-date">06 · 03 · 2027</span>
-              </div>
-            </div>
-            <div class="g3d-card c4">
-              <div class="inv-mini style-boho">
-                <span class="im-orn">🍃</span>
-                <span class="im-label">Al aire libre</span>
-                <strong class="im-names">Coti <em>&amp;</em> Iván</strong>
-                <span class="im-date">28 Nov 2026</span>
-              </div>
-            </div>
-            <div class="g3d-card c5">
-              <div class="inv-mini style-real variant-count">
-                <span class="im-mark">Q&amp;N</span>
-                <span class="im-label">Quedan</span>
-                <span class="im-count">270<small>d</small></span>
-                <span class="im-date">27 Marzo 2027</span>
-              </div>
-            </div>
-          </div>
+          <canvas class="g3d-canvas"></canvas>
         </div>
       </div>
 
@@ -410,6 +372,7 @@
   </div>
 </footer>
 
-<script src="main.js?v=20260623q" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script src="main.js?v=20260627e" defer></script>
 </body>
 </html>

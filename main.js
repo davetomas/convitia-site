@@ -539,6 +539,185 @@
     render();
   }
 
+  /* ---------- Hero right panel — real 3D flying-card gallery (WebGL) ----------
+     Replaces the earlier pure-CSS approximation: Dave said that loop's
+     motion didn't match the 21st.dev reference he pointed back to, so
+     this builds an actual perspective-camera scene instead of faking
+     depth with CSS scale/translateZ. Three.js loads via a CDN <script>
+     in index.html (UMD build, no bundler) — if it's blocked or slow,
+     the `if(!window.THREE) return` guard plus the standard safe()
+     wrapper just leaves the dark panel empty instead of breaking
+     anything else on the page.
+
+     Each card's "photo" is a small <canvas> 2D drawing of the real
+     invitation copy/colors — there's still no tool that can export a
+     literal screenshot, so this keeps the same real-content fallback
+     Dave already approved for the CSS version, just turned into a
+     texture instead of a styled div. Five planes drift on independent,
+     deliberately-mismatched sine waves in x/y/z so they never lock into
+     an obvious repeating pattern, and a real PerspectiveCamera gives the
+     closer-is-bigger / further-is-smaller depth cue the CSS keyframe
+     loop couldn't produce on its own. */
+  function initG3DGallery(){
+    var stage = document.querySelector(".g3d-stage");
+    var canvas = stage && stage.querySelector(".g3d-canvas");
+    if(!stage || !canvas || !window.THREE) return;
+
+    var CARDS = [
+      { name:"Quimey & Nacho",    label:"Nos casamos",    date:"27 · Marzo · 2027", bg1:"#7B2238", bg2:"#3c0f1a", fg:"#FBF3EC", serif:true },
+      { name:"Valentina & Bruno", label:"Nos casamos",     date:"12 Dic 2026",       bg1:"#FAF3EA", bg2:"#F1E4CC", fg:"#3a2f28", serif:true },
+      { name:"Julia & Martín",    label:"Save the date",  date:"06 · 03 · 2027",    bg1:"#F4F2EE", bg2:"#F4F2EE", fg:"#181410", serif:false },
+      { name:"Coti & Iván",       label:"Al aire libre",   date:"28 Nov 2026",       bg1:"#FBF6EE", bg2:"#F0E9DC", fg:"#3a2f28", serif:true },
+      { name:"Quimey & Nacho",    label:"Quedan 270 días", date:"27 Marzo 2027",     bg1:"#7B2238", bg2:"#3c0f1a", fg:"#FBF3EC", serif:true }
+    ];
+
+    function roundRectPath(ctx, x, y, w, h, r){
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
+
+    function drawCard(def){
+      var W = 360, H = 526;
+      var c = document.createElement("canvas");
+      c.width = W; c.height = H;
+      var ctx = c.getContext("2d");
+
+      roundRectPath(ctx, 0, 0, W, H, 26);
+      ctx.clip();
+      var grad = ctx.createLinearGradient(0, 0, W * 0.25, H);
+      grad.addColorStop(0, def.bg1);
+      grad.addColorStop(1, def.bg2);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+
+      ctx.textAlign = "center";
+      ctx.fillStyle = def.fg;
+      var serifFont = "'Cormorant Garamond', Georgia, serif";
+      var sansFont = "Jost, 'Trebuchet MS', sans-serif";
+
+      try{ ctx.letterSpacing = "3px"; }catch(e){}
+      ctx.globalAlpha = .7;
+      ctx.font = "600 15px " + sansFont;
+      ctx.fillText(def.label.toUpperCase(), W / 2, H * 0.38);
+      try{ ctx.letterSpacing = "0px"; }catch(e){}
+      ctx.globalAlpha = 1;
+
+      var nameFont = def.serif ? ("italic 500 42px " + serifFont) : ("700 32px " + sansFont);
+      var ampFont = def.serif ? ("italic 400 24px " + serifFont) : ("400 20px " + sansFont);
+      var names = def.name.split(" & ");
+      ctx.font = nameFont;
+      ctx.fillText(names[0], W / 2, H * 0.48);
+      ctx.font = ampFont;
+      ctx.globalAlpha = .65;
+      ctx.fillText("&", W / 2, H * 0.48 + 42);
+      ctx.globalAlpha = 1;
+      ctx.font = nameFont;
+      ctx.fillText(names[1], W / 2, H * 0.48 + 84);
+
+      try{ ctx.letterSpacing = "1px"; }catch(e){}
+      ctx.font = "500 14px " + sansFont;
+      ctx.globalAlpha = .85;
+      ctx.fillText(def.date, W / 2, H * 0.6);
+      ctx.globalAlpha = 1;
+      try{ ctx.letterSpacing = "0px"; }catch(e){}
+
+      return c;
+    }
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(42, 1, 0.1, 30);
+    camera.position.z = 6.4;
+
+    var renderer;
+    try{
+      renderer = new THREE.WebGLRenderer({ canvas:canvas, alpha:true, antialias:true });
+    }catch(e){ return; }
+    renderer.setClearColor(0x000000, 0);
+
+    var ASPECT = 360 / 526;
+    var cardW = 1.9, cardH = cardW / ASPECT;
+    var meshes = [];
+
+    CARDS.forEach(function(def, i){
+      var tex = new THREE.CanvasTexture(drawCard(def));
+      var mat = new THREE.MeshBasicMaterial({ map:tex, transparent:true, side:THREE.DoubleSide });
+      var geo = new THREE.PlaneGeometry(cardW, cardH);
+      var mesh = new THREE.Mesh(geo, mat);
+      mesh.userData = {
+        def:def, tex:tex,
+        phase: (i / CARDS.length) * Math.PI * 2,
+        ax: 1.5 + (i % 3) * 0.32,
+        ay: 0.85 + (i % 2) * 0.3,
+        az: 2.15,
+        fx: 0.15 + i * 0.021,
+        fy: 0.12 + i * 0.017,
+        fz: 0.095 + i * 0.013,
+        rTilt: (i % 2 === 0 ? 1 : -1) * (0.18 + i * 0.03)
+      };
+      scene.add(mesh);
+      meshes.push(mesh);
+    });
+
+    function resize(){
+      var w = stage.clientWidth, h = stage.clientHeight;
+      if(!w || !h) return;
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    resize();
+    window.addEventListener("resize", resize);
+    if(window.ResizeObserver){
+      new ResizeObserver(resize).observe(stage);
+    }
+
+    var running = true, raf = null;
+    var clockStart = performance.now();
+
+    function tick(){
+      if(!running) return;
+      var t = (performance.now() - clockStart) / 1000;
+      meshes.forEach(function(mesh){
+        var u = mesh.userData;
+        mesh.position.x = Math.sin(t * u.fx + u.phase) * u.ax;
+        mesh.position.y = Math.cos(t * u.fy + u.phase * 1.3) * u.ay;
+        mesh.position.z = Math.sin(t * u.fz + u.phase * 0.7) * u.az;
+        mesh.rotation.y = u.rTilt + Math.sin(t * 0.12 + u.phase) * 0.24;
+        mesh.rotation.x = Math.sin(t * 0.09 + u.phase) * 0.05;
+        var depthFade = (mesh.position.z + u.az) / (u.az * 2);
+        mesh.material.opacity = 0.35 + depthFade * 0.65;
+      });
+      renderer.render(scene, camera);
+      raf = requestAnimationFrame(tick);
+    }
+    tick();
+
+    document.addEventListener("visibilitychange", function(){
+      if(document.hidden){
+        running = false;
+        if(raf) cancelAnimationFrame(raf);
+      }else if(!running){
+        running = true;
+        tick();
+      }
+    });
+
+    if(document.fonts && document.fonts.ready){
+      document.fonts.ready.then(function(){
+        meshes.forEach(function(mesh){
+          mesh.userData.tex.image = drawCard(mesh.userData.def);
+          mesh.userData.tex.needsUpdate = true;
+        });
+      });
+    }
+  }
+
   /* ---------- Marquee speeds up / reverses with scroll velocity ---------- */
   function initMarqueeScrollSpeed(){
     var tracks = document.querySelectorAll(".marquee");
@@ -589,6 +768,7 @@
     safe(initCursorGallery, "cursorGallery");
     safe(initDesignsBook, "designsBook");
     safe(initHeroParallax, "heroParallax");
+    safe(initG3DGallery, "g3dGallery");
     safe(initMarqueeScrollSpeed, "marqueeScrollSpeed");
     safe(initAnchors, "anchors");
   });
