@@ -203,12 +203,17 @@ body.has-custom-cursor, body.has-custom-cursor a, body.has-custom-cursor button{
 .hero-trust div{ font-size:13px; color:var(--ink-soft); display:flex; align-items:center; gap:8px; }
 .hero-trust b{ color:var(--ink); font-family:var(--font-display); font-size:15px; }
 
-/* ---------- Phone showcase — floating mockups + florals ----------
-   Two real phone-mockup screenshots staged like a product shot: a warm
-   gradient arch behind, soft "pebble" blobs as a pedestal, and a few
-   line-art flowers/sprigs (Convitia's romantic, hand-finished touch)
-   swaying gently. Each phone idles on its own float-phone animation
-   (different duration/delay = organic, not synchronized) while
+/* ---------- Phone showcase — floating phone-bezel mockups + florals ----------
+   Two real phone-bezel mockups (dark frame + notch) staged like a product
+   shot: a warm gradient arch behind, white pedestal shapes as a tabletop
+   base, and a few line-art flowers/sprigs (Convitia's romantic,
+   hand-finished touch) swaying gently. Each screen is a faithful CSS
+   recreation of an actual screen from Convitia's own Quimey & Nacho
+   invite (hero with names/date, and the live countdown) — same copy,
+   colors and layout as that real project, not a captured screenshot;
+   swap a .ps-phone-screen's inner markup for a real <img> once an actual
+   screenshot file is supplied. Each phone idles on its own float-phone
+   animation (different duration/delay = organic, not synchronized) while
    keeping its base tilt via the --rot custom property, same trick the
    hero blobs use for --px/--py so the keyframe never fights the
    element's own static transform. */
@@ -226,59 +231,74 @@ body.has-custom-cursor, body.has-custom-cursor a, body.has-custom-cursor button{
   50%{ transform:translateY(14px) scale(1.03); }
 }
 
-.ps-pebble{
-  position:absolute; z-index:1; background:var(--paper);
-  border-radius:50% 50% 45% 55% / 55% 45% 55% 45%;
-  box-shadow:0 30px 50px -22px rgba(43,36,32,.25);
+/* White cylindrical "pedestals" the phones rest on — flattened capsule
+   shapes with a top-lit gradient + soft contact shadow so they read as
+   a tabletop product-shot base rather than a flat blob. */
+.ps-pedestal{
+  position:absolute; z-index:1;
+  background:linear-gradient(180deg, #fff, var(--cream-soft));
+  border-radius:999px;
+  box-shadow:0 28px 46px -18px rgba(43,36,32,.28), inset 0 -7px 12px rgba(43,36,32,.06);
 }
-.ps-pebble.p1{ width:150px; height:68px; left:0; bottom:14px; transform:rotate(-6deg); }
-.ps-pebble.p2{ width:108px; height:54px; left:32%; bottom:-4px; transform:rotate(4deg); }
-.ps-pebble.p3{ width:88px; height:46px; right:4%; bottom:24px; transform:rotate(-3deg); }
+.ps-pedestal.p1{ width:150px; height:44px; left:0; bottom:16px; transform:rotate(-4deg); }
+.ps-pedestal.p2{ width:106px; height:32px; left:32%; bottom:-2px; transform:rotate(3deg); }
+.ps-pedestal.p3{ width:84px; height:28px; right:4%; bottom:32px; transform:rotate(-2deg); }
 
-.ps-card{
+.ps-phone{
   position:absolute; transform:rotate(var(--rot,0deg));
   animation:float-phone 8s ease-in-out infinite;
+  text-align:center;
 }
-.ps-card.back{ --rot:-8deg; z-index:2; width:172px; top:2%; right:18%; animation-duration:9.5s; animation-delay:-3s; }
-.ps-card.front{ --rot:9deg; z-index:3; width:206px; right:-2%; bottom:8%; animation-duration:8s; animation-delay:-.6s; }
+.ps-phone.back{ --rot:-8deg; z-index:2; width:152px; top:2%; right:20%; animation-duration:9.5s; animation-delay:-3s; }
+.ps-phone.front{ --rot:9deg; z-index:3; width:180px; right:-2%; bottom:10%; animation-duration:8s; animation-delay:-.6s; }
 @keyframes float-phone{
   0%,100%{ transform:rotate(var(--rot,0deg)) translateY(0); }
   50%{ transform:rotate(var(--rot,0deg)) translateY(-16px); }
 }
 
-/* Photo cards — polaroid-style, anchored to the right side of .ps-stage.
-   No real photos yet, so .ps-card-photo is a soft gradient placeholder
-   (camera glyph) — swap it for a real <img class="ps-card-photo"
-   src="..."> once Dave uploads photos, no other rule needs to change.
-   Idle float/tilt lives on the outer .ps-card (var(--rot) trick above);
-   hover lift/scale lives on .ps-card-inner so the two transforms never
+/* Idle float/tilt lives on the outer .ps-phone (var(--rot) trick above);
+   hover lift/scale lives on .ps-phone-inner so the two transforms never
    fight on the same element. */
-.ps-card-inner{
-  background:var(--paper); padding:8px 8px 14px; border-radius:13px;
-  box-shadow:0 30px 50px -22px rgba(43,36,32,.32);
-  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
-  cursor:pointer;
+.ps-phone-inner{ transition:transform .3s var(--ease); cursor:pointer; }
+.ps-phone:hover .ps-phone-inner{ transform:scale(1.05) translateY(-6px); }
+
+.ps-phone-frame{
+  position:relative; background:#1c1a17; border-radius:30px; padding:9px;
+  box-shadow:0 32px 56px -20px rgba(43,36,32,.42), inset 0 0 0 1px rgba(255,255,255,.06);
 }
-.ps-card:hover .ps-card-inner{
-  transform:scale(1.05) translateY(-6px);
-  box-shadow:0 40px 70px -20px rgba(43,36,32,.45);
+.ps-phone-frame::before{
+  content:""; position:absolute; top:9px; left:50%; transform:translateX(-50%);
+  width:46%; height:14px; background:#1c1a17; border-radius:0 0 12px 12px; z-index:3;
 }
-.ps-card-photo{
-  position:relative; width:100%; aspect-ratio:27/40; border-radius:7px; overflow:hidden;
-  background:linear-gradient(160deg, var(--cream-soft), var(--gold-soft));
+.ps-phone-screen{
+  position:relative; width:100%; aspect-ratio:9/18.5; border-radius:21px; overflow:hidden;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
 }
-.ps-card-photo.placeholder::after{
-  content:"✺"; position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-  font-size:30px; color:var(--gold); opacity:.5;
+.ps-phone-screen img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+
+/* Recreated QyN hero screen — rings-gradient background, names, date */
+.qn-screen-hero{
+  background:radial-gradient(circle at 50% 25%, rgba(255,255,255,.16), transparent 55%), linear-gradient(165deg,#6e3c3c 0%, #8c5252 55%, #54302f 100%);
+  color:#f5ece0; padding:14% 10%;
 }
-.ps-card-photo img{ width:100%; height:100%; object-fit:cover; transition:transform .4s var(--ease); }
-.ps-card:hover .ps-card-photo img{ transform:scale(1.05); }
+.qn-screen-hero .qn-eyebrow{ display:block; font-family:var(--font-body); font-size:6.5px; letter-spacing:.24em; text-transform:uppercase; opacity:.75; }
+.qn-screen-hero .qn-names{ display:block; font-family:var(--font-display); font-style:italic; font-size:17px; margin:4px 0; line-height:1.05; }
+.qn-screen-hero .qn-date{ display:block; font-family:var(--font-body); font-size:8px; letter-spacing:.16em; opacity:.9; }
+
+/* Recreated QyN countdown screen — live "Falta poco" timer card */
+.qn-screen-count{ background:var(--cream-soft); padding:9% 8%; }
+.qn-screen-count .qn-count-title{ display:block; font-family:var(--font-display); font-style:italic; font-size:10.5px; color:var(--terracotta-d); margin-bottom:6px; }
+.qn-count-grid{ display:flex; gap:4px; }
+.qn-count-box{ background:#fff; border:1px solid var(--line); border-radius:5px; padding:5px 5px 4px; text-align:center; min-width:24px; }
+.qn-count-box b{ display:block; font-family:var(--font-display); color:var(--terracotta-d); font-size:12px; line-height:1; }
+.qn-count-box span{ display:block; font-family:var(--font-body); font-size:4.6px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-soft); margin-top:2px; }
+
 .ps-card-caption{
   font-family:var(--font-display); font-style:italic; font-size:12px;
   color:var(--ink-soft); text-align:center; padding-top:10px; line-height:1.3;
 }
-.ps-card.back.reveal{ transition-delay:.05s; }
-.ps-card.front.reveal{ transition-delay:.3s; }
+.ps-phone.back.reveal{ transition-delay:.05s; }
+.ps-phone.front.reveal{ transition-delay:.3s; }
 
 .ps-flower{ position:absolute; z-index:4; transform-origin:50% 100%; animation:ps-sway 6.5s ease-in-out infinite; }
 .ps-flower.f1{ width:42px; top:0; left:-6px; color:var(--gold); animation-duration:7s; }
@@ -512,8 +532,8 @@ footer{ background:var(--ink); color:rgba(251,246,238,.78); padding:90px 0 30px;
   .all-works-teaser{ height:240px; }
   .ps-stage{ height:400px; max-width:340px; }
   .ps-arch{ width:190px; height:260px; right:0; }
-  .ps-card.front{ width:148px; }
-  .ps-card.back{ width:122px; }
+  .ps-phone.front{ width:140px; }
+  .ps-phone.back{ width:118px; }
   .ps-flower.f1{ width:30px; } .ps-flower.f2{ width:32px; } .ps-flower.f3{ display:none; }
 }
 

@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=20260626c">
+<link rel="stylesheet" href="styles.css?v=20260626d">
 </head>
 <body>
 
@@ -95,9 +95,9 @@
     <div class="container">
       <div class="ps-stage">
         <div class="ps-arch"></div>
-        <div class="ps-pebble p1"></div>
-        <div class="ps-pebble p2"></div>
-        <div class="ps-pebble p3"></div>
+        <div class="ps-pedestal p1"></div>
+        <div class="ps-pedestal p2"></div>
+        <div class="ps-pedestal p3"></div>
 
         <svg class="ps-flower f1" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g stroke="currentColor" stroke-width="1.2">
@@ -123,18 +123,37 @@
           </g>
         </svg>
 
-        <div class="ps-card back reveal">
-          <div class="ps-card-inner">
-            <!-- swap for <img class="ps-card-photo" src="..." alt="..."> once Dave uploads real photos -->
-            <div class="ps-card-photo placeholder"></div>
-            <p class="ps-card-caption"><span data-es>Tu invitación, acá</span><span data-en hidden>Your invitation, here</span></p>
+        <!-- Phone screens below are a faithful CSS recreation of two real screens
+             from Convitia's own Quimey & Nacho invite (hero + countdown) — same
+             copy/colors/layout as the live site, not a captured screenshot.
+             Swap each .ps-phone-screen's inner markup for a real <img> once an
+             actual screenshot file is supplied. -->
+        <div class="ps-phone back reveal">
+          <div class="ps-phone-inner">
+            <div class="ps-phone-frame">
+              <div class="ps-phone-screen qn-screen-hero">
+                <span class="qn-eyebrow" data-es>Nos casamos</span><span class="qn-eyebrow" data-en hidden>We're getting married</span>
+                <span class="qn-names">Quimey &amp; Nacho</span>
+                <span class="qn-date">27 · MARZO · 2027</span>
+              </div>
+            </div>
           </div>
+          <p class="ps-card-caption"><span data-es>Tu invitación, acá</span><span data-en hidden>Your invitation, here</span></p>
         </div>
-        <div class="ps-card front reveal">
-          <div class="ps-card-inner">
-            <div class="ps-card-photo placeholder"></div>
-            <p class="ps-card-caption"><span data-es>Lista para abrirse</span><span data-en hidden>Ready to open</span></p>
+        <div class="ps-phone front reveal">
+          <div class="ps-phone-inner">
+            <div class="ps-phone-frame">
+              <div class="ps-phone-screen qn-screen-count">
+                <span class="qn-count-title" data-es>Falta poco para el gran día</span><span class="qn-count-title" data-en hidden>Almost there</span>
+                <div class="qn-count-grid">
+                  <div class="qn-count-box"><b>273</b><span data-es>días</span><span data-en hidden>days</span></div>
+                  <div class="qn-count-box"><b>18</b><span data-es>hs</span><span data-en hidden>hrs</span></div>
+                  <div class="qn-count-box"><b>14</b><span data-es>min</span><span data-en hidden>min</span></div>
+                </div>
+              </div>
+            </div>
           </div>
+          <p class="ps-card-caption"><span data-es>Lista para abrirse</span><span data-en hidden>Ready to open</span></p>
         </div>
       </div>
       <p class="ps-caption center">
