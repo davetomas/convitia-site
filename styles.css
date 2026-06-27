@@ -166,6 +166,35 @@ body.has-custom-cursor, body.has-custom-cursor a, body.has-custom-cursor button{
 
 @media (pointer:coarse){ .cg-card{ display:none !important; } }
 
+/* ---------- Splash / entry gate (home only) ----------
+   Full-screen gate shown on load: soft paper-cream background, only
+   the terracotta wordmark centered (logo1.svg recolored via CSS
+   mask — no need to touch the source file). Moving the mouse spawns
+   the same .cg-card design trail used in the hero (initCursorGallery)
+   so visitors preview the variety of designs before clicking in.
+   Click anywhere fades the gate out; its mousemove listener dies with
+   it once removed from the DOM, so the trail doesn't follow you in. */
+body.splash-active{ overflow:hidden; }
+.splash-gate{
+  position:fixed; inset:0; z-index:10000;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--paper);
+  cursor:pointer;
+  opacity:1; visibility:visible;
+  transition:opacity .6s var(--ease), visibility .6s var(--ease);
+}
+.splash-gate.splash-hidden{ opacity:0; visibility:hidden; pointer-events:none; }
+.splash-logo{
+  width:300px; height:167px; /* matches logo1.svg's 2752:1536 ratio */
+  background-color:var(--terracotta);
+  -webkit-mask-image:url('assets/logo/logo1.svg'); mask-image:url('assets/logo/logo1.svg');
+  -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+  -webkit-mask-size:contain; mask-size:contain;
+  -webkit-mask-position:center; mask-position:center;
+  pointer-events:none;
+}
+@media (max-width:640px){ .splash-logo{ width:210px; height:117px; } }
+
 /* ---------- Hero — giant centered wordmark (Miles-style) ---------- */
 .hero-giant{ position:relative; padding:200px 0 90px; overflow:hidden; }
 .hero-giant .container{ position:relative; z-index:2; text-align:center; }

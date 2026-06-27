@@ -239,6 +239,64 @@
     });
   }
 
+  /* ---------- Splash / entry gate (home only) ----------
+     Full-screen gate covering the page on load: soft paper-cream bg,
+     only the terracotta logo centered. Reuses the same .cg-card
+     design-trail visuals/logic as initCursorGallery below, but
+     spawns cards across the whole gate on mousemove. A click anywhere
+     fades the gate out, unlocks scrolling, and removes it from the
+     DOM — its mousemove listener goes with it, so the trail doesn't
+     carry over into the page underneath. */
+  function initSplashGate(){
+    var gate = document.getElementById("splash-gate");
+    if(!gate) return;
+    document.body.classList.add("splash-active");
+
+    if(window.matchMedia && window.matchMedia("(pointer:fine)").matches){
+      var designs = [
+        { style:"real",    seal:"C", name:"Quimey &amp; Nacho",    venue:"Bariloche, Arg.",                  tag:"Caso real" },
+        { style:"clasica", seal:"C", name:"Valentina &amp; Bruno", venue:"Est. Las Magnolias, Córdoba",       tag:"Clásica Elegante" },
+        { style:"moderna", seal:"C", name:"Julia &amp; Martín",    venue:"Espacio Darwin, Bs. As.",           tag:"Moderna Minimal" },
+        { style:"boho",    seal:"C", name:"Coti &amp; Iván",       venue:"Finca Las Acacias, Córdoba",        tag:"Boho Romántico" }
+      ];
+      var idx = 0, travel = 0, lastX = null, lastY = null;
+
+      function spawn(x, y){
+        var d = designs[idx];
+        idx = (idx + 1) % designs.length;
+        var card = document.createElement("div");
+        card.className = "cg-card style-" + d.style;
+        card.style.left = x + "px";
+        card.style.top = y + "px";
+        card.innerHTML =
+          '<div class="seal">' + d.seal + '</div>' +
+          '<h4>' + d.name + '</h4>' +
+          '<div class="cg-venue">' + d.venue + '</div>' +
+          '<span class="cg-tag">' + d.tag + '</span>';
+        gate.appendChild(card);
+        requestAnimationFrame(function(){ card.classList.add("cg-in"); });
+        setTimeout(function(){ card.classList.remove("cg-in"); card.classList.add("cg-out"); }, 550);
+        setTimeout(function(){ if(card.parentNode) card.parentNode.removeChild(card); }, 1150);
+      }
+
+      gate.addEventListener("mousemove", function(e){
+        if(lastX !== null){
+          travel += Math.hypot(e.clientX - lastX, e.clientY - lastY);
+          if(travel > 130){ travel = 0; spawn(e.clientX, e.clientY); }
+        }else{
+          spawn(e.clientX, e.clientY);
+        }
+        lastX = e.clientX; lastY = e.clientY;
+      });
+    }
+
+    gate.addEventListener("click", function(){
+      gate.classList.add("splash-hidden");
+      document.body.classList.remove("splash-active");
+      setTimeout(function(){ if(gate.parentNode) gate.parentNode.removeChild(gate); }, 650);
+    });
+  }
+
   /* ---------- Cursor design trail (hero, fine-pointer only) ----------
      As the mouse moves inside the hero, a card pops in just to the right
      of the cursor (not centered on it) every ~130px of movement, then
@@ -606,6 +664,7 @@
 
   /* ---------- Boot ---------- */
   document.addEventListener("DOMContentLoaded", function(){
+    safe(initSplashGate, "splashGate");
     safe(initHeader, "header");
     safe(initMobileNav, "mobileNav");
     safe(initActiveNav, "activeNav");
