@@ -259,9 +259,9 @@ body.has-custom-cursor, body.has-custom-cursor a, body.has-custom-cursor button{
   box-shadow:0 40px 80px -28px rgba(43,36,32,.5);
 }
 .g3d-tag{
-  position:absolute; top:50%; left:50%; z-index:5; transform:translate(-50%,-50%);
-  font-family:var(--font-display); font-style:italic; font-size:15px; letter-spacing:.02em;
-  color:rgba(251,246,238,.5); white-space:nowrap; pointer-events:none;
+  position:absolute; top:22px; left:50%; z-index:5; transform:translateX(-50%);
+  font-family:var(--font-display); font-style:italic; font-size:14px; letter-spacing:.02em;
+  color:rgba(251,246,238,.55); white-space:nowrap; pointer-events:none;
 }
 .g3d-cards{ position:absolute; inset:0; perspective:900px; transform-style:preserve-3d; }
 .g3d-card{
