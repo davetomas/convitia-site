@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=20260627e">
+<link rel="stylesheet" href="styles.css?v=20260627f">
 </head>
 <body>
 
@@ -121,19 +121,61 @@
       </div>
 
       <div class="hero-right reveal">
-        <!-- Self-contained dark "3D gallery" panel — inspired by a 21st.dev
-             flying-photo component Dave shared, scoped to just this column
-             (left column/copy stays untouched). Dave said the first pure-CSS
-             pass didn't match the reference's feel, so this is now a real
-             Three.js scene (perspective camera, canvas-textured planes) —
-             see initG3DGallery() in main.js. Each card's texture is drawn
-             from the real invitation copy/colors (Quimey & Nacho — the real
-             client site — plus the 3 sample designs): no tool is available
-             to export a literal screenshot, so the real names/dates/colors
-             are painted onto canvas instead of a generic photo. -->
-        <div class="g3d-stage" aria-hidden="true">
-          <span class="g3d-tag">Nuestros diseños</span>
-          <canvas class="g3d-canvas"></canvas>
+        <!-- Self-contained dark "image accordion" panel — Dave asked to
+             replace the Three.js flying-card scene above with this effect
+             instead, modeled on a 21st.dev interactive-image-accordion
+             component he shared. Scoped to just this column (left column/
+             copy stays untouched). Pure CSS (flexbox + flex-grow transition)
+             + a tiny JS toggle — see initAccGallery() in main.js, no WebGL
+             needed. Each panel's content is the real invitation copy/colors
+             (Quimey & Nacho — the real client site — plus the 3 sample
+             designs): no tool is available to export a literal screenshot,
+             so the real names/dates/colors are painted as CSS text instead
+             of a generic photo. -->
+        <div class="acc-stage" aria-hidden="true">
+          <span class="acc-tag">Nuestros diseños</span>
+          <div class="acc-row">
+            <button type="button" class="acc-panel c1 active">
+              <span class="acc-vert">Quimey &amp; Nacho</span>
+              <span class="acc-info">
+                <span class="acc-info-label">Nos casamos</span>
+                <span class="acc-info-name">Quimey &amp; Nacho</span>
+                <span class="acc-info-date">27 Marzo 2027</span>
+              </span>
+            </button>
+            <button type="button" class="acc-panel c2">
+              <span class="acc-vert">Valentina &amp; Bruno</span>
+              <span class="acc-info">
+                <span class="acc-info-label">Clásica Elegante</span>
+                <span class="acc-info-name">Valentina &amp; Bruno</span>
+                <span class="acc-info-date">12 Dic 2026</span>
+              </span>
+            </button>
+            <button type="button" class="acc-panel c3">
+              <span class="acc-vert">Julia &amp; Martín</span>
+              <span class="acc-info">
+                <span class="acc-info-label">Moderna Minimal</span>
+                <span class="acc-info-name">Julia &amp; Martín</span>
+                <span class="acc-info-date">06 Marzo 2027</span>
+              </span>
+            </button>
+            <button type="button" class="acc-panel c4">
+              <span class="acc-vert">Coti &amp; Iván</span>
+              <span class="acc-info">
+                <span class="acc-info-label">Boho Romántico</span>
+                <span class="acc-info-name">Coti &amp; Iván</span>
+                <span class="acc-info-date">28 Nov 2026</span>
+              </span>
+            </button>
+            <button type="button" class="acc-panel c5">
+              <span class="acc-vert">Quimey &amp; Nacho</span>
+              <span class="acc-info">
+                <span class="acc-info-label">Quedan 270 días</span>
+                <span class="acc-info-name">Quimey &amp; Nacho</span>
+                <span class="acc-info-date">27 Marzo 2027</span>
+              </span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -372,7 +414,6 @@
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-<script src="main.js?v=20260627e" defer></script>
+<script src="main.js?v=20260627f" defer></script>
 </body>
 </html>

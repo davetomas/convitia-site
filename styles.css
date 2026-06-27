@@ -239,26 +239,58 @@ body.has-custom-cursor, body.has-custom-cursor a, body.has-custom-cursor button{
 
 .hero-right{ display:flex; align-items:center; justify-content:center; }
 
-/* ---------- 3D flying-card gallery — hero right panel ----------
-   Self-contained dark panel living inside .hero-right (the light left
-   column with copy/CTAs is untouched). Modeled on a 21st.dev reference
-   Dave shared. First pass was a pure-CSS keyframe loop; Dave said the
-   motion didn't match the reference, so this is now a real WebGL scene
-   (Three.js, loaded via CDN in index.html) — the canvas just needs to
-   fill the panel, all motion/perspective lives in initG3DGallery() in
-   main.js. See that function for how each card's texture is drawn. */
-.g3d-stage{
+/* ---------- Interactive image accordion — hero right panel ----------
+   Replaces the earlier Three.js flying-card scene: Dave pointed at a
+   different 21st.dev reference (interactive-image-accordion) and asked
+   to match that effect instead. Self-contained dark panel living inside
+   .hero-right (the light left column with copy/CTAs is untouched).
+   Pure CSS: a flex row of panels where the .active one gets a much
+   larger flex-grow, animated by the browser's normal flex-grow
+   transition — no WebGL/canvas needed. The tiny JS in initAccGallery()
+   (main.js) just moves the .active class on hover/click/focus. */
+.acc-stage{
   position:relative; max-width:480px; width:100%; height:480px; margin:0 auto;
-  border-radius:28px; overflow:hidden;
+  border-radius:28px; overflow:hidden; padding:14px;
   background:radial-gradient(circle at 50% 32%, #2b2420, #120f0d 78%);
   box-shadow:0 40px 80px -28px rgba(43,36,32,.5);
 }
-.g3d-tag{
+.acc-tag{
   position:absolute; top:22px; left:50%; z-index:5; transform:translateX(-50%);
   font-family:var(--font-display); font-style:italic; font-size:14px; letter-spacing:.02em;
   color:rgba(251,246,238,.55); white-space:nowrap; pointer-events:none;
 }
-.g3d-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+.acc-row{ display:flex; align-items:stretch; gap:8px; width:100%; height:100%; }
+.acc-panel{
+  position:relative; flex:1 1 0; min-width:0; height:100%;
+  border:none; padding:0; cursor:pointer; border-radius:18px; overflow:hidden;
+  transition:flex-grow .65s var(--ease);
+}
+.acc-panel.active{ flex-grow:5; }
+.acc-panel.c1, .acc-panel.c5{ background:linear-gradient(160deg, #7B2238, #3c0f1a); color:#FBF3EC; }
+.acc-panel.c2{ background:linear-gradient(160deg, #FAF3EA, #F1E4CC); color:#3a2f28; }
+.acc-panel.c3{ background:linear-gradient(160deg, #F4F2EE, #E5DFD4); color:#181410; }
+.acc-panel.c4{ background:linear-gradient(160deg, #FBF6EE, #F0E9DC); color:#3a2f28; }
+
+.acc-vert{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) rotate(-90deg);
+  white-space:nowrap; font-family:var(--font-display); font-style:italic;
+  font-size:15px; letter-spacing:.02em; color:inherit; opacity:.85;
+  transition:opacity .3s ease; pointer-events:none;
+}
+.acc-panel.active .acc-vert{ opacity:0; }
+
+.acc-info{
+  position:absolute; left:0; right:0; bottom:0; padding:22px 22px 24px;
+  display:flex; flex-direction:column; gap:5px; color:inherit; opacity:0;
+  transition:opacity .35s ease .12s; pointer-events:none;
+}
+.acc-panel.active .acc-info{ opacity:1; }
+.acc-info-label{
+  font-family:var(--font-body); font-size:11px; letter-spacing:.12em;
+  text-transform:uppercase; opacity:.65; white-space:nowrap;
+}
+.acc-info-name{ font-family:var(--font-display); font-style:italic; font-size:25px; white-space:nowrap; }
+.acc-info-date{ font-family:var(--font-body); font-size:12px; opacity:.8; white-space:nowrap; }
 
 /* ---------- Invite-card mockup (reused inside the works grid) ---------- */
 .invite-card{
@@ -481,7 +513,10 @@ footer{ background:var(--ink); color:rgba(251,246,238,.78); padding:90px 0 30px;
   .hero-giant{ padding:150px 0 60px; }
   .footer-links a, .footer-links span{ font-size:18px; }
   .all-works-teaser{ height:240px; }
-  .g3d-stage{ height:340px; max-width:300px; }
+  .acc-stage{ height:340px; max-width:300px; padding:10px; }
+  .acc-info{ padding:14px 14px 16px; }
+  .acc-info-name{ font-size:19px; }
+  .acc-vert{ font-size:13px; }
   .hero-split .giant-word{ font-size:clamp(28px,7vw,38px); }
   .hero-split .hero-cta-row, .hero-split .hero-trust{ justify-content:flex-start; }
   .reviews-badge{ font-size:12px; flex-wrap:wrap; }
