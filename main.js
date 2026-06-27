@@ -309,6 +309,10 @@
      spawned on demand and removed once its fade-out finishes. */
   function initCursorGallery(){
     if(!window.matchMedia || !window.matchMedia("(pointer:fine)").matches) return;
+    /* Homepage already shows this trail on the splash gate before the
+       click; once past it, the real Hero should stay clean — skip
+       attaching it here when the splash markup is present on the page. */
+    if(document.getElementById("splash-gate")) return;
     var hero = document.querySelector(".hero-giant");
     if(!hero) return;
 
