@@ -239,63 +239,82 @@ body.has-custom-cursor, body.has-custom-cursor a, body.has-custom-cursor button{
 
 .hero-right{ display:flex; align-items:center; justify-content:center; }
 
-/* ---------- Phone showcase — step podium + vase + real phone mockups ----------
-   Lives inside the homepage hero's right column (.hero-right > .ps-stage).
-   Matches Dave's reference layout: a staircase of white "step" blocks
-   instead of the earlier arch + capsule pedestals, a small ceramic vase
-   standing on the front block, and two real phone-mockup product photos
-   (Dave's own licensed assets — assets/recursos-nuevos/1.png, 2.png)
-   instead of the earlier CSS-recreated screens. Each phone idles on its
-   own float-phone animation (different duration/delay = organic, not
-   synchronized) while keeping its base tilt via the --rot custom
-   property, same trick the hero blobs use for --px/--py so the keyframe
-   never fights the element's own static transform. */
-.ps-stage{ position:relative; max-width:480px; width:100%; height:480px; margin:0 auto; }
-
-/* Staggered white "step" platforms — ascending left to right, flat
-   illustrative blocks (top-lit gradient + soft contact shadow) so they
-   read as a tabletop podium rather than a flat rectangle. */
-.ps-block{
-  position:absolute; z-index:0; bottom:0; border-radius:14px;
-  background:linear-gradient(165deg, #fff, var(--cream-soft));
-  box-shadow:0 28px 46px -18px rgba(43,36,32,.26), inset 0 -8px 14px rgba(43,36,32,.05);
+/* ---------- 3D flying-card gallery — hero right panel ----------
+   Self-contained dark panel living inside .hero-right (the light left
+   column with copy/CTAs is untouched). Modeled on a 21st.dev reference
+   Dave shared (cards flying through 3D depth around a fixed center
+   line) but scoped to just this column, never the full hero. Each
+   .g3d-card recreates a real invitation design (Quimey & Nacho — the
+   real client site — plus the 3 sample designs) as a CSS mini-mockup:
+   there's no tool available to export a literal screenshot, so the
+   real names/dates/colors/typography are reproduced in CSS instead of
+   a generic placeholder. Pure CSS loop via @keyframes g3d-fly — no JS:
+   every card runs the identical keyframe, offset only by
+   animation-delay plus its own --x/--y/--ry custom properties, so the
+   5 cards drift on independent paths without ever needing a script. */
+.g3d-stage{
+  position:relative; max-width:480px; width:100%; height:480px; margin:0 auto;
+  border-radius:28px; overflow:hidden;
+  background:radial-gradient(circle at 50% 32%, #2b2420, #120f0d 78%);
+  box-shadow:0 40px 80px -28px rgba(43,36,32,.5);
 }
-.ps-block.b1{ left:-4%; width:170px; height:64px; }
-.ps-block.b2{ left:35%; width:128px; height:128px; }
-.ps-block.b3{ right:6%; width:150px; height:208px; }
-
-.ps-vase{
-  position:absolute; z-index:1; width:84px; left:10%; bottom:64px;
-  transform-origin:50% 95%; animation:ps-sway 7s ease-in-out infinite;
+.g3d-tag{
+  position:absolute; top:50%; left:50%; z-index:5; transform:translate(-50%,-50%);
+  font-family:var(--font-display); font-style:italic; font-size:15px; letter-spacing:.02em;
+  color:rgba(251,246,238,.5); white-space:nowrap; pointer-events:none;
+}
+.g3d-cards{ position:absolute; inset:0; perspective:900px; transform-style:preserve-3d; }
+.g3d-card{
+  position:absolute; top:50%; left:50%; width:118px; height:172px; margin:-86px 0 0 -59px;
+  border-radius:12px; overflow:hidden; box-shadow:0 22px 38px -12px rgba(0,0,0,.65);
+  animation:g3d-fly 9s ease-in-out infinite; opacity:0;
+}
+.g3d-card.c1{ --x:-160px; --y:-46px; --ry:-9deg; animation-delay:0s; }
+.g3d-card.c2{ --x:138px;  --y:34px;  --ry:7deg;  animation-delay:-1.8s; }
+.g3d-card.c3{ --x:-44px;  --y:96px;  --ry:-5deg; animation-delay:-3.6s; }
+.g3d-card.c4{ --x:168px;  --y:-94px; --ry:8deg;  animation-delay:-5.4s; }
+.g3d-card.c5{ --x:-136px; --y:112px; --ry:-6deg; animation-delay:-7.2s; }
+@keyframes g3d-fly{
+  0%{   transform:translate3d(calc(var(--x) * -1), calc(var(--y) * -1), -420px) scale(.32) rotateY(calc(var(--ry) * -1)); opacity:0; }
+  12%{  opacity:1; }
+  50%{  transform:translate3d(0,0,60px) scale(1.06) rotateY(0deg); opacity:1; }
+  88%{  opacity:1; }
+  100%{ transform:translate3d(var(--x), var(--y), -420px) scale(.32) rotateY(var(--ry)); opacity:0; }
 }
 
-.ps-phone{
-  position:absolute; transform:rotate(var(--rot,0deg));
-  animation:float-phone 8s ease-in-out infinite;
-  text-align:center;
+/* Mini invitation-design cards — faithful CSS recreations of the real
+   site copy/palette for each design (see designs/*.html for source). */
+.inv-mini{
+  width:100%; height:100%; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; gap:3px; padding:14px 10px; text-align:center;
 }
-.ps-phone.back{ --rot:-6deg; z-index:2; width:230px; top:-2%; right:2%; animation-duration:9.5s; animation-delay:-3s; }
-.ps-phone.front{ --rot:7deg; z-index:3; width:270px; right:-10%; bottom:2%; animation-duration:8s; animation-delay:-.6s; }
-@keyframes float-phone{
-  0%,100%{ transform:rotate(var(--rot,0deg)) translateY(0); }
-  50%{ transform:rotate(var(--rot,0deg)) translateY(-16px); }
-}
+.inv-mini .im-label{ font-size:8px; letter-spacing:.16em; text-transform:uppercase; opacity:.8; margin-top:6px; }
+.inv-mini .im-names{ font-size:18px; margin-top:6px; line-height:1.15; }
+.inv-mini .im-date{ font-size:9px; letter-spacing:.05em; margin-top:8px; opacity:.85; }
 
-/* Idle float/tilt lives on the outer .ps-phone (var(--rot) trick above);
-   hover lift/scale lives on .ps-phone-inner so the two transforms never
-   fight on the same element. */
-.ps-phone-inner{ transition:transform .3s var(--ease); cursor:pointer; }
-.ps-phone:hover .ps-phone-inner{ transform:scale(1.05) translateY(-6px); }
+.inv-mini.style-real{ background:linear-gradient(165deg,#7B2238,#3c0f1a); color:#fff; }
+.inv-mini.style-real .im-mark{ font-family:var(--font-display); font-size:11px; letter-spacing:.1em; opacity:.7; }
+.inv-mini.style-real .im-names{ font-family:var(--font-display); font-style:italic; }
+.inv-mini.style-real.variant-count .im-count{ font-family:var(--font-display); font-size:30px; line-height:1; margin-top:4px; }
+.inv-mini.style-real.variant-count .im-count small{ font-size:11px; margin-left:2px; opacity:.7; }
 
-.ps-phone-img{ width:100%; filter:drop-shadow(0 30px 40px rgba(43,36,32,.32)); }
+.inv-mini.style-clasica{ background:linear-gradient(165deg,#FAF3EA,#F1E4CC); color:var(--ink); }
+.inv-mini.style-clasica .im-orn{ color:var(--gold); font-size:15px; }
+.inv-mini.style-clasica .im-label{ color:var(--terracotta-d); font-weight:600; }
+.inv-mini.style-clasica .im-names{ font-family:var(--font-display); }
+.inv-mini.style-clasica .im-names em{ color:var(--gold); font-style:normal; }
+.inv-mini.style-clasica .im-date{ color:var(--ink-soft); }
 
-.ps-phone.back.reveal{ transition-delay:.05s; }
-.ps-phone.front.reveal{ transition-delay:.3s; }
+.inv-mini.style-moderna{ background:#F4F2EE; color:#181410; }
+.inv-mini.style-moderna .im-label{ color:#D6432A; font-weight:700; }
+.inv-mini.style-moderna .im-names{ font-family:'Jost',sans-serif; font-weight:700; letter-spacing:-.01em; text-transform:uppercase; }
+.inv-mini.style-moderna .im-names em{ color:#D6432A; font-style:normal; }
 
-@keyframes ps-sway{
-  0%,100%{ transform:rotate(-5deg); }
-  50%{ transform:rotate(5deg); }
-}
+.inv-mini.style-boho{ background:linear-gradient(165deg,#FBF6EE,#F0E9DC); color:var(--ink); }
+.inv-mini.style-boho .im-label{ color:var(--terracotta-d); }
+.inv-mini.style-boho .im-names{ font-family:var(--font-display); font-style:italic; }
+.inv-mini.style-boho .im-names em{ color:var(--sage); font-style:italic; }
+.inv-mini.style-boho .im-date{ color:var(--ink-soft); }
 
 /* ---------- Invite-card mockup (reused inside the works grid) ---------- */
 .invite-card{
@@ -518,13 +537,8 @@ footer{ background:var(--ink); color:rgba(251,246,238,.78); padding:90px 0 30px;
   .hero-giant{ padding:150px 0 60px; }
   .footer-links a, .footer-links span{ font-size:18px; }
   .all-works-teaser{ height:240px; }
-  .ps-stage{ height:340px; max-width:300px; }
-  .ps-block.b1{ width:120px; height:46px; }
-  .ps-block.b2{ width:90px; height:90px; }
-  .ps-block.b3{ width:106px; height:146px; }
-  .ps-vase{ width:58px; bottom:46px; }
-  .ps-phone.front{ width:190px; }
-  .ps-phone.back{ width:160px; }
+  .g3d-stage{ height:340px; max-width:300px; }
+  .g3d-cards{ transform:scale(.74); }
   .hero-split .giant-word{ font-size:clamp(28px,7vw,38px); }
   .hero-split .hero-cta-row, .hero-split .hero-trust{ justify-content:flex-start; }
   .reviews-badge{ font-size:12px; flex-wrap:wrap; }

@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=20260627b">
+<link rel="stylesheet" href="styles.css?v=20260627c">
 </head>
 <body>
 
@@ -121,41 +121,55 @@
       </div>
 
       <div class="hero-right reveal">
-        <div class="ps-stage">
-          <!-- Staggered white "step" platforms (replaces the old arch +
-               capsule pedestals) — a small product-shot podium the vase
-               and phones rest on. -->
-          <div class="ps-block b1"></div>
-          <div class="ps-block b2"></div>
-          <div class="ps-block b3"></div>
-
-          <!-- Ceramic vase + bouquet standing on the front block -->
-          <svg class="ps-vase" viewBox="0 0 80 170" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M28 100C24 110 24 130 30 138C36 144 44 144 50 138C56 130 56 110 52 100C50 95 50 88 50 84H30C30 88 30 95 28 100Z" fill="var(--terracotta-d)"/>
-            <g stroke="var(--sage)" stroke-width="1.4">
-              <path d="M36 84C34 60 30 40 24 22"/>
-              <path d="M40 84C40 56 40 34 40 14"/>
-              <path d="M44 84C47 58 53 38 58 20"/>
-            </g>
-            <g fill="var(--cream)" stroke="var(--gold)" stroke-width="1">
-              <circle cx="24" cy="18" r="9"/>
-              <circle cx="40" cy="10" r="10"/>
-              <circle cx="58" cy="16" r="8.5"/>
-            </g>
-          </svg>
-
-          <!-- Phone mockups — Dave's own licensed product-mockup photos
-               (assets/recursos-nuevos/1.png, 2.png). These already include
-               the bezel + tilt in the image itself, so no .ps-phone-frame
-               wrapper is needed (unlike the earlier CSS-recreated screens). -->
-          <div class="ps-phone back reveal">
-            <div class="ps-phone-inner">
-              <img class="ps-phone-img" src="assets/recursos-nuevos/2.png" alt="" loading="lazy">
+        <!-- Self-contained dark "3D gallery" panel — inspired by a 21st.dev
+             flying-photo component Dave shared, scoped to just this column
+             (left column/copy stays untouched). Cards recreate the real
+             invitation designs (Quimey & Nacho — the real client site — plus
+             the 3 sample designs) as CSS mini-mockups: no image-export tool
+             is available to grab literal screenshots, so each card faithfully
+             reproduces the real names/dates/colors/typography instead. Pure
+             CSS loop (@keyframes g3d-fly below) — no JS needed. -->
+        <div class="g3d-stage" aria-hidden="true">
+          <span class="g3d-tag">Nuestros diseños</span>
+          <div class="g3d-cards">
+            <div class="g3d-card c1">
+              <div class="inv-mini style-real">
+                <span class="im-mark">Q&amp;N</span>
+                <span class="im-label">Nos casamos</span>
+                <strong class="im-names">Quimey &amp; Nacho</strong>
+                <span class="im-date">27 · Marzo · 2027</span>
+              </div>
             </div>
-          </div>
-          <div class="ps-phone front reveal">
-            <div class="ps-phone-inner">
-              <img class="ps-phone-img" src="assets/recursos-nuevos/1.png" alt="" loading="lazy">
+            <div class="g3d-card c2">
+              <div class="inv-mini style-clasica">
+                <span class="im-orn">✺</span>
+                <span class="im-label">Nos casamos</span>
+                <strong class="im-names">Valentina <em>&amp;</em> Bruno</strong>
+                <span class="im-date">12 Dic 2026</span>
+              </div>
+            </div>
+            <div class="g3d-card c3">
+              <div class="inv-mini style-moderna">
+                <span class="im-label">Save the date</span>
+                <strong class="im-names">Julia <em>&amp;</em> Martín</strong>
+                <span class="im-date">06 · 03 · 2027</span>
+              </div>
+            </div>
+            <div class="g3d-card c4">
+              <div class="inv-mini style-boho">
+                <span class="im-orn">🍃</span>
+                <span class="im-label">Al aire libre</span>
+                <strong class="im-names">Coti <em>&amp;</em> Iván</strong>
+                <span class="im-date">28 Nov 2026</span>
+              </div>
+            </div>
+            <div class="g3d-card c5">
+              <div class="inv-mini style-real variant-count">
+                <span class="im-mark">Q&amp;N</span>
+                <span class="im-label">Quedan</span>
+                <span class="im-count">270<small>d</small></span>
+                <span class="im-date">27 Marzo 2027</span>
+              </div>
             </div>
           </div>
         </div>
