@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=20260626d">
+<link rel="stylesheet" href="styles.css?v=20260627a">
 </head>
 <body>
 
@@ -63,103 +63,129 @@
 
 <main>
 
-  <!-- ===================== HERO — giant wordmark ===================== -->
-  <section class="hero-giant" id="hero">
+  <!-- ===================== HERO — 2-column: copy left, phone showcase right =====================
+       Merged the old standalone .phone-showcase section into the hero as the
+       right-hand column (reference: text+CTA left / arch+pedestals+phones
+       right). .hero-split is scoped so the shared .hero-giant rules used by
+       contacto/index.html's plain single-column hero stay untouched. -->
+  <section class="hero-giant hero-split" id="hero">
     <div class="hero-bg-blob"></div>
     <div class="hero-bg-blob two"></div>
-    <div class="container">
-      <span class="eyebrow center reveal"><span data-es>Invitaciones digitales de boda</span><span data-en hidden>Wedding digital invitations</span></span>
-      <h1 class="giant-word reveal">Convitia</h1>
-      <p class="lede center reveal">
-        <span data-es>Invitaciones a medida con un diseñador real acompañándote de principio a fin. Cambios ilimitados, invitados ilimitados, un solo link.</span>
-        <span data-en hidden>Custom invitations with a real designer by your side from start to finish. Unlimited revisions, unlimited guests, one single link.</span>
-      </p>
-      <div class="hero-cta-row center reveal">
-        <a class="btn btn-primary" href="https://wa.me/5492944152161?text=Hola!%20Quiero%20crear%20mi%20invitaci%C3%B3n%20digital%20de%20boda%20con%20Convitia" target="_blank" rel="noopener">
-          <span data-es>Empezá tu invitación</span><span data-en hidden>Start your invitation</span>
-        </a>
-        <a class="btn btn-ghost" href="disenos/">
-          <span data-es>Ver diseños</span><span data-en hidden>See designs</span>
-        </a>
-      </div>
-      <div class="hero-trust center reveal">
-        <div><b>💌</b> <span data-es>Tu diseñador, no un bot</span><span data-en hidden>Your designer, not a bot</span></div>
-        <div><b>♻️</b> <span data-es>Cambios ilimitados</span><span data-en hidden>Unlimited revisions</span></div>
-        <div><b>⚡</b> <span data-es>Entrega express 48-72h</span><span data-en hidden>Express delivery 48-72h</span></div>
-      </div>
-    </div>
-  </section>
+    <div class="container hero-grid">
 
-  <!-- ===================== PHONE SHOWCASE — floating mockups + florals ===================== -->
-  <section class="phone-showcase reveal" id="celular">
-    <div class="container">
-      <div class="ps-stage">
-        <div class="ps-arch"></div>
-        <div class="ps-pedestal p1"></div>
-        <div class="ps-pedestal p2"></div>
-        <div class="ps-pedestal p3"></div>
+      <div class="hero-left">
+        <span class="eyebrow reveal"><span data-es>Invitaciones digitales de boda</span><span data-en hidden>Wedding digital invitations</span></span>
+        <h1 class="giant-word reveal">
+          <span class="hl-accent"><span data-es>Invitaciones digitales</span><span data-en hidden>Digital invitations</span></span><br>
+          <span data-es>pensadas para atesorar</span><span data-en hidden>made to cherish</span><span class="type-cursor" aria-hidden="true"></span>
+        </h1>
+        <p class="lede reveal">
+          <span data-es>Con RSVP inteligente, mapas interactivos, música y más. Cambios ilimitados. En el idioma que necesites, en cualquier parte del mundo.</span>
+          <span data-en hidden>With smart RSVP, interactive maps, music, and more. Unlimited revisions. In any language, anywhere in the world.</span>
+        </p>
 
-        <svg class="ps-flower f1" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g stroke="currentColor" stroke-width="1.2">
-            <circle cx="20" cy="20" r="3.5"/>
-            <circle cx="20" cy="10" r="5"/><circle cx="28" cy="15" r="5"/>
-            <circle cx="28" cy="25" r="5"/><circle cx="20" cy="30" r="5"/>
-            <circle cx="12" cy="25" r="5"/><circle cx="12" cy="15" r="5"/>
-          </g>
-        </svg>
-        <svg class="ps-flower f2" viewBox="0 0 50 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M25 68V14" stroke="currentColor" stroke-width="1.3"/>
-          <path d="M25 30C18 26 12 28 8 34C14 38 20 36 25 30Z" stroke="currentColor" stroke-width="1.2"/>
-          <path d="M25 44C32 40 38 42 42 48C36 52 30 50 25 44Z" stroke="currentColor" stroke-width="1.2"/>
-          <circle cx="25" cy="10" r="5" stroke="currentColor" stroke-width="1.3"/>
-        </svg>
-        <svg class="ps-flower f3" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g stroke="currentColor" stroke-width="1.3">
-            <circle cx="32" cy="32" r="5"/>
-            <path d="M32 25C28 17 28 9 32 5C36 9 36 17 32 25Z"/>
-            <path d="M39 28C47 24 55 24 59 28C55 32 47 32 39 28Z"/>
-            <path d="M36 38C40 46 40 54 36 58C32 54 32 46 36 38Z"/>
-            <path d="M25 36C17 40 9 40 5 36C9 32 17 32 25 36Z"/>
-          </g>
-        </svg>
+        <!-- PLACEHOLDER badge (Dave's call): Convitia has no Google Business
+             listing yet, so this rating isn't real. Not a live link — swap
+             href/copy for the real review link + rating once it exists. -->
+        <span class="reviews-badge reveal" data-es title="Próximamente — todavía no es un dato real">
+          <svg class="reviews-badge-g" viewBox="0 0 18 18" aria-hidden="true">
+            <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84c-.21 1.13-.85 2.09-1.81 2.73v2.27h2.92c1.71-1.57 2.69-3.88 2.69-6.64z"/>
+            <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.27c-.81.54-1.84.87-3.04.87-2.34 0-4.32-1.58-5.03-3.71H.96v2.33C2.44 15.98 5.48 18 9 18z"/>
+            <path fill="#FBBC05" d="M3.97 10.71A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.18.29-1.71V4.96H.96A8.99 8.99 0 0 0 0 9c0 1.45.35 2.83.96 4.04l3.01-2.33z"/>
+            <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0 5.48 0 2.44 2.02.96 4.96l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/>
+          </svg>
+          <b>5.0</b>
+          <span class="reviews-stars" aria-hidden="true">★★★★★</span>
+          <span class="reviews-label"><span data-es>Reseñas de Google</span><span data-en hidden>Google Reviews</span> →</span>
+        </span>
 
-        <!-- Phone screens below are a faithful CSS recreation of two real screens
-             from Convitia's own Quimey & Nacho invite (hero + countdown) — same
-             copy/colors/layout as the live site, not a captured screenshot.
-             Swap each .ps-phone-screen's inner markup for a real <img> once an
-             actual screenshot file is supplied. -->
-        <div class="ps-phone back reveal">
-          <div class="ps-phone-inner">
-            <div class="ps-phone-frame">
-              <div class="ps-phone-screen qn-screen-hero">
-                <span class="qn-eyebrow" data-es>Nos casamos</span><span class="qn-eyebrow" data-en hidden>We're getting married</span>
-                <span class="qn-names">Quimey &amp; Nacho</span>
-                <span class="qn-date">27 · MARZO · 2027</span>
-              </div>
-            </div>
-          </div>
-          <p class="ps-card-caption"><span data-es>Tu invitación, acá</span><span data-en hidden>Your invitation, here</span></p>
+        <div class="hero-cta-row reveal">
+          <a class="btn btn-primary" href="https://wa.me/5492944152161?text=Hola!%20Quiero%20crear%20mi%20invitaci%C3%B3n%20digital%20de%20boda%20con%20Convitia" target="_blank" rel="noopener">
+            <span data-es>Empezá tu invitación</span><span data-en hidden>Start your invitation</span>
+          </a>
+          <a class="btn btn-ghost" href="disenos/">
+            <span data-es>Ver diseños</span><span data-en hidden>See designs</span>
+          </a>
         </div>
-        <div class="ps-phone front reveal">
-          <div class="ps-phone-inner">
-            <div class="ps-phone-frame">
-              <div class="ps-phone-screen qn-screen-count">
-                <span class="qn-count-title" data-es>Falta poco para el gran día</span><span class="qn-count-title" data-en hidden>Almost there</span>
-                <div class="qn-count-grid">
-                  <div class="qn-count-box"><b>273</b><span data-es>días</span><span data-en hidden>days</span></div>
-                  <div class="qn-count-box"><b>18</b><span data-es>hs</span><span data-en hidden>hrs</span></div>
-                  <div class="qn-count-box"><b>14</b><span data-es>min</span><span data-en hidden>min</span></div>
+
+        <!-- PLACEHOLDER stats (Dave's call, per reference image): the
+             invitation-count and country-count aren't real numbers yet —
+             swap for Convitia's actual figures once available. The
+             delivery time stays real (matches the Stats band further
+             down the page). -->
+        <div class="hero-trust reveal">
+          <div><b>✓</b> <span data-es>+1000 invitaciones realizadas</span><span data-en hidden>+1000 invitations made</span></div>
+          <div><b>🌎</b> <span data-es>+35 países</span><span data-en hidden>+35 countries</span></div>
+          <div><b>⏳</b> <span data-es>Entrega express 48-72h</span><span data-en hidden>Express delivery 48-72h</span></div>
+        </div>
+      </div>
+
+      <div class="hero-right reveal">
+        <div class="ps-stage">
+          <div class="ps-arch"></div>
+          <div class="ps-pedestal p1"></div>
+          <div class="ps-pedestal p2"></div>
+          <div class="ps-pedestal p3"></div>
+
+          <svg class="ps-flower f1" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="currentColor" stroke-width="1.2">
+              <circle cx="20" cy="20" r="3.5"/>
+              <circle cx="20" cy="10" r="5"/><circle cx="28" cy="15" r="5"/>
+              <circle cx="28" cy="25" r="5"/><circle cx="20" cy="30" r="5"/>
+              <circle cx="12" cy="25" r="5"/><circle cx="12" cy="15" r="5"/>
+            </g>
+          </svg>
+          <svg class="ps-flower f2" viewBox="0 0 50 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M25 68V14" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M25 30C18 26 12 28 8 34C14 38 20 36 25 30Z" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M25 44C32 40 38 42 42 48C36 52 30 50 25 44Z" stroke="currentColor" stroke-width="1.2"/>
+            <circle cx="25" cy="10" r="5" stroke="currentColor" stroke-width="1.3"/>
+          </svg>
+          <svg class="ps-flower f3" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="currentColor" stroke-width="1.3">
+              <circle cx="32" cy="32" r="5"/>
+              <path d="M32 25C28 17 28 9 32 5C36 9 36 17 32 25Z"/>
+              <path d="M39 28C47 24 55 24 59 28C55 32 47 32 39 28Z"/>
+              <path d="M36 38C40 46 40 54 36 58C32 54 32 46 36 38Z"/>
+              <path d="M25 36C17 40 9 40 5 36C9 32 17 32 25 36Z"/>
+            </g>
+          </svg>
+
+          <!-- Phone screens below are a faithful CSS recreation of two real screens
+               from Convitia's own Quimey & Nacho invite (hero + countdown) — same
+               copy/colors/layout as the live site, not a captured screenshot.
+               Swap each .ps-phone-screen's inner markup for a real <img> once an
+               actual screenshot file is supplied. -->
+          <div class="ps-phone back reveal">
+            <div class="ps-phone-inner">
+              <div class="ps-phone-frame">
+                <div class="ps-phone-screen qn-screen-hero">
+                  <span class="qn-eyebrow" data-es>Nos casamos</span><span class="qn-eyebrow" data-en hidden>We're getting married</span>
+                  <span class="qn-names">Quimey &amp; Nacho</span>
+                  <span class="qn-date">27 · MARZO · 2027</span>
                 </div>
               </div>
             </div>
+            <p class="ps-card-caption"><span data-es>Tu invitación, acá</span><span data-en hidden>Your invitation, here</span></p>
           </div>
-          <p class="ps-card-caption"><span data-es>Lista para abrirse</span><span data-en hidden>Ready to open</span></p>
+          <div class="ps-phone front reveal">
+            <div class="ps-phone-inner">
+              <div class="ps-phone-frame">
+                <div class="ps-phone-screen qn-screen-count">
+                  <span class="qn-count-title" data-es>Falta poco para el gran día</span><span class="qn-count-title" data-en hidden>Almost there</span>
+                  <div class="qn-count-grid">
+                    <div class="qn-count-box"><b>273</b><span data-es>días</span><span data-en hidden>days</span></div>
+                    <div class="qn-count-box"><b>18</b><span data-es>hs</span><span data-en hidden>hrs</span></div>
+                    <div class="qn-count-box"><b>14</b><span data-es>min</span><span data-en hidden>min</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="ps-card-caption"><span data-es>Lista para abrirse</span><span data-en hidden>Ready to open</span></p>
+          </div>
         </div>
       </div>
-      <p class="ps-caption center">
-        <span data-es>Tu invitación, lista para abrirse — con cariño — en cualquier celular.</span>
-        <span data-en hidden>Your invitation, ready to open — with care — on any phone.</span>
-      </p>
+
     </div>
   </section>
 
