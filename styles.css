@@ -239,54 +239,43 @@ body.has-custom-cursor, body.has-custom-cursor a, body.has-custom-cursor button{
 
 .hero-right{ display:flex; align-items:center; justify-content:center; }
 
-/* ---------- Phone showcase — floating phone-bezel mockups + florals ----------
+/* ---------- Phone showcase — step podium + vase + real phone mockups ----------
    Lives inside the homepage hero's right column (.hero-right > .ps-stage).
-   Two real phone-bezel mockups (dark frame + notch) staged like a product
-   shot: a warm gradient arch behind, white pedestal shapes as a tabletop
-   base, and a few line-art flowers/sprigs (Convitia's romantic,
-   hand-finished touch) swaying gently. Each screen is a faithful CSS
-   recreation of an actual screen from Convitia's own Quimey & Nacho
-   invite (hero with names/date, and the live countdown) — same copy,
-   colors and layout as that real project, not a captured screenshot;
-   swap a .ps-phone-screen's inner markup for a real <img> once an actual
-   screenshot file is supplied. Each phone idles on its own float-phone
-   animation (different duration/delay = organic, not synchronized) while
-   keeping its base tilt via the --rot custom property, same trick the
-   hero blobs use for --px/--py so the keyframe never fights the
-   element's own static transform. */
+   Matches Dave's reference layout: a staircase of white "step" blocks
+   instead of the earlier arch + capsule pedestals, a small ceramic vase
+   standing on the front block, and two real phone-mockup product photos
+   (Dave's own licensed assets — assets/recursos-nuevos/1.png, 2.png)
+   instead of the earlier CSS-recreated screens. Each phone idles on its
+   own float-phone animation (different duration/delay = organic, not
+   synchronized) while keeping its base tilt via the --rot custom
+   property, same trick the hero blobs use for --px/--py so the keyframe
+   never fights the element's own static transform. */
 .ps-stage{ position:relative; max-width:480px; width:100%; height:480px; margin:0 auto; }
 
-.ps-arch{
-  position:absolute; z-index:0; top:0; right:4%; width:280px; height:380px;
-  border-radius:160px 160px 20px 20px;
-  background:linear-gradient(155deg, var(--gold-soft), var(--terracotta) 80%);
-  animation:float-arch 14s ease-in-out infinite;
+/* Staggered white "step" platforms — ascending left to right, flat
+   illustrative blocks (top-lit gradient + soft contact shadow) so they
+   read as a tabletop podium rather than a flat rectangle. */
+.ps-block{
+  position:absolute; z-index:0; bottom:0; border-radius:14px;
+  background:linear-gradient(165deg, #fff, var(--cream-soft));
+  box-shadow:0 28px 46px -18px rgba(43,36,32,.26), inset 0 -8px 14px rgba(43,36,32,.05);
 }
-@keyframes float-arch{
-  0%,100%{ transform:translateY(0) scale(1); }
-  50%{ transform:translateY(14px) scale(1.03); }
-}
+.ps-block.b1{ left:-4%; width:170px; height:64px; }
+.ps-block.b2{ left:35%; width:128px; height:128px; }
+.ps-block.b3{ right:6%; width:150px; height:208px; }
 
-/* White cylindrical "pedestals" the phones rest on — flattened capsule
-   shapes with a top-lit gradient + soft contact shadow so they read as
-   a tabletop product-shot base rather than a flat blob. */
-.ps-pedestal{
-  position:absolute; z-index:1;
-  background:linear-gradient(180deg, #fff, var(--cream-soft));
-  border-radius:999px;
-  box-shadow:0 28px 46px -18px rgba(43,36,32,.28), inset 0 -7px 12px rgba(43,36,32,.06);
+.ps-vase{
+  position:absolute; z-index:1; width:84px; left:10%; bottom:64px;
+  transform-origin:50% 95%; animation:ps-sway 7s ease-in-out infinite;
 }
-.ps-pedestal.p1{ width:150px; height:44px; left:0; bottom:16px; transform:rotate(-4deg); }
-.ps-pedestal.p2{ width:106px; height:32px; left:32%; bottom:-2px; transform:rotate(3deg); }
-.ps-pedestal.p3{ width:84px; height:28px; right:4%; bottom:32px; transform:rotate(-2deg); }
 
 .ps-phone{
   position:absolute; transform:rotate(var(--rot,0deg));
   animation:float-phone 8s ease-in-out infinite;
   text-align:center;
 }
-.ps-phone.back{ --rot:-8deg; z-index:2; width:152px; top:2%; right:20%; animation-duration:9.5s; animation-delay:-3s; }
-.ps-phone.front{ --rot:9deg; z-index:3; width:180px; right:-2%; bottom:10%; animation-duration:8s; animation-delay:-.6s; }
+.ps-phone.back{ --rot:-6deg; z-index:2; width:230px; top:-2%; right:2%; animation-duration:9.5s; animation-delay:-3s; }
+.ps-phone.front{ --rot:7deg; z-index:3; width:270px; right:-10%; bottom:2%; animation-duration:8s; animation-delay:-.6s; }
 @keyframes float-phone{
   0%,100%{ transform:rotate(var(--rot,0deg)) translateY(0); }
   50%{ transform:rotate(var(--rot,0deg)) translateY(-16px); }
@@ -298,48 +287,11 @@ body.has-custom-cursor, body.has-custom-cursor a, body.has-custom-cursor button{
 .ps-phone-inner{ transition:transform .3s var(--ease); cursor:pointer; }
 .ps-phone:hover .ps-phone-inner{ transform:scale(1.05) translateY(-6px); }
 
-.ps-phone-frame{
-  position:relative; background:#1c1a17; border-radius:30px; padding:9px;
-  box-shadow:0 32px 56px -20px rgba(43,36,32,.42), inset 0 0 0 1px rgba(255,255,255,.06);
-}
-.ps-phone-frame::before{
-  content:""; position:absolute; top:9px; left:50%; transform:translateX(-50%);
-  width:46%; height:14px; background:#1c1a17; border-radius:0 0 12px 12px; z-index:3;
-}
-.ps-phone-screen{
-  position:relative; width:100%; aspect-ratio:9/18.5; border-radius:21px; overflow:hidden;
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
-}
-.ps-phone-screen img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.ps-phone-img{ width:100%; filter:drop-shadow(0 30px 40px rgba(43,36,32,.32)); }
 
-/* Recreated QyN hero screen — rings-gradient background, names, date */
-.qn-screen-hero{
-  background:radial-gradient(circle at 50% 25%, rgba(255,255,255,.16), transparent 55%), linear-gradient(165deg,#6e3c3c 0%, #8c5252 55%, #54302f 100%);
-  color:#f5ece0; padding:14% 10%;
-}
-.qn-screen-hero .qn-eyebrow{ display:block; font-family:var(--font-body); font-size:6.5px; letter-spacing:.24em; text-transform:uppercase; opacity:.75; }
-.qn-screen-hero .qn-names{ display:block; font-family:var(--font-display); font-style:italic; font-size:17px; margin:4px 0; line-height:1.05; }
-.qn-screen-hero .qn-date{ display:block; font-family:var(--font-body); font-size:8px; letter-spacing:.16em; opacity:.9; }
-
-/* Recreated QyN countdown screen — live "Falta poco" timer card */
-.qn-screen-count{ background:var(--cream-soft); padding:9% 8%; }
-.qn-screen-count .qn-count-title{ display:block; font-family:var(--font-display); font-style:italic; font-size:10.5px; color:var(--terracotta-d); margin-bottom:6px; }
-.qn-count-grid{ display:flex; gap:4px; }
-.qn-count-box{ background:#fff; border:1px solid var(--line); border-radius:5px; padding:5px 5px 4px; text-align:center; min-width:24px; }
-.qn-count-box b{ display:block; font-family:var(--font-display); color:var(--terracotta-d); font-size:12px; line-height:1; }
-.qn-count-box span{ display:block; font-family:var(--font-body); font-size:4.6px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-soft); margin-top:2px; }
-
-.ps-card-caption{
-  font-family:var(--font-display); font-style:italic; font-size:12px;
-  color:var(--ink-soft); text-align:center; padding-top:10px; line-height:1.3;
-}
 .ps-phone.back.reveal{ transition-delay:.05s; }
 .ps-phone.front.reveal{ transition-delay:.3s; }
 
-.ps-flower{ position:absolute; z-index:4; transform-origin:50% 100%; animation:ps-sway 6.5s ease-in-out infinite; }
-.ps-flower.f1{ width:42px; top:0; left:-6px; color:var(--gold); animation-duration:7s; }
-.ps-flower.f2{ width:46px; bottom:10%; right:-10px; color:var(--sage); animation-duration:8.5s; animation-delay:-3s; }
-.ps-flower.f3{ width:34px; top:42%; left:40%; color:var(--terracotta); animation-duration:5.5s; animation-delay:-1.5s; }
 @keyframes ps-sway{
   0%,100%{ transform:rotate(-5deg); }
   50%{ transform:rotate(5deg); }
@@ -566,11 +518,13 @@ footer{ background:var(--ink); color:rgba(251,246,238,.78); padding:90px 0 30px;
   .hero-giant{ padding:150px 0 60px; }
   .footer-links a, .footer-links span{ font-size:18px; }
   .all-works-teaser{ height:240px; }
-  .ps-stage{ height:400px; max-width:340px; }
-  .ps-arch{ width:190px; height:260px; right:0; }
-  .ps-phone.front{ width:140px; }
-  .ps-phone.back{ width:118px; }
-  .ps-flower.f1{ width:30px; } .ps-flower.f2{ width:32px; } .ps-flower.f3{ display:none; }
+  .ps-stage{ height:340px; max-width:300px; }
+  .ps-block.b1{ width:120px; height:46px; }
+  .ps-block.b2{ width:90px; height:90px; }
+  .ps-block.b3{ width:106px; height:146px; }
+  .ps-vase{ width:58px; bottom:46px; }
+  .ps-phone.front{ width:190px; }
+  .ps-phone.back{ width:160px; }
   .hero-split .giant-word{ font-size:clamp(28px,7vw,38px); }
   .hero-split .hero-cta-row, .hero-split .hero-trust{ justify-content:flex-start; }
   .reviews-badge{ font-size:12px; flex-wrap:wrap; }

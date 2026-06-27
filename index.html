@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=20260627a">
+<link rel="stylesheet" href="styles.css?v=20260627b">
 </head>
 <body>
 
@@ -122,66 +122,41 @@
 
       <div class="hero-right reveal">
         <div class="ps-stage">
-          <div class="ps-arch"></div>
-          <div class="ps-pedestal p1"></div>
-          <div class="ps-pedestal p2"></div>
-          <div class="ps-pedestal p3"></div>
+          <!-- Staggered white "step" platforms (replaces the old arch +
+               capsule pedestals) — a small product-shot podium the vase
+               and phones rest on. -->
+          <div class="ps-block b1"></div>
+          <div class="ps-block b2"></div>
+          <div class="ps-block b3"></div>
 
-          <svg class="ps-flower f1" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g stroke="currentColor" stroke-width="1.2">
-              <circle cx="20" cy="20" r="3.5"/>
-              <circle cx="20" cy="10" r="5"/><circle cx="28" cy="15" r="5"/>
-              <circle cx="28" cy="25" r="5"/><circle cx="20" cy="30" r="5"/>
-              <circle cx="12" cy="25" r="5"/><circle cx="12" cy="15" r="5"/>
+          <!-- Ceramic vase + bouquet standing on the front block -->
+          <svg class="ps-vase" viewBox="0 0 80 170" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M28 100C24 110 24 130 30 138C36 144 44 144 50 138C56 130 56 110 52 100C50 95 50 88 50 84H30C30 88 30 95 28 100Z" fill="var(--terracotta-d)"/>
+            <g stroke="var(--sage)" stroke-width="1.4">
+              <path d="M36 84C34 60 30 40 24 22"/>
+              <path d="M40 84C40 56 40 34 40 14"/>
+              <path d="M44 84C47 58 53 38 58 20"/>
             </g>
-          </svg>
-          <svg class="ps-flower f2" viewBox="0 0 50 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M25 68V14" stroke="currentColor" stroke-width="1.3"/>
-            <path d="M25 30C18 26 12 28 8 34C14 38 20 36 25 30Z" stroke="currentColor" stroke-width="1.2"/>
-            <path d="M25 44C32 40 38 42 42 48C36 52 30 50 25 44Z" stroke="currentColor" stroke-width="1.2"/>
-            <circle cx="25" cy="10" r="5" stroke="currentColor" stroke-width="1.3"/>
-          </svg>
-          <svg class="ps-flower f3" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g stroke="currentColor" stroke-width="1.3">
-              <circle cx="32" cy="32" r="5"/>
-              <path d="M32 25C28 17 28 9 32 5C36 9 36 17 32 25Z"/>
-              <path d="M39 28C47 24 55 24 59 28C55 32 47 32 39 28Z"/>
-              <path d="M36 38C40 46 40 54 36 58C32 54 32 46 36 38Z"/>
-              <path d="M25 36C17 40 9 40 5 36C9 32 17 32 25 36Z"/>
+            <g fill="var(--cream)" stroke="var(--gold)" stroke-width="1">
+              <circle cx="24" cy="18" r="9"/>
+              <circle cx="40" cy="10" r="10"/>
+              <circle cx="58" cy="16" r="8.5"/>
             </g>
           </svg>
 
-          <!-- Phone screens below are a faithful CSS recreation of two real screens
-               from Convitia's own Quimey & Nacho invite (hero + countdown) — same
-               copy/colors/layout as the live site, not a captured screenshot.
-               Swap each .ps-phone-screen's inner markup for a real <img> once an
-               actual screenshot file is supplied. -->
+          <!-- Phone mockups — Dave's own licensed product-mockup photos
+               (assets/recursos-nuevos/1.png, 2.png). These already include
+               the bezel + tilt in the image itself, so no .ps-phone-frame
+               wrapper is needed (unlike the earlier CSS-recreated screens). -->
           <div class="ps-phone back reveal">
             <div class="ps-phone-inner">
-              <div class="ps-phone-frame">
-                <div class="ps-phone-screen qn-screen-hero">
-                  <span class="qn-eyebrow" data-es>Nos casamos</span><span class="qn-eyebrow" data-en hidden>We're getting married</span>
-                  <span class="qn-names">Quimey &amp; Nacho</span>
-                  <span class="qn-date">27 · MARZO · 2027</span>
-                </div>
-              </div>
+              <img class="ps-phone-img" src="assets/recursos-nuevos/2.png" alt="" loading="lazy">
             </div>
-            <p class="ps-card-caption"><span data-es>Tu invitación, acá</span><span data-en hidden>Your invitation, here</span></p>
           </div>
           <div class="ps-phone front reveal">
             <div class="ps-phone-inner">
-              <div class="ps-phone-frame">
-                <div class="ps-phone-screen qn-screen-count">
-                  <span class="qn-count-title" data-es>Falta poco para el gran día</span><span class="qn-count-title" data-en hidden>Almost there</span>
-                  <div class="qn-count-grid">
-                    <div class="qn-count-box"><b>273</b><span data-es>días</span><span data-en hidden>days</span></div>
-                    <div class="qn-count-box"><b>18</b><span data-es>hs</span><span data-en hidden>hrs</span></div>
-                    <div class="qn-count-box"><b>14</b><span data-es>min</span><span data-en hidden>min</span></div>
-                  </div>
-                </div>
-              </div>
+              <img class="ps-phone-img" src="assets/recursos-nuevos/1.png" alt="" loading="lazy">
             </div>
-            <p class="ps-card-caption"><span data-es>Lista para abrirse</span><span data-en hidden>Ready to open</span></p>
           </div>
         </div>
       </div>
