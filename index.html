@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=20260628b">
+<link rel="stylesheet" href="styles.css?v=20260628c">
 </head>
 <body>
 
@@ -134,17 +134,16 @@
              (Quimey & Nacho — the real client site — plus the 3 sample
              designs): no tool is available to export a literal screenshot,
              so the real names/dates/colors are painted as CSS text instead
-             of a generic photo. -->
+             of a generic photo. The "Nuestros diseños" tag now sits above
+             the stage (not floating over the panels) so it reads cleanly
+             regardless of which panel's background is underneath. Panel
+             c1 plays a real video (Quimey & Nacho) instead of CSS text —
+             see assets/video/. -->
+        <span class="acc-tag">Nuestros diseños</span>
         <div class="acc-stage" aria-hidden="true">
-          <span class="acc-tag">Nuestros diseños</span>
           <div class="acc-row">
             <button type="button" class="acc-panel c1 active">
-              <span class="acc-vert">Quimey &amp; Nacho</span>
-              <span class="acc-info">
-                <span class="acc-info-label">Nos casamos</span>
-                <span class="acc-info-name">Quimey &amp; Nacho</span>
-                <span class="acc-info-date">27 Marzo 2027</span>
-              </span>
+              <video class="acc-video" src="assets/video/video-output-476B50D0-234E-446C-8D4D-53C81173C047-2%202.MOV" autoplay muted loop playsinline></video>
             </button>
             <button type="button" class="acc-panel c2">
               <span class="acc-vert">Valentina &amp; Bruno</span>
