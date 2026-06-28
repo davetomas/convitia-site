@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quimey & Nacho — Muestra de diseño Clásica Elegante | Convitia</title>
+<title>Rachel & Ross — Muestra de diseño Clásica Elegante | Convitia</title>
 <meta name="robots" content="noindex">
-<meta name="description" content="Invitación de boda de Quimey y Nacho. Confirmá tu asistencia, conocé el programa del día, la ubicación y todos los detalles.">
+<meta name="description" content="Invitación de boda de Rachel y Ross. Confirmá tu asistencia, conocé el programa del día, la ubicación y todos los detalles.">
 <meta name="theme-color" content="#7B1F35">
 
 <!-- ============================================================
@@ -140,6 +140,10 @@ h1,h2,h3,h4{font-weight:600;line-height:1.2;}
   font-family:var(--font-script);
   font-size:1.6rem;
   color:var(--burgundy);
+  display:flex;align-items:center;
+}
+.nav-logo img{
+  height:36px;width:auto;display:block;
 }
 .nav-toggle{
   display:flex;flex-direction:column;gap:5px;
@@ -516,7 +520,8 @@ h1,h2,h3,h4{font-weight:600;line-height:1.2;}
 footer{
   background:var(--burgundy-dark);color:var(--cream);text-align:center;padding:60px 24px 40px;
 }
-footer .footer-names{font-family:var(--font-script);font-size:2.4rem;color:var(--gold-light);margin-bottom:10px;}
+footer .footer-names{font-family:var(--font-script);font-size:2.4rem;color:var(--gold-light);margin-bottom:10px;display:inline-flex;align-items:center;justify-content:center;gap:12px;}
+footer .footer-names img{height:34px;width:auto;display:block;}
 footer p{opacity:.75;font-size:.95rem;}
 footer .heart-beat{color:var(--gold-light);display:inline-block;animation:heartBeat 1.4s ease-in-out infinite;}
 @keyframes heartBeat{0%,100%{transform:scale(1);}50%{transform:scale(1.25);}}
@@ -571,7 +576,7 @@ footer .heart-beat{color:var(--gold-light);display:inline-block;animation:heartB
      NAV
      ================================================================= -->
 <nav class="site-nav" id="siteNav">
-  <a href="#hero" class="nav-logo">Q &amp; N</a>
+  <a href="#hero" class="nav-logo"><img src="../assets/logo/logo1.svg" alt="Convitia" class="nav-logo-img"></a>
   <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
     <span></span><span></span><span></span>
   </button>
@@ -599,7 +604,7 @@ footer .heart-beat{color:var(--gold-light);display:inline-block;animation:heartB
   <div class="petals-layer" id="petalsLayer"></div>
   <div class="hero-content">
     <p class="hero-eyebrow">Nos casamos</p>
-    <h1 class="hero-names">Quimey <span class="hero-amp">&amp;</span> Nacho</h1>
+    <h1 class="hero-names">Rachel <span class="hero-amp">&amp;</span> Ross</h1>
     <p class="hero-date">27 <span>·</span> Marzo <span>·</span> 2027</p>
     <p class="hero-tagline">Te invitamos a celebrar con nosotros</p>
   </div>
@@ -783,7 +788,7 @@ footer .heart-beat{color:var(--gold-light);display:inline-block;animation:heartB
     <div class="divider reveal"><span class="line"></span><i class="fa-solid fa-heart"></i><span class="line"></span></div>
 
     <div class="playlist-card reveal">
-      <iframe class="playlist-embed" src="https://open.spotify.com/embed/playlist/2jD7fjo5QIfCllwkgTWwcQ?utm_source=generator" height="380" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Playlist colaborativa Quimey y Nacho"></iframe>
+      <iframe class="playlist-embed" src="https://open.spotify.com/embed/playlist/2jD7fjo5QIfCllwkgTWwcQ?utm_source=generator" height="380" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Playlist colaborativa Rachel y Ross"></iframe>
       <a href="https://open.spotify.com/playlist/2jD7fjo5QIfCllwkgTWwcQ" target="_blank" rel="noopener" class="btn btn-gold playlist-btn">
         <i class="fa-brands fa-spotify"></i> Agregá tus canciones
       </a>
@@ -804,7 +809,7 @@ footer .heart-beat{color:var(--gold-light);display:inline-block;animation:heartB
         <li><i class="fa-solid fa-square-parking"></i><span><strong>Estacionamiento:</strong> el lugar cuenta con estacionamiento propio para los invitados.</span></li>
         <li><i class="fa-solid fa-shuttle-van"></i><span><strong>Transporte:</strong> [detalle sobre shuttle o transporte compartido, si aplica].</span></li>
         <li><i class="fa-solid fa-gift"></i><span><strong>Regalos:</strong> tu presencia es el mejor regalo. Si querés colaborar con nuestra luna de miel, vas a encontrar una mesa de regalos en el salón.</span></li>
-        <li><i class="fa-brands fa-instagram"></i><span><strong>Compartí el momento:</strong> usá el hashtag <strong>#QuimeyyNacho2027</strong> en tus fotos y videos.</span></li>
+        <li><i class="fa-brands fa-instagram"></i><span><strong>Compartí el momento:</strong> usá el hashtag <strong>#RachelyRoss2027</strong> en tus fotos y videos.</span></li>
         <li><i class="fa-solid fa-child"></i><span><strong>Niños:</strong> [indicar si la celebración incluye niños o es solo para adultos].</span></li>
       </ul>
     </div>
@@ -878,7 +883,7 @@ footer .heart-beat{color:var(--gold-light);display:inline-block;animation:heartB
      FOOTER
      ================================================================= -->
 <footer>
-  <p class="footer-names">Quimey &amp; Nacho</p>
+  <p class="footer-names"><img src="../assets/logo/convitia-mark.svg" alt="Convitia"><span>Convitia</span></p>
   <p>Gracias por ser parte de nuestra historia <span class="heart-beat">♥</span></p>
   <p style="margin-top:10px;">27 · Marzo · 2027</p>
   <p style="margin-top:24px;font-size:.8rem;opacity:.6;">© 2026 Todos los derechos reservados.<br>Diseño web by <a href="https://www.flesh-studio.com/" target="_blank" rel="noopener" style="text-decoration:underline;">FLESH STUDIO</a></p>
@@ -1152,7 +1157,7 @@ footer .heart-beat{color:var(--gold-light);display:inline-block;animation:heartB
 
       // Construir mensaje de WhatsApp
       var lines = [
-        'Hola! Quiero confirmar mi asistencia a la boda de *Quimey & Nacho* 💍',
+        'Hola! Quiero confirmar mi asistencia a la boda de *Rachel & Ross* 💍',
         '',
         '*Nombre:* ' + data.fullName,
         '*Teléfono:* ' + data.phone,
