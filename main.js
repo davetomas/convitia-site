@@ -674,6 +674,34 @@
     }
   }
 
+  /* ---------- "Qué incluye" video — click to pause/play, button to mute/unmute ---------- */
+  function initIncluyeVideo(){
+    var wrap = document.querySelector(".incluye-video-wrap");
+    var video = wrap && wrap.querySelector(".incluye-video");
+    if(!wrap || !video) return;
+    var soundBtn = wrap.querySelector(".incluye-sound-btn");
+
+    function syncPausedState(){ wrap.classList.toggle("is-paused", video.paused); }
+    video.addEventListener("play", syncPausedState);
+    video.addEventListener("pause", syncPausedState);
+    syncPausedState();
+
+    wrap.addEventListener("click", function(e){
+      if(soundBtn && (e.target === soundBtn || soundBtn.contains(e.target))) return;
+      if(video.paused){ video.play(); } else { video.pause(); }
+    });
+
+    if(soundBtn){
+      soundBtn.addEventListener("click", function(e){
+        e.stopPropagation();
+        video.muted = !video.muted;
+        soundBtn.classList.toggle("is-on", !video.muted);
+        soundBtn.setAttribute("aria-pressed", String(!video.muted));
+        soundBtn.setAttribute("aria-label", video.muted ? "Activar sonido" : "Silenciar");
+      });
+    }
+  }
+
   /* ---------- Marquee speeds up / reverses with scroll velocity ---------- */
   function initMarqueeScrollSpeed(){
     var tracks = document.querySelectorAll(".marquee");
@@ -727,6 +755,7 @@
     safe(initHeroParallax, "heroParallax");
     safe(initAccGallery, "accGallery");
     safe(initStyleStack, "styleStack");
+    safe(initIncluyeVideo, "incluyeVideo");
     safe(initMarqueeScrollSpeed, "marqueeScrollSpeed");
     safe(initAnchors, "anchors");
   });
