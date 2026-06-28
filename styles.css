@@ -184,47 +184,21 @@ body.splash-active{ overflow:hidden; }
   transition:opacity .6s var(--ease), visibility .6s var(--ease);
 }
 .splash-gate.splash-hidden{ opacity:0; visibility:hidden; pointer-events:none; }
-/* Embossed letterpress card: cream card, beveled edge + soft floating
-   shadow, terracotta wordmark with a light/dark drop-shadow pair to read
-   as engraved, gold dot rendered separately on top of the masked dot. */
-.splash-card{
-  position:relative;
-  background:var(--paper);
-  border-radius:14px;
-  padding:64px 70px 58px;
+/* Real embossed letterpress-card photo (Dave's chosen render), shown as-is
+   with a soft floating shadow so it lifts off the page's cream backdrop. */
+.splash-image{
+  width:min(620px, 82vw);
+  height:auto;
+  display:block;
+  border-radius:6px;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.9),
-    inset 0 -1px 1px rgba(43,36,32,.06),
-    0 1px 0 rgba(43,36,32,.08),
-    0 18px 40px -12px rgba(43,36,32,.18),
-    0 4px 10px -4px rgba(43,36,32,.12);
-  pointer-events:none;
-}
-.splash-logo{
-  position:relative;
-  width:300px; height:167px; /* matches logo1.svg's 2752:1536 ratio */
-  background-color:var(--terracotta);
-  -webkit-mask-image:url('assets/logo/logo1.svg'); mask-image:url('assets/logo/logo1.svg');
-  -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
-  -webkit-mask-size:contain; mask-size:contain;
-  -webkit-mask-position:center; mask-position:center;
-  filter:
-    drop-shadow(0 1px 0 rgba(255,255,255,.6))
-    drop-shadow(0 -1px 1px rgba(43,36,32,.25));
-  pointer-events:none;
-}
-.splash-dot{
-  position:absolute; left:50%; top:70.5%;
-  width:11px; height:11px; border-radius:50%;
-  transform:translate(-50%,-50%);
-  background:radial-gradient(circle at 35% 30%, #fdf3cf 0%, #d9a634 40%, #9c6e1c 75%, #6b4a10 100%);
-  box-shadow:0 1px 2px rgba(43,36,32,.35);
+    0 1px 0 rgba(43,36,32,.06),
+    0 22px 48px -14px rgba(43,36,32,.22),
+    0 6px 14px -6px rgba(43,36,32,.14);
   pointer-events:none;
 }
 @media (max-width:640px){
-  .splash-card{ padding:42px 36px 38px; border-radius:11px; }
-  .splash-logo{ width:210px; height:117px; }
-  .splash-dot{ width:8px; height:8px; }
+  .splash-image{ width:min(420px, 86vw); border-radius:4px; }
 }
 
 /* ---------- Hero — giant centered wordmark (Miles-style) ---------- */
