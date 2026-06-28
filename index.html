@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=20260628d">
+<link rel="stylesheet" href="styles.css?v=20260628e">
 </head>
 <body>
 
@@ -136,14 +136,19 @@
              so the real names/dates/colors are painted as CSS text instead
              of a generic photo. The "Nuestros diseños" tag now sits above
              the stage (not floating over the panels) so it reads cleanly
-             regardless of which panel's background is underneath. Panel
-             c1 plays a real video (Quimey & Nacho) instead of CSS text —
-             see assets/video/. -->
+             regardless of which panel's background is underneath. The
+             real video (Quimey & Nacho) that briefly lived in panel c1
+             moved to the "Qué incluye" section — see assets/video/. -->
         <span class="acc-tag">Nuestros diseños</span>
         <div class="acc-stage" aria-hidden="true">
           <div class="acc-row">
             <button type="button" class="acc-panel c1 active">
-              <video class="acc-video" src="assets/video/quimey-nacho-hero.mp4" autoplay muted loop playsinline></video>
+              <span class="acc-vert">Quimey &amp; Nacho</span>
+              <span class="acc-info">
+                <span class="acc-info-label">Nos casamos</span>
+                <span class="acc-info-name">Quimey &amp; Nacho</span>
+                <span class="acc-info-date">27 Marzo 2027</span>
+              </span>
             </button>
             <button type="button" class="acc-panel c2">
               <span class="acc-vert">Valentina &amp; Bruno</span>
@@ -252,6 +257,11 @@
         <span class="eyebrow"><span data-es>Qué incluye</span><span data-en hidden>What's included</span></span>
         <h2><span data-es>Todo lo que necesitás, en un solo lugar</span><span data-en hidden>Everything you need, in one place</span></h2>
         <p class="lede"><span data-es>Un estudio chico, atención grande: tu boda no es un número más en una lista.</span><span data-en hidden>A small studio, big attention — your wedding isn't one more number on a list.</span></p>
+        <!-- Real video (Quimey & Nacho), moved here from the hero accordion's
+             panel c1 per Dave's request — see assets/video/. -->
+        <div class="incluye-video-wrap reveal">
+          <video class="incluye-video" src="assets/video/quimey-nacho-hero.mp4" autoplay muted loop playsinline></video>
+        </div>
       </div>
       <div class="sticky-list">
         <div class="sticky-row reveal"><span class="row-num">01</span><div><h3><span data-es>Diseño personalizado</span><span data-en hidden>Custom design</span></h3><p><span data-es>Con tus colores y tus fotos.</span><span data-en hidden>With your colors and photos.</span></p></div></div>
