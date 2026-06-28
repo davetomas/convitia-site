@@ -164,7 +164,13 @@ body.has-custom-cursor, body.has-custom-cursor a, body.has-custom-cursor button{
 .cg-card.style-boho{ background:linear-gradient(160deg,#fff,var(--cream-soft)); }
 .cg-card.style-boho .seal{ background:linear-gradient(160deg,var(--sage),#5f6b58); }
 
-@media (pointer:coarse){ .cg-card{ display:none !important; } }
+/* Hide the hero's mouse-trail cards on touch (no fine pointer to drive them),
+   but let them through on the splash gate, where a finger-drag trigger
+   (see initSplashGate in main.js) still spawns the same cards on mobile. */
+@media (pointer:coarse){
+  .cg-card{ display:none !important; }
+  #splash-gate .cg-card{ display:block !important; }
+}
 
 /* ---------- Splash / entry gate (home only) ----------
    Full-screen gate shown on load: soft paper-cream background, only
@@ -180,6 +186,7 @@ body.splash-active{ overflow:hidden; }
   display:flex; align-items:center; justify-content:center;
   background:var(--paper);
   cursor:pointer;
+  touch-action:none;
   opacity:1; visibility:visible;
   transition:opacity .6s var(--ease), visibility .6s var(--ease);
 }

@@ -252,42 +252,60 @@
     if(!gate) return;
     document.body.classList.add("splash-active");
 
-    if(window.matchMedia && window.matchMedia("(pointer:fine)").matches){
-      var designs = [
-        { style:"real",    seal:"C", name:"Quimey &amp; Nacho",    venue:"Bariloche, Arg.",                  tag:"Caso real" },
-        { style:"clasica", seal:"C", name:"Valentina &amp; Bruno", venue:"Est. Las Magnolias, Córdoba",       tag:"Clásica Elegante" },
-        { style:"moderna", seal:"C", name:"Julia &amp; Martín",    venue:"Espacio Darwin, Bs. As.",           tag:"Moderna Minimal" },
-        { style:"boho",    seal:"C", name:"Coti &amp; Iván",       venue:"Finca Las Acacias, Córdoba",        tag:"Boho Romántico" }
-      ];
-      var idx = 0, travel = 0, lastX = null, lastY = null;
+    /* Card-spawn trail: built unconditionally (not just on fine pointers)
+       so touch devices get the same visual via finger-drag, see below. */
+    var designs = [
+      { style:"real",    seal:"C", name:"Quimey &amp; Nacho",    venue:"Bariloche, Arg.",                  tag:"Caso real" },
+      { style:"clasica", seal:"C", name:"Valentina &amp; Bruno", venue:"Est. Las Magnolias, Córdoba",       tag:"Clásica Elegante" },
+      { style:"moderna", seal:"C", name:"Julia &amp; Martín",    venue:"Espacio Darwin, Bs. As.",           tag:"Moderna Minimal" },
+      { style:"boho",    seal:"C", name:"Coti &amp; Iván",       venue:"Finca Las Acacias, Córdoba",        tag:"Boho Romántico" }
+    ];
+    var idx = 0, travel = 0, lastX = null, lastY = null;
 
-      function spawn(x, y){
-        var d = designs[idx];
-        idx = (idx + 1) % designs.length;
-        var card = document.createElement("div");
-        card.className = "cg-card style-" + d.style;
-        card.style.left = x + "px";
-        card.style.top = y + "px";
-        card.innerHTML =
-          '<div class="seal">' + d.seal + '</div>' +
-          '<h4>' + d.name + '</h4>' +
-          '<div class="cg-venue">' + d.venue + '</div>' +
-          '<span class="cg-tag">' + d.tag + '</span>';
-        gate.appendChild(card);
-        requestAnimationFrame(function(){ card.classList.add("cg-in"); });
-        setTimeout(function(){ card.classList.remove("cg-in"); card.classList.add("cg-out"); }, 550);
-        setTimeout(function(){ if(card.parentNode) card.parentNode.removeChild(card); }, 1150);
+    function spawn(x, y){
+      var d = designs[idx];
+      idx = (idx + 1) % designs.length;
+      var card = document.createElement("div");
+      card.className = "cg-card style-" + d.style;
+      card.style.left = x + "px";
+      card.style.top = y + "px";
+      card.innerHTML =
+        '<div class="seal">' + d.seal + '</div>' +
+        '<h4>' + d.name + '</h4>' +
+        '<div class="cg-venue">' + d.venue + '</div>' +
+        '<span class="cg-tag">' + d.tag + '</span>';
+      gate.appendChild(card);
+      requestAnimationFrame(function(){ card.classList.add("cg-in"); });
+      setTimeout(function(){ card.classList.remove("cg-in"); card.classList.add("cg-out"); }, 550);
+      setTimeout(function(){ if(card.parentNode) card.parentNode.removeChild(card); }, 1150);
+    }
+
+    function trackMove(x, y){
+      if(lastX !== null){
+        travel += Math.hypot(x - lastX, y - lastY);
+        if(travel > 130){ travel = 0; spawn(x, y); }
+      }else{
+        spawn(x, y);
       }
+      lastX = x; lastY = y;
+    }
 
+    if(window.matchMedia && window.matchMedia("(pointer:fine)").matches){
       gate.addEventListener("mousemove", function(e){
-        if(lastX !== null){
-          travel += Math.hypot(e.clientX - lastX, e.clientY - lastY);
-          if(travel > 130){ travel = 0; spawn(e.clientX, e.clientY); }
-        }else{
-          spawn(e.clientX, e.clientY);
-        }
-        lastX = e.clientX; lastY = e.clientY;
+        trackMove(e.clientX, e.clientY);
       });
+    }else{
+      /* Touch devices: a finger drag across the splash stands in for the
+         mouse trail. touchstart seeds the first card immediately (like
+         the first mousemove does on desktop); touchmove keeps it going. */
+      gate.addEventListener("touchstart", function(e){
+        var t = e.touches[0];
+        if(t) trackMove(t.clientX, t.clientY);
+      }, { passive:true });
+      gate.addEventListener("touchmove", function(e){
+        var t = e.touches[0];
+        if(t) trackMove(t.clientX, t.clientY);
+      }, { passive:true });
     }
 
     gate.addEventListener("click", function(){
