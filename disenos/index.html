@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="../styles.css?v=20260627g">
+<link rel="stylesheet" href="../styles.css?v=20260628a">
 </head>
 <body>
 
@@ -70,45 +70,51 @@
     </div>
   </section>
 
-  <section class="works-section" style="padding-top:0;">
-    <div class="bleed reveal">
-      <div class="works-grid">
+  <section class="style-stack-section reveal" style="padding-top:10px; padding-bottom:30px;">
+    <div class="container">
+      <div class="stack-cards" id="styleStack">
 
-        <a class="work-tile thumb-real" href="https://incomparable-custard-c48dd6.netlify.app" target="_blank" rel="noopener">
-          <div class="work-visual">
-            <div class="invite-card mini">
-              <div class="seal">C</div>
-              <h3>Quimey &amp; Nacho</h3>
-              <div class="names"><span data-es>Nos casamos</span><span data-en hidden>We're getting married</span></div>
-              <hr>
-              <div class="detail-row"><span data-es>Lugar</span><span data-en hidden>Venue</span><span>Bariloche, Arg.</span></div>
-            </div>
-          </div>
-          <span class="work-name">Quimey &amp; Nacho</span>
-          <span class="work-tag"><span data-es>Caso real</span><span data-en hidden>Real project</span></span>
-        </a>
+        <article class="stack-card active" data-style="clasica" tabindex="0">
+          <p class="stack-card-cat"><span data-es>Estilo 01</span><span data-en hidden>Style 01</span></p>
+          <h3 class="stack-card-title">Clásica Elegante</h3>
+          <p class="stack-card-sub"><span data-es>Serif &amp; dorado</span><span data-en hidden>Serif &amp; gold</span></p>
+          <a class="stack-card-link" href="../designs/clasica-elegante.html" target="_blank" rel="noopener"><span data-es>Ver muestra</span><span data-en hidden>View sample</span> →</a>
+          <div class="stack-card-photo"><img src="../assets/portadas/clasica%20elegante.jpeg" alt="Clásica Elegante" loading="lazy"></div>
+        </article>
 
-        <a class="work-tile thumb-1" href="../designs/clasica-elegante.html" target="_blank" rel="noopener">
-          <div class="work-ornament">✺</div>
-          <span class="work-name"><span data-es>Clásica Elegante</span><span data-en hidden>Classic Elegant</span></span>
-          <span class="work-tag"><span data-es>Serif &amp; dorado</span><span data-en hidden>Serif &amp; gold</span></span>
-        </a>
+        <article class="stack-card" data-style="moderno" tabindex="0">
+          <p class="stack-card-cat"><span data-es>Estilo 02</span><span data-en hidden>Style 02</span></p>
+          <h3 class="stack-card-title">Moderno Minimalista</h3>
+          <p class="stack-card-sub"><span data-es>Líneas limpias</span><span data-en hidden>Clean lines</span></p>
+          <a class="stack-card-link" href="../designs/moderna-minimal.html" target="_blank" rel="noopener"><span data-es>Ver muestra</span><span data-en hidden>View sample</span> →</a>
+          <div class="stack-card-photo"><img src="../assets/portadas/Moderno%20Minimalista.jpeg" alt="Moderno Minimalista" loading="lazy"></div>
+        </article>
 
-        <a class="work-tile thumb-2" href="../designs/moderna-minimal.html" target="_blank" rel="noopener">
-          <div class="work-ornament">／</div>
-          <span class="work-name"><span data-es>Moderna Minimal</span><span data-en hidden>Modern Minimal</span></span>
-          <span class="work-tag"><span data-es>Líneas limpias</span><span data-en hidden>Clean lines</span></span>
-        </a>
+        <article class="stack-card" data-style="boho" tabindex="0">
+          <p class="stack-card-cat"><span data-es>Estilo 03</span><span data-en hidden>Style 03</span></p>
+          <h3 class="stack-card-title">Boho Romántico</h3>
+          <p class="stack-card-sub"><span data-es>Terracota &amp; salvia</span><span data-en hidden>Terracotta &amp; sage</span></p>
+          <a class="stack-card-link" href="../designs/boho-romantico.html" target="_blank" rel="noopener"><span data-es>Ver muestra</span><span data-en hidden>View sample</span> →</a>
+          <div class="stack-card-photo"><img src="../assets/portadas/Boho%20Rom%C3%A1ntico.jpeg" alt="Boho Romántico" loading="lazy"></div>
+        </article>
 
-        <a class="work-tile thumb-3" href="../designs/boho-romantico.html" target="_blank" rel="noopener">
-          <div class="work-ornament">❀</div>
-          <span class="work-name"><span data-es>Boho Romántico</span><span data-en hidden>Boho Romantic</span></span>
-          <span class="work-tag"><span data-es>Terracota &amp; salvia</span><span data-en hidden>Terracotta &amp; sage</span></span>
-        </a>
+        <article class="stack-card" data-style="glam" tabindex="0">
+          <p class="stack-card-cat"><span data-es>Estilo 04</span><span data-en hidden>Style 04</span></p>
+          <h3 class="stack-card-title">Glam / Art Decó</h3>
+          <p class="stack-card-sub"><span data-es>Negro &amp; dorado</span><span data-en hidden>Black &amp; gold</span></p>
+          <span class="stack-card-link disabled"><span data-es>Próximamente</span><span data-en hidden>Coming soon</span></span>
+          <div class="stack-card-photo"><img src="../assets/portadas/Glam%20-%20Art%20Dec%C3%B3.jpeg" alt="Glam / Art Decó" loading="lazy"></div>
+        </article>
 
       </div>
     </div>
   </section>
+
+  <a class="real-case-banner bleed reveal" href="https://incomparable-custard-c48dd6.netlify.app" target="_blank" rel="noopener">
+    <span class="real-case-tag"><span data-es>Caso real</span><span data-en hidden>Real project</span></span>
+    <span class="real-case-text"><span data-es>Mirá la invitación real de Quimey &amp; Nacho</span><span data-en hidden>See Quimey &amp; Nacho's real invitation</span></span>
+    <span class="real-case-arrow">→</span>
+  </a>
 
   <a class="all-works-teaser bleed reveal" href="../contacto/">
     <span class="teaser-text"><span data-es>¿Hablamos de tu boda?</span><span data-en hidden>Let's talk about your wedding</span></span>
@@ -134,6 +140,6 @@
   </div>
 </footer>
 
-<script src="../main.js?v=20260623q" defer></script>
+<script src="../main.js?v=20260628a" defer></script>
 </body>
 </html>
