@@ -280,7 +280,7 @@ body.splash-active{ overflow:hidden; }
 .reviews-stars{ color:var(--gold); font-size:11px; letter-spacing:1px; }
 .reviews-label{ color:var(--ink-soft); }
 
-.hero-right{ display:flex; align-items:center; justify-content:center; }
+.hero-right{ display:flex; flex-direction:column; align-items:center; justify-content:center; }
 
 /* ---------- Interactive image accordion — hero right panel ----------
    Replaces the earlier Three.js flying-card scene: Dave pointed at a
