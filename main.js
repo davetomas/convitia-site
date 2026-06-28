@@ -426,7 +426,7 @@
     var SLOT_DX_FACTOR = 0.64; /* px of horizontal travel per 1 slot-unit, as a fraction of card width */
     var slotDX = cardW * SLOT_DX_FACTOR;
 
-    var spin = 0.5; /* default: lands the 4 cards symmetrically at -1.5..1.5, real-case card near centre */
+    var spin = 0; /* default: with the real-case card removed, lands Clásica Elegante dead centre and the other 2 symmetrically fanned either side */
     var dragging = false, startX = 0, startSpin = 0, dx = 0, suppressClick = false;
 
     /* Momentum: while dragging we buffer recent (time, spin) samples; on

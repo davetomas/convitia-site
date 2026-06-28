@@ -441,18 +441,6 @@ section{ padding:120px 0; position:relative; }
 .stack-card:hover .stack-card-photo, .stack-card.active .stack-card-photo{ transform:rotate(0deg) translateY(-6px) scale(1.05); }
 .stack-card:hover .stack-card-link, .stack-card.active .stack-card-link{ opacity:1; transform:translateY(0); }
 
-/* ---------- Real-case banner (/disenos/ — keeps Quimey & Nacho visible
-   once removed from the 4-card style grid above) ---------- */
-.real-case-banner{
-  display:flex; align-items:center; justify-content:center; gap:18px; height:140px; position:relative;
-  background:var(--cream-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line); flex-wrap:wrap;
-}
-.real-case-tag{ font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--terracotta-d); background:var(--paper); border:1px solid var(--line); border-radius:999px; padding:7px 16px; }
-.real-case-text{ font-family:var(--font-display); font-style:italic; font-size:clamp(18px,2.4vw,24px); color:var(--ink); transition:transform .35s var(--ease); }
-.real-case-arrow{ font-size:18px; color:var(--terracotta-d); transition:transform .35s var(--ease); }
-.real-case-banner:hover .real-case-text{ transform:translateX(4px); }
-.real-case-banner:hover .real-case-arrow{ transform:translateX(6px); }
-
 /* ---------- Full-bleed type break ---------- */
 .type-break{ background:var(--ink); color:var(--cream); padding:100px 0; text-align:center; }
 .type-break p{ font-family:var(--font-display); font-style:italic; font-weight:500; font-size:clamp(26px,4vw,52px); max-width:900px; margin:0 auto; line-height:1.3; }
@@ -616,7 +604,6 @@ footer{ background:var(--ink); color:rgba(251,246,238,.78); padding:90px 0 30px;
   .stack-card-sub{ font-size:11.5px; max-width:100px; }
   .stack-card-link{ left:16px; bottom:16px; font-size:11px; }
   .stack-card-photo{ width:92px; height:118px; right:-6px; bottom:-6px; }
-  .real-case-banner{ height:auto; padding:30px 20px; flex-direction:column; text-align:center; }
 }
 
 /* Mobile nav drawer */
