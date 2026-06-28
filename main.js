@@ -702,6 +702,67 @@
     }
   }
 
+  /* ---------- Background music — starts on the splash-gate click (already
+     a user gesture, so browsers' autoplay-with-sound block doesn't apply),
+     delicate icon + slider volume control in the header. ---------- */
+  function initBackgroundAudio(){
+    var audio = document.querySelector(".site-audio");
+    var control = document.querySelector(".audio-control");
+    if(!audio || !control) return;
+    var toggle = control.querySelector(".audio-toggle");
+    var slider = control.querySelector(".audio-volume");
+    var gate = document.getElementById("splash-gate");
+    var DEFAULT_VOLUME = 0.4;
+
+    audio.volume = DEFAULT_VOLUME;
+    if(slider) slider.value = String(DEFAULT_VOLUME);
+
+    function startPlayback(){
+      if(audio.paused){
+        audio.play().catch(function(){ /* autoplay blocked — toggle button still works */ });
+      }
+    }
+
+    if(gate){
+      gate.addEventListener("click", startPlayback);
+    }else{
+      /* No splash gate on this page — try immediately, falling back to
+         the first interaction anywhere if the browser blocks it. */
+      startPlayback();
+      document.addEventListener("click", startPlayback, { once:true });
+    }
+
+    function syncState(){
+      control.classList.toggle("is-muted", audio.muted || audio.volume === 0);
+      if(toggle){
+        toggle.setAttribute("aria-pressed", String(!audio.muted));
+        toggle.setAttribute("aria-label", audio.muted ? "Activar música" : "Silenciar música");
+      }
+    }
+
+    if(toggle){
+      toggle.addEventListener("click", function(){
+        audio.muted = !audio.muted;
+        if(!audio.muted && audio.volume === 0){
+          audio.volume = DEFAULT_VOLUME;
+          if(slider) slider.value = String(DEFAULT_VOLUME);
+        }
+        syncState();
+      });
+    }
+
+    if(slider){
+      slider.addEventListener("input", function(){
+        var v = parseFloat(slider.value);
+        audio.volume = v;
+        audio.muted = (v === 0);
+        syncState();
+      });
+    }
+
+    syncState();
+  }
+
   /* ---------- Marquee speeds up / reverses with scroll velocity ---------- */
   function initMarqueeScrollSpeed(){
     var tracks = document.querySelectorAll(".marquee");
@@ -756,6 +817,7 @@
     safe(initAccGallery, "accGallery");
     safe(initStyleStack, "styleStack");
     safe(initIncluyeVideo, "incluyeVideo");
+    safe(initBackgroundAudio, "backgroundAudio");
     safe(initMarqueeScrollSpeed, "marqueeScrollSpeed");
     safe(initAnchors, "anchors");
   });

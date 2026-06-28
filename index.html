@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=20260628i">
+<link rel="stylesheet" href="styles.css?v=20260628j">
 </head>
 <body>
 
@@ -34,6 +34,14 @@
     </nav>
 
     <div class="header-actions">
+      <div class="audio-control">
+        <button type="button" class="audio-toggle" aria-label="Silenciar música" aria-pressed="true">
+          <svg class="icon-vol" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8 8 0 010 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>
+          <svg class="icon-mute" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor"/><path d="M16 8l5 8M21 8l-5 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <input type="range" class="audio-volume" min="0" max="1" step="0.01" value="0.4" aria-label="Volumen de la música">
+        <audio class="site-audio" src="assets/audio/amor-loco.mp3?v=20260628" loop preload="auto"></audio>
+      </div>
       <div class="lang-toggle">
         <button data-lang-btn="es" class="active">ES</button>
         <button data-lang-btn="en">EN</button>
@@ -416,6 +424,6 @@
   </div>
 </footer>
 
-<script src="main.js?v=20260628c" defer></script>
+<script src="main.js?v=20260628d" defer></script>
 </body>
 </html>

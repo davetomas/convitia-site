@@ -98,6 +98,30 @@ h1,h2,h3,h4{ font-family:var(--font-display); font-weight:500; line-height:1.12;
 .main-nav a:hover::after, .main-nav a.active::after{ width:100%; }
 
 .header-actions{ display:flex; align-items:center; gap:16px; }
+
+/* ---------- Background-music control (delicate: icon + slider on hover/focus) ---------- */
+.audio-control{ display:flex; align-items:center; gap:0; }
+.audio-toggle{
+  width:36px; height:36px; flex-shrink:0; border-radius:50%; border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center; color:var(--ink-soft);
+  background:rgba(255,255,255,.4); transition:background .25s, color .25s, border-color .25s;
+}
+.audio-toggle:hover{ background:rgba(255,255,255,.85); color:var(--ink); border-color:var(--terracotta); }
+.audio-toggle svg{ width:15px; height:15px; }
+.audio-toggle .icon-mute{ display:none; }
+.audio-control.is-muted .icon-vol{ display:none; }
+.audio-control.is-muted .icon-mute{ display:block; }
+.audio-volume{
+  width:0; margin-left:0; opacity:0; height:2px; border-radius:999px; background:var(--line);
+  -webkit-appearance:none; appearance:none; outline:none; cursor:pointer; accent-color:var(--terracotta);
+  transition:width .35s var(--ease), opacity .25s var(--ease), margin-left .35s var(--ease);
+}
+.audio-control:hover .audio-volume,
+.audio-control:focus-within .audio-volume{
+  width:72px; margin-left:10px; opacity:1;
+}
+.audio-volume::-webkit-slider-thumb{ -webkit-appearance:none; width:10px; height:10px; border-radius:50%; background:var(--terracotta); }
+.audio-volume::-moz-range-thumb{ width:10px; height:10px; border-radius:50%; background:var(--terracotta); border:none; }
 .lang-toggle{
   display:flex; align-items:center; border:1px solid var(--line); border-radius:999px; padding:3px; font-size:12px; font-weight:600;
 }
