@@ -702,9 +702,11 @@
     }
   }
 
-  /* ---------- Background music — starts on the splash-gate click (already
-     a user gesture, so browsers' autoplay-with-sound block doesn't apply),
-     delicate icon + slider volume control in the header. ---------- */
+  /* ---------- Background music — tries to autoplay the instant the page
+     loads (moderate volume); browsers that block silent-gesture autoplay
+     reject that first attempt, so we also arm the splash-gate click and a
+     catch-all first-click-anywhere as an instant fallback. Delicate icon +
+     slider volume control in the header. ---------- */
   function initBackgroundAudio(){
     var audio = document.querySelector(".site-audio");
     var control = document.querySelector(".audio-control");
@@ -712,25 +714,26 @@
     var toggle = control.querySelector(".audio-toggle");
     var slider = control.querySelector(".audio-volume");
     var gate = document.getElementById("splash-gate");
-    var DEFAULT_VOLUME = 0.4;
+    var DEFAULT_VOLUME = 0.5;
 
     audio.volume = DEFAULT_VOLUME;
     if(slider) slider.value = String(DEFAULT_VOLUME);
 
     function startPlayback(){
       if(audio.paused){
-        audio.play().catch(function(){ /* autoplay blocked — toggle button still works */ });
+        audio.play().catch(function(){ /* autoplay blocked — toggle button + fallback listeners still work */ });
       }
     }
 
-    if(gate){
-      gate.addEventListener("click", startPlayback);
-    }else{
-      /* No splash gate on this page — try immediately, falling back to
-         the first interaction anywhere if the browser blocks it. */
-      startPlayback();
-      document.addEventListener("click", startPlayback, { once:true });
-    }
+    /* Always attempt immediately on load — works outright in browsers
+       that don't enforce the autoplay-with-sound gesture rule (or that
+       already consider this site "engaged"). */
+    startPlayback();
+    /* Fallback for browsers that do block it: first real interaction
+       anywhere starts it without any further delay. On the homepage
+       that's the splash-gate click; everywhere else, any click. */
+    if(gate) gate.addEventListener("click", startPlayback);
+    document.addEventListener("click", startPlayback, { once:true });
 
     function syncState(){
       control.classList.toggle("is-muted", audio.muted || audio.volume === 0);
