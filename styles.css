@@ -390,6 +390,7 @@ section{ padding:120px 0; position:relative; }
   position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
   transition:transform .6s var(--ease);
 }
+.work-visual img{ width:100%; height:100%; object-fit:cover; display:block; }
 .work-ornament{ font-size:140px; opacity:.16; color:#fff; }
 .work-tile:hover .work-visual, .work-tile:hover .work-ornament{ transform:scale(1.07); }
 .work-name{
@@ -405,6 +406,7 @@ section{ padding:120px 0; position:relative; }
 .thumb-1{ background:linear-gradient(155deg,var(--gold-soft),var(--gold)); }
 .thumb-2{ background:linear-gradient(155deg,#2B2420,#534840); }
 .thumb-3{ background:linear-gradient(155deg,var(--sage),#5f6b58); }
+.thumb-4{ background:linear-gradient(155deg,#1a1a1a,#000); }
 
 /* ---------- Full-bleed type break ---------- */
 .type-break{ background:var(--ink); color:var(--cream); padding:100px 0; text-align:center; }
