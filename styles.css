@@ -408,6 +408,51 @@ section{ padding:120px 0; position:relative; }
 .thumb-3{ background:linear-gradient(155deg,var(--sage),#5f6b58); }
 .thumb-4{ background:linear-gradient(155deg,#1a1a1a,#000); }
 
+/* ---------- Style stack cards (/disenos/ — 4 style picker) ----------
+   A row of cards, each with a small cover photo peeking out of the
+   bottom-right corner. Hover or click lifts the card and straightens
+   the photo; the "view sample" link fades in. Only one card is
+   .active at a time (see initStyleStack in main.js, mirrors the
+   acc-panel/initAccGallery pattern) — the first card ships with
+   .active hardcoded in the markup so it looks right before JS runs. */
+.stack-cards{ display:flex; justify-content:center; align-items:flex-end; gap:26px; flex-wrap:wrap; padding:20px 0 30px; }
+.stack-card{
+  position:relative; z-index:1; width:248px; height:354px; flex-shrink:0;
+  background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+  padding:30px 26px; box-shadow:0 20px 50px -28px rgba(43,36,32,.22); cursor:pointer;
+  transition:transform .5s var(--ease), box-shadow .5s var(--ease);
+}
+.stack-card-cat{ font-family:var(--font-body); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--terracotta-d); font-weight:600; margin-bottom:10px; }
+.stack-card-title{ font-size:25px; line-height:1.15; max-width:140px; }
+.stack-card-sub{ font-size:13px; color:var(--ink-soft); margin-top:8px; max-width:140px; }
+.stack-card-link{
+  position:absolute; left:26px; bottom:28px; font-family:var(--font-body); font-size:12.5px; font-weight:600;
+  letter-spacing:.03em; color:var(--terracotta-d); text-decoration:none;
+  opacity:0; transform:translateY(8px); transition:opacity .35s var(--ease), transform .35s var(--ease);
+}
+.stack-card-link.disabled{ color:var(--ink-soft); pointer-events:none; }
+.stack-card-photo{
+  position:absolute; right:-10px; bottom:-10px; width:148px; height:188px; border-radius:12px; overflow:hidden;
+  border:5px solid var(--paper); box-shadow:0 24px 40px -16px rgba(43,36,32,.4);
+  transform:rotate(6deg) translateY(10px); transition:transform .6s var(--ease);
+}
+.stack-card-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+.stack-card:hover, .stack-card.active{ transform:translateY(-14px) scale(1.04); box-shadow:0 36px 70px -26px rgba(43,36,32,.32); z-index:5; }
+.stack-card:hover .stack-card-photo, .stack-card.active .stack-card-photo{ transform:rotate(0deg) translateY(-6px) scale(1.05); }
+.stack-card:hover .stack-card-link, .stack-card.active .stack-card-link{ opacity:1; transform:translateY(0); }
+
+/* ---------- Real-case banner (/disenos/ — keeps Quimey & Nacho visible
+   once removed from the 4-card style grid above) ---------- */
+.real-case-banner{
+  display:flex; align-items:center; justify-content:center; gap:18px; height:140px; position:relative;
+  background:var(--cream-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line); flex-wrap:wrap;
+}
+.real-case-tag{ font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--terracotta-d); background:var(--paper); border:1px solid var(--line); border-radius:999px; padding:7px 16px; }
+.real-case-text{ font-family:var(--font-display); font-style:italic; font-size:clamp(18px,2.4vw,24px); color:var(--ink); transition:transform .35s var(--ease); }
+.real-case-arrow{ font-size:18px; color:var(--terracotta-d); transition:transform .35s var(--ease); }
+.real-case-banner:hover .real-case-text{ transform:translateX(4px); }
+.real-case-banner:hover .real-case-arrow{ transform:translateX(6px); }
+
 /* ---------- Full-bleed type break ---------- */
 .type-break{ background:var(--ink); color:var(--cream); padding:100px 0; text-align:center; }
 .type-break p{ font-family:var(--font-display); font-style:italic; font-weight:500; font-size:clamp(26px,4vw,52px); max-width:900px; margin:0 auto; line-height:1.3; }
@@ -565,6 +610,13 @@ footer{ background:var(--ink); color:rgba(251,246,238,.78); padding:90px 0 30px;
   .hero-split .giant-word{ font-size:clamp(28px,7vw,38px); }
   .hero-split .hero-cta-row, .hero-split .hero-trust{ justify-content:flex-start; }
   .reviews-badge{ font-size:12px; flex-wrap:wrap; }
+  .stack-cards{ gap:18px; }
+  .stack-card{ width:148px; height:230px; padding:18px 16px; }
+  .stack-card-title{ font-size:18px; max-width:100px; }
+  .stack-card-sub{ font-size:11.5px; max-width:100px; }
+  .stack-card-link{ left:16px; bottom:16px; font-size:11px; }
+  .stack-card-photo{ width:92px; height:118px; right:-6px; bottom:-6px; }
+  .real-case-banner{ height:auto; padding:30px 20px; flex-direction:column; text-align:center; }
 }
 
 /* Mobile nav drawer */

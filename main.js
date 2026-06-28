@@ -650,6 +650,30 @@
     }
   }
 
+  /* ---------- Style stack cards (/disenos/ — 4 style picker) ----------
+     Same one-active-at-a-time pattern as initAccGallery above, but
+     targeting the .stack-card row instead of .acc-panel. */
+  function initStyleStack(){
+    var stage = document.querySelector(".stack-cards");
+    var cards = stage && stage.querySelectorAll(".stack-card");
+    if(!stage || !cards || !cards.length) return;
+
+    function setActive(card){
+      for(var i = 0; i < cards.length; i++){
+        if(cards[i] !== card) cards[i].classList.remove("active");
+      }
+      card.classList.add("active");
+    }
+
+    for(var i = 0; i < cards.length; i++){
+      (function(card){
+        card.addEventListener("mouseenter", function(){ setActive(card); });
+        card.addEventListener("focus", function(){ setActive(card); });
+        card.addEventListener("click", function(){ setActive(card); });
+      })(cards[i]);
+    }
+  }
+
   /* ---------- Marquee speeds up / reverses with scroll velocity ---------- */
   function initMarqueeScrollSpeed(){
     var tracks = document.querySelectorAll(".marquee");
@@ -702,6 +726,7 @@
     safe(initDesignsBook, "designsBook");
     safe(initHeroParallax, "heroParallax");
     safe(initAccGallery, "accGallery");
+    safe(initStyleStack, "styleStack");
     safe(initMarqueeScrollSpeed, "marqueeScrollSpeed");
     safe(initAnchors, "anchors");
   });
