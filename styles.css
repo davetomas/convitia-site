@@ -403,12 +403,12 @@ section{ padding:120px 0; position:relative; }
 .works-section{ padding-bottom:0; }
 .works-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:2px; background:var(--ink); perspective:1200px; }
 .work-tile{
-  position:relative; aspect-ratio:1.15; display:flex; align-items:flex-end; overflow:hidden;
+  position:relative; aspect-ratio:1.15; overflow:hidden; scroll-margin-top:100px;
   transition:transform .35s var(--ease); transform-style:preserve-3d; will-change:transform;
 }
 .work-tile::after{
   content:""; position:absolute; inset:0; z-index:1;
-  background:linear-gradient(to top, rgba(0,0,0,.62), transparent 55%);
+  background:linear-gradient(to bottom, rgba(0,0,0,.62), transparent 55%);
 }
 .work-visual, .work-ornament{
   position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
@@ -418,8 +418,8 @@ section{ padding:120px 0; position:relative; }
 .work-ornament{ font-size:140px; opacity:.16; color:#fff; }
 .work-tile:hover .work-visual, .work-tile:hover .work-ornament{ transform:scale(1.07); }
 .work-info{
-  position:relative; z-index:2; padding:0 28px 26px 30px;
-  display:flex; flex-direction:column; gap:6px; max-width:80%;
+  position:absolute; top:0; left:0; z-index:2; padding:26px 22px 0 30px;
+  display:flex; flex-direction:column; gap:6px; max-width:60%;
 }
 .work-name{
   font-family:var(--font-display); font-style:italic;
@@ -645,6 +645,7 @@ footer{ background:var(--ink); color:rgba(251,246,238,.78); padding:90px 0 30px;
   .nav-toggle{ display:flex; }
   .works-grid{ grid-template-columns:1fr; }
   .work-tile{ aspect-ratio:1.3; }
+  .work-info{ max-width:66%; padding:20px 16px 0 22px; }
   .book-deck{ height:260px; }
   .book-card{ width:150px; height:200px; padding:18px 14px; }
   .book-card .invite-card.mini{ transform:scale(.4); margin-bottom:-4px; }
