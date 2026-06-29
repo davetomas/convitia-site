@@ -791,6 +791,21 @@
     }, { passive:true });
   }
 
+  /* ---------- Land on the right section when arriving with a hash ----------
+     Covers visitors coming back from a demo page's "Volver al Sitio web -
+     Convitia" button (e.g. "#work-clasica"), or any other deep link. The
+     inline script in index.html already removed #splash-gate synchronously
+     before paint when a hash is present, so there's no overflow:hidden lock
+     to fight here — this just nudges the scroll position once layout (fonts,
+     images) has settled, since a bare native scroll-to-hash can land a few
+     pixels off if late-loading content shifts the page. */
+  function initHashLanding(){
+    if(!location.hash) return;
+    var target = document.querySelector(location.hash);
+    if(!target) return;
+    setTimeout(function(){ target.scrollIntoView({ block:"start" }); }, 60);
+  }
+
   /* ---------- Smooth anchor scroll (native, offset for fixed header) ---------- */
   function initAnchors(){
     var header = document.querySelector(".site-header");
@@ -831,5 +846,6 @@
     safe(initBackgroundAudio, "backgroundAudio");
     safe(initMarqueeScrollSpeed, "marqueeScrollSpeed");
     safe(initAnchors, "anchors");
+    safe(initHashLanding, "hashLanding");
   });
 })();

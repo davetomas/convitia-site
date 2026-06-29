@@ -19,6 +19,18 @@
 <div id="splash-gate" class="splash-gate" aria-hidden="true">
   <img class="splash-image" src="assets/logo/Convitia_logo_variant__Wordmark_%27Convitia%27_202606271709%20(1).jpeg" alt="Convitia">
 </div>
+<script>
+  /* Arriving with a hash already in the URL (e.g. "#work-clasica", from a
+     demo page's "Volver al Sitio web - Convitia" button) means the visitor
+     already passed the splash once — remove it synchronously, before the
+     browser paints, so it never flashes and never blocks the jump straight
+     to the target card/section. Runs inline (not in main.js) so it executes
+     before first paint, not after defer scripts. */
+  if(location.hash){
+    var __gate = document.getElementById("splash-gate");
+    if(__gate) __gate.parentNode.removeChild(__gate);
+  }
+</script>
 
 <header class="site-header">
   <div class="container">
@@ -435,6 +447,6 @@
   </div>
 </footer>
 
-<script src="main.js?v=20260628g" defer></script>
+<script src="main.js?v=20260629a" defer></script>
 </body>
 </html>
