@@ -43,6 +43,14 @@
   .hero .date{font-size:16px;font-weight:600;color:var(--ink);margin-top:8px;position:relative;z-index:2;}
   .hero .venue{font-size:14px;color:var(--ink-soft);margin-top:4px;position:relative;z-index:2;}
 
+  /* foto principal — banda rounded, sombra suave terracota, motivo organico */
+  .photo-feature{position:relative;height:380px;border-radius:34px;overflow:hidden;box-shadow:0 26px 50px -22px rgba(156,85,54,.35);margin:8px 0 44px;}
+  .photo-feature img{width:100%;height:100%;object-fit:cover;}
+  .photo-feature .cap{
+    position:absolute;left:18px;bottom:18px;background:rgba(255,252,246,.92);border-radius:999px;padding:8px 18px;
+    font-family:var(--font-script);font-style:italic;font-size:14px;color:var(--terracotta-d);
+  }
+
   .note{
     text-align:center;font-family:var(--font-script);font-style:italic;font-size:23px;line-height:1.55;
     color:var(--ink);margin:46px 0;padding:0 6px;
@@ -67,10 +75,12 @@
   .timeline .row .dot{width:9px;height:9px;border-radius:50%;background:var(--sage);flex-shrink:0;}
   .timeline .row b{font-family:var(--font-script);font-style:italic;font-size:17px;color:var(--terracotta-d);margin-left:auto;}
 
-  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;}
   .detail-grid .d{text-align:center;}
   .detail-grid .d h3{font-family:var(--font-script);font-style:italic;font-size:19px;margin-bottom:6px;color:var(--ink);}
   .detail-grid .d p{font-size:13.5px;color:var(--ink-soft);}
+  .detail-photo{border-radius:20px;overflow:hidden;aspect-ratio:1/1;box-shadow:0 14px 28px -14px rgba(156,85,54,.3);}
+  .detail-photo img{width:100%;height:100%;object-fit:cover;}
 
   .dresscode{
     display:flex;justify-content:center;gap:10px;margin-top:22px;flex-wrap:wrap;
@@ -95,10 +105,16 @@
   .btn-light:hover{transform:translateY(-2px);}
   footer small{color:rgba(255,255,255,.6);font-size:12px;}
 
+  /* scroll-reveal */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease), transform .8s var(--ease);}
+  .reveal.is-visible{opacity:1;transform:none;}
+
   @media (max-width:560px){
     .detail-grid{grid-template-columns:1fr;}
+    .detail-photo{aspect-ratio:16/9;}
     .countdown div{min-width:64px;padding:14px 14px;}
     .countdown b{font-size:24px;}
+    .photo-feature{height:280px;border-radius:24px;}
   }
 </style>
 </head>
@@ -124,27 +140,32 @@
 </section>
 
 <div class="container">
+  <div class="photo-feature reveal">
+    <img src="https://images.unsplash.com/photo-1556302482-70b6e670e6b7?auto=format&fit=crop&w=2400&q=80" alt="Pareja tomada de la mano en un campo al atardecer, estética boho romántica">
+    <span class="cap">Finca Las Acacias, Sierras de Córdoba</span>
+  </div>
+
   <p class="note">"Encontramos nuestro lugar <span>bajo los árboles</span>, y ahí queremos celebrar."</p>
 
-  <div class="countdown" id="countdown">
+  <div class="countdown reveal" id="countdown">
     <div><b id="cd-d">00</b><span>Días</span></div>
     <div><b id="cd-h">00</b><span>Hs</span></div>
     <div><b id="cd-m">00</b><span>Min</span></div>
     <div><b id="cd-s">00</b><span>Seg</span></div>
   </div>
 
-  <div class="panel">
+  <div class="panel reveal">
     <span class="tag-eyebrow">El día</span>
     <h2>Cómo va a ser</h2>
     <div class="timeline">
       <div class="row"><span class="dot"></span><span>Ceremonia entre los árboles</span><b>17:00</b></div>
-      <div class="row"><span class="dot"></span><span>Brindis al atardecer</span><b>18:30</b></div>
+      <div class="row"><span class="dot" style="background:var(--terracotta)"></span><span>Brindis al atardecer</span><b>18:30</b></div>
       <div class="row"><span class="dot"></span><span>Cena bajo las luces</span><b>20:30</b></div>
-      <div class="row"><span class="dot"></span><span>Música y baile</span><b>22:30</b></div>
+      <div class="row"><span class="dot" style="background:var(--terracotta)"></span><span>Música y baile</span><b>22:30</b></div>
     </div>
   </div>
 
-  <div class="panel">
+  <div class="panel reveal">
     <span class="tag-eyebrow">Detalles</span>
     <h2>Para tener en cuenta</h2>
     <div class="detail-grid">
@@ -152,9 +173,8 @@
         <h3>Ubicación</h3>
         <p>Finca Las Acacias, Ruta E-66 km 14. Terreno natural — recomendamos calzado cómodo.</p>
       </div>
-      <div class="d">
-        <h3>Clima</h3>
-        <p>Ceremonia al aire libre; en caso de lluvia, nos mudamos al galpón de la finca.</p>
+      <div class="detail-photo">
+        <img src="https://images.unsplash.com/photo-1605101417781-b069480f938a?auto=format&fit=crop&w=900&q=80" alt="Flores secas color terracota sobre hojas, detalle decorativo boho">
       </div>
     </div>
     <div class="dresscode">
@@ -164,10 +184,10 @@
     </div>
   </div>
 
-  <div class="rsvp">
+  <div class="rsvp reveal">
     <h2>¿Nos acompañás?</h2>
     <p>Confirmá tu asistencia antes del 1 de Octubre, 2026.</p>
-    <a class="btn" href="#" onclick="alert('Esto es una invitación de muestra — el RSVP real se activa en tu invitación.'); return false;">Sí, ahí estaré 🌿</a>
+    <a class="btn" href="https://wa.me/5491100000000?text=Hola!%20Confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Coti%20%26%20Iv%C3%A1n%20%F0%9F%8C%BF" target="_blank" rel="noopener">Sí, ahí estaré 🌿</a>
     <p class="rsvp-note">Esta es una invitación de muestra del estilo "Boho Romántico".</p>
   </div>
 </div>
@@ -198,6 +218,21 @@
     tick();
     setInterval(tick, 1000);
   }catch(e){ console.warn("countdown failed", e); }
+
+  try{
+    var items = document.querySelectorAll(".reveal");
+    if("IntersectionObserver" in window){
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){ entry.target.classList.add("is-visible"); obs.unobserve(entry.target); }
+        });
+      }, {threshold:.15});
+      items.forEach(function(el){ obs.observe(el); });
+    } else {
+      items.forEach(function(el){ el.classList.add("is-visible"); });
+    }
+    setTimeout(function(){ items.forEach(function(el){ el.classList.add("is-visible"); }); }, 6000);
+  }catch(e){ console.warn("reveal failed", e); }
 })();
 </script>
 </body>

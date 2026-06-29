@@ -43,6 +43,15 @@
   .hero-meta .date{font-family:var(--font-d);font-size:20px;font-weight:600;}
   .hero-meta .venue{font-size:13.5px;color:var(--ink-soft);text-align:right;}
 
+  /* photo band — editorial full-bleed image with thin lines, no rounding, no gradients */
+  .photo-band{position:relative;height:420px;overflow:hidden;border-bottom:1px solid var(--line);}
+  .photo-band img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.08);display:block;}
+  .photo-band .cap{
+    position:absolute;left:26px;bottom:0;background:var(--bg);padding:10px 16px;
+    font-family:var(--font-d);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+    border-top:1px solid var(--line);border-right:1px solid var(--line);
+  }
+
   .strip{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line);}
   .strip div{padding:30px 26px;border-right:1px solid var(--line);text-align:center;}
   .strip div:last-child{border-right:none;}
@@ -77,6 +86,10 @@
   .btn-outline:hover{background:var(--ink);color:var(--bg);opacity:1;}
   small{display:block;margin-top:30px;font-size:11.5px;color:var(--ink-soft);text-align:center;}
 
+  /* scroll-reveal */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease), transform .7s var(--ease);}
+  .reveal.is-visible{opacity:1;transform:none;}
+
   @media (max-width:720px){
     .strip{grid-template-columns:repeat(2,1fr);}
     .strip div:nth-child(2){border-right:none;}
@@ -84,6 +97,7 @@
     .grid2 .label{border-right:none;padding:40px 0 0;}
     .grid2 .content{padding:30px 0 50px;}
     .twocol{grid-template-columns:1fr;gap:24px;}
+    .photo-band{height:280px;}
   }
 </style>
 </head>
@@ -107,14 +121,19 @@
   </div>
 </section>
 
-<div class="strip" id="countdown">
+<div class="photo-band reveal">
+  <img src="https://images.unsplash.com/photo-1527576539890-dfa815648363?auto=format&fit=crop&w=2400&q=80" alt="Fachada arquitectónica en blanco y negro, estética editorial">
+  <span class="cap">Espacio Darwin — Palermo Hollywood</span>
+</div>
+
+<div class="strip reveal" id="countdown">
   <div><b id="cd-d">00</b><span>Días</span></div>
   <div><b id="cd-h">00</b><span>Horas</span></div>
   <div><b id="cd-m">00</b><span>Min</span></div>
   <div><b id="cd-s">00</b><span>Seg</span></div>
 </div>
 
-<div class="grid2">
+<div class="grid2 reveal">
   <div class="label">
     <span>Programa</span>
     <h2>Cómo va a ser el día</h2>
@@ -127,7 +146,7 @@
   </div>
 </div>
 
-<div class="grid2">
+<div class="grid2 reveal">
   <div class="label">
     <span>Detalles</span>
     <h2>Lo que necesitás saber</h2>
@@ -147,9 +166,9 @@
   </div>
 </div>
 
-<div class="container rsvp">
+<div class="container rsvp reveal">
   <h2>¿Vas a poder acompañarnos?</h2>
-  <a class="btn" href="#" onclick="alert('Esto es una invitación de muestra — el RSVP real se activa en tu invitación.'); return false;">Confirmar asistencia</a>
+  <a class="btn" href="https://wa.me/5491100000000?text=Hola!%20Confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Julia%20%26%20Mart%C3%ADn." target="_blank" rel="noopener">Confirmar asistencia</a>
 </div>
 
 <footer>
@@ -178,6 +197,21 @@
     tick();
     setInterval(tick, 1000);
   }catch(e){ console.warn("countdown failed", e); }
+
+  try{
+    var items = document.querySelectorAll(".reveal");
+    if("IntersectionObserver" in window){
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){ entry.target.classList.add("is-visible"); obs.unobserve(entry.target); }
+        });
+      }, {threshold:.15});
+      items.forEach(function(el){ obs.observe(el); });
+    } else {
+      items.forEach(function(el){ el.classList.add("is-visible"); });
+    }
+    setTimeout(function(){ items.forEach(function(el){ el.classList.add("is-visible"); }); }, 6000);
+  }catch(e){ console.warn("reveal failed", e); }
 })();
 </script>
 </body>

@@ -7,84 +7,133 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --cream:#FBF6EE; --paper:#FFFDF9; --ink:#2B2420; --ink-soft:#6E6258;
-    --gold:#C9A24B; --gold-d:#9C7A2F; --line:rgba(43,36,32,.15);
-    --font-d:'Cormorant Garamond',Georgia,serif; --font-b:'Jost',Arial,sans-serif;
+    --bg:#0E0E0E; --panel:#1A1816; --gold:#D4AF37; --gold-d:#9C7A2F; --ivory:#F5F0E6; --ivory-soft:rgba(245,240,230,.6);
+    --line:rgba(212,175,55,.35);
+    --font-deco:'Cinzel Decorative',Georgia,serif; --font-script:'Cormorant Garamond',Georgia,serif; --font-b:'Jost',Arial,sans-serif;
     --ease:cubic-bezier(.16,.84,.32,1);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{font-family:var(--font-b);background:var(--cream);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  body{font-family:var(--font-b);font-weight:300;background:var(--bg);color:var(--ivory);line-height:1.7;-webkit-font-smoothing:antialiased;}
   img,svg{display:block;max-width:100%;}
   a{color:inherit;text-decoration:none;}
-  .container{max-width:760px;margin:0 auto;padding:0 26px;}
+  .container{max-width:760px;margin:0 auto;padding:0 26px;position:relative;z-index:2;}
 
-  .topbar{position:fixed;top:0;left:0;right:0;z-index:50;padding:16px 0;background:rgba(251,246,238,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:50;padding:16px 0;background:rgba(14,14,14,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
   .topbar .container{display:flex;align-items:center;justify-content:space-between;}
   .back{
-    font-size:12.5px;font-weight:500;letter-spacing:.02em;color:var(--gold-d);display:inline-flex;align-items:center;gap:6px;
-    border:1px solid var(--gold-d);border-radius:2px;padding:8px 16px;
+    font-size:11.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-family:var(--font-b);
+    display:inline-flex;align-items:center;gap:6px;border:1px solid var(--gold-d);padding:8px 16px;
     transition:background .3s var(--ease), color .3s var(--ease);
   }
-  .back:hover{background:var(--gold-d);color:var(--cream);}
-  .sample-badge{font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:var(--ink);color:var(--cream);padding:6px 12px;border-radius:999px;}
+  .back:hover{background:var(--gold);color:#0E0E0E;}
+  .sample-badge{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;background:var(--gold);color:#0E0E0E;padding:6px 14px;font-weight:600;}
 
-  .hero{padding:150px 0 70px;text-align:center;position:relative;overflow:hidden;}
-  .hero::before{
-    content:"";position:absolute;top:-220px;left:50%;transform:translateX(-50%);width:680px;height:680px;border-radius:50%;
-    background:radial-gradient(circle,rgba(201,162,75,.22),transparent 65%);pointer-events:none;
+  /* deco corner brackets — esquinas rectas con filete dorado en las puntas */
+  .deco-corners{position:relative;}
+  .deco-corners::before,.deco-corners::after{content:"";position:absolute;width:20px;height:20px;border:2px solid var(--gold);pointer-events:none;z-index:3;}
+  .deco-corners::before{top:-1px;left:-1px;border-right:none;border-bottom:none;}
+  .deco-corners::after{bottom:-1px;right:-1px;border-left:none;border-top:none;}
+
+  .hero{padding:160px 0 60px;text-align:center;position:relative;overflow:hidden;}
+  .sunburst{
+    position:absolute;top:-260px;left:50%;transform:translateX(-50%);width:920px;height:920px;border-radius:50%;
+    background:repeating-conic-gradient(from 0deg, rgba(212,175,55,.09) 0deg 3.5deg, transparent 3.5deg 18deg);
+    pointer-events:none;z-index:1;
   }
-  .ornament{font-size:22px;color:var(--gold-d);letter-spacing:.4em;}
-  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-d);font-weight:600;margin-top:18px;}
-  .hero h1{font-family:var(--font-d);font-weight:500;font-size:clamp(44px,8vw,84px);margin:16px 0 6px;position:relative;z-index:2;}
-  .hero .amp{color:var(--gold-d);font-style:italic;}
-  .hero .date{font-family:var(--font-d);font-size:22px;letter-spacing:.06em;color:var(--ink-soft);margin-top:10px;}
-  .hero .venue{font-size:14px;color:var(--ink-soft);margin-top:6px;letter-spacing:.04em;}
+  .eyebrow{font-size:12.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+  .hero h1{
+    font-family:var(--font-deco);font-weight:700;font-size:clamp(38px,8vw,72px);text-transform:uppercase;letter-spacing:.04em;
+    margin:22px 0 6px;background:linear-gradient(135deg,var(--gold-d) 0%,var(--gold) 35%,#F2E2A6 50%,var(--gold) 65%,var(--gold-d) 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.25;position:relative;z-index:2;
+  }
+  .hero h1 .amp{font-size:.6em;color:var(--ivory-soft);-webkit-text-fill-color:var(--ivory-soft);}
+  .hero .date{font-family:var(--font-b);font-size:15px;font-weight:500;letter-spacing:.08em;color:var(--ivory);margin-top:14px;position:relative;z-index:2;}
+  .hero .venue{font-size:13px;color:var(--ivory-soft);margin-top:4px;letter-spacing:.04em;position:relative;z-index:2;}
 
-  .divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:50px 0;color:var(--gold-d);}
-  .divider::before,.divider::after{content:"";width:60px;height:1px;background:var(--line);}
+  /* chevron divider */
+  .chevron{display:flex;justify-content:center;gap:6px;margin:30px 0;}
+  .chevron span{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:7px solid var(--gold-d);}
 
-  .note{text-align:center;font-family:var(--font-d);font-style:italic;font-size:24px;line-height:1.5;color:var(--ink);padding:0 10px;}
-  .note span{color:var(--gold-d);}
+  /* foto principal — fachada dorada, marco doble fino, esquinas rectas con filete */
+  .photo-feature{position:relative;height:380px;overflow:hidden;border:1px solid var(--line);outline:1px solid var(--line);outline-offset:6px;margin:6px 0 50px;}
+  .photo-feature img{width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05) brightness(.82) sepia(.12);}
+  .photo-feature .cap{
+    position:absolute;left:0;bottom:0;right:0;background:linear-gradient(to top, rgba(14,14,14,.92), transparent);
+    padding:34px 26px 16px;font-family:var(--font-b);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:500;
+  }
 
-  .countdown{display:flex;justify-content:center;gap:30px;margin:54px 0;flex-wrap:wrap;}
-  .countdown div{text-align:center;}
-  .countdown b{display:block;font-family:var(--font-d);font-size:40px;color:var(--ink);}
-  .countdown span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
+  .note{
+    text-align:center;font-family:var(--font-script);font-style:italic;font-size:22px;line-height:1.6;color:var(--gold);
+    margin:46px 0;padding:0 6px;
+  }
+  .note span{color:var(--ivory);}
 
-  .panel{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:46px 40px;margin-bottom:40px;text-align:center;}
-  .panel h2{font-family:var(--font-d);font-weight:500;font-size:30px;margin-bottom:28px;}
-  .timeline{display:grid;gap:22px;max-width:420px;margin:0 auto;}
-  .timeline .row{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:14px;font-size:14.5px;}
-  .timeline .row b{font-family:var(--font-d);font-size:17px;color:var(--gold-d);}
+  /* countdown — marco rectangular fino */
+  .countdown-wrap{border:1px solid var(--gold-d);padding:2px;margin:46px 0;}
+  .countdown-wrap-inner{border:1px solid rgba(212,175,55,.22);}
+  .countdown{display:grid;grid-template-columns:repeat(4,1fr);}
+  .countdown div{text-align:center;padding:26px 10px;border-right:1px solid var(--line);}
+  .countdown div:last-child{border-right:none;}
+  .countdown b{
+    display:block;font-family:var(--font-deco);font-weight:700;font-size:30px;color:var(--gold);
+    text-shadow:0 1px 0 rgba(0,0,0,.6), 0 -1px 0 rgba(245,240,230,.25);
+  }
+  .countdown span{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ivory-soft);}
+
+  .panel{background:var(--panel);border:1px solid var(--line);padding:46px 36px;margin-bottom:30px;position:relative;}
+  .panel .tag-eyebrow{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:500;display:block;text-align:center;margin-bottom:10px;}
+  .panel h2{font-family:var(--font-deco);font-weight:700;font-size:24px;text-transform:uppercase;letter-spacing:.03em;text-align:center;margin-bottom:30px;color:var(--ivory);}
+
+  .timeline{display:grid;gap:0;max-width:440px;margin:0 auto;}
+  .timeline .row{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--ivory-soft);}
   .timeline .row:last-child{border-bottom:none;}
+  .timeline .row b{font-family:var(--font-b);font-weight:500;color:var(--gold);letter-spacing:.04em;}
 
-  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:10px;}
-  .detail-grid .d h3{font-family:var(--font-d);font-size:18px;margin-bottom:6px;}
-  .detail-grid .d p{font-size:13.5px;color:var(--ink-soft);}
+  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center;}
+  .detail-grid .d{text-align:center;}
+  .detail-grid .d h3{font-family:var(--font-deco);font-weight:700;font-size:16px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px;color:var(--gold);}
+  .detail-grid .d p{font-size:13px;color:var(--ivory-soft);}
+  .detail-photo{position:relative;aspect-ratio:1/1;overflow:hidden;border:1px solid var(--line);outline:1px solid var(--line);outline-offset:5px;}
+  .detail-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.8) contrast(1.05) brightness(.85) sepia(.1);}
 
-  .dresscode{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--gold);color:var(--gold-d);padding:10px 22px;border-radius:999px;font-size:13px;letter-spacing:.06em;margin-top:6px;}
+  .badge-row{display:flex;justify-content:center;margin-top:28px;}
+  .badge-bt{
+    display:inline-block;padding:3px;border:1px solid var(--gold-d);
+  }
+  .badge-bt span{
+    display:block;border:1px solid var(--gold);padding:9px 24px;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:500;
+  }
 
-  .rsvp{text-align:center;padding:60px 0;}
-  .rsvp h2{font-family:var(--font-d);font-size:32px;font-weight:500;margin-bottom:14px;}
-  .rsvp p{color:var(--ink-soft);font-size:14.5px;margin-bottom:26px;}
-  .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:2px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--ink);transition:all .3s var(--ease);}
-  .btn:hover{background:var(--ink);color:var(--cream);}
-  .rsvp-note{font-size:12px;color:var(--ink-soft);margin-top:16px;font-style:italic;}
+  .rsvp{text-align:center;padding:56px 0;}
+  .rsvp h2{font-family:var(--font-deco);font-weight:700;font-size:26px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:14px;color:var(--ivory);}
+  .rsvp p{color:var(--ivory-soft);font-size:13.5px;margin-bottom:26px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;padding:16px 34px;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
+    background:#0E0E0E;color:var(--gold);border:1px solid var(--gold);font-weight:500;transition:background .3s var(--ease), color .3s var(--ease);
+  }
+  .btn:hover{background:var(--gold);color:#0E0E0E;}
+  .rsvp-note{font-size:11.5px;color:var(--ivory-soft);margin-top:16px;font-style:italic;font-family:var(--font-script);}
 
-  footer{background:var(--ink);color:rgba(251,246,238,.85);padding:54px 0;text-align:center;}
+  footer{background:#0E0E0E;border-top:1px solid var(--gold-d);position:relative;padding:54px 0 40px;text-align:center;}
+  footer::before{content:"";position:absolute;top:6px;left:0;right:0;height:1px;background:rgba(212,175,55,.22);}
   footer .container{display:flex;flex-direction:column;align-items:center;gap:18px;}
-  footer p{font-size:14px;max-width:380px;color:rgba(251,246,238,.7);}
-  footer .btn-light{border:1px solid rgba(251,246,238,.4);color:#fff;}
-  footer .btn-light:hover{background:#fff;color:var(--ink);}
-  footer small{color:rgba(251,246,238,.45);font-size:12px;}
+  footer p{font-size:13.5px;max-width:380px;color:var(--ivory-soft);}
+  .btn-light{background:var(--gold);color:#0E0E0E;border:1px solid var(--gold);}
+  .btn-light:hover{background:#0E0E0E;color:var(--gold);}
+  footer small{color:rgba(245,240,230,.4);font-size:11px;letter-spacing:.04em;}
+
+  /* scroll-reveal */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease), transform .8s var(--ease);}
+  .reveal.is-visible{opacity:1;transform:none;}
 
   @media (max-width:560px){
     .detail-grid{grid-template-columns:1fr;}
-    .countdown{gap:18px;}
-    .countdown b{font-size:32px;}
+    .countdown div{padding:18px 6px;}
+    .countdown b{font-size:23px;}
+    .photo-feature{height:260px;}
   }
 </style>
 </head>
@@ -98,9 +147,9 @@
 </div>
 
 <section class="hero">
+  <div class="sunburst"></div>
   <div class="container">
-    <div class="ornament">✺ ✺ ✺</div>
-    <div class="eyebrow">Nos casamos</div>
+    <div class="eyebrow">Una noche de gala</div>
     <h1>Valentina <span class="amp">&amp;</span> Bruno</h1>
     <div class="date">12 de Diciembre, 2026</div>
     <div class="venue">Estancia Las Magnolias — Córdoba, Argentina</div>
@@ -108,55 +157,65 @@
 </section>
 
 <div class="container">
+  <div class="chevron reveal"><span></span><span></span><span></span></div>
+
+  <div class="photo-feature deco-corners reveal">
+    <img src="https://images.unsplash.com/photo-1780248346974-2f8960a5c69b?auto=format&fit=crop&w=2400&q=80" alt="Fachada dorada ornamentada, estética glamorosa Art Decó">
+    <span class="cap">Estancia Las Magnolias — Salón principal</span>
+  </div>
+
   <p class="note">"Después de tantos años buscándonos, <span>elegimos quedarnos</span>."</p>
 
-  <div class="countdown" id="countdown">
-    <div><b id="cd-d">00</b><span>Días</span></div>
-    <div><b id="cd-h">00</b><span>Horas</span></div>
-    <div><b id="cd-m">00</b><span>Min</span></div>
-    <div><b id="cd-s">00</b><span>Seg</span></div>
-  </div>
-
-  <div class="divider">✺</div>
-
-  <div class="panel">
-    <h2>Programa</h2>
-    <div class="timeline">
-      <div class="row"><span>Ceremonia religiosa</span><b>18:00 hs</b></div>
-      <div class="row"><span>Recepción y brindis</span><b>19:30 hs</b></div>
-      <div class="row"><span>Cena</span><b>21:00 hs</b></div>
-      <div class="row"><span>Fiesta</span><b>23:00 hs</b></div>
+  <div class="countdown-wrap deco-corners reveal" id="countdown">
+    <div class="countdown-wrap-inner">
+      <div class="countdown">
+        <div><b id="cd-d">00</b><span>Días</span></div>
+        <div><b id="cd-h">00</b><span>Horas</span></div>
+        <div><b id="cd-m">00</b><span>Min</span></div>
+        <div><b id="cd-s">00</b><span>Seg</span></div>
+      </div>
     </div>
   </div>
 
-  <div class="panel">
-    <h2>Detalles</h2>
+  <div class="panel deco-corners reveal">
+    <span class="tag-eyebrow">Programa</span>
+    <h2>Cómo va a ser la noche</h2>
+    <div class="timeline">
+      <div class="row"><span>Recepción de invitados</span><b>20:00</b></div>
+      <div class="row"><span>Ceremonia simbólica</span><b>21:00</b></div>
+      <div class="row"><span>Cena de gala</span><b>22:00</b></div>
+      <div class="row"><span>Banda en vivo y pista abierta</span><b>00:00</b></div>
+    </div>
+  </div>
+
+  <div class="panel deco-corners reveal">
+    <span class="tag-eyebrow">Detalles</span>
+    <h2>Lo que necesitás saber</h2>
     <div class="detail-grid">
       <div class="d">
-        <h3>Ceremonia</h3>
-        <p>Capilla Las Magnolias, dentro de la estancia. A 12 min del salón principal.</p>
+        <h3>Ceremonia &amp; Recepción</h3>
+        <p>Estancia Las Magnolias, Salón Jardín de Invierno. Valet parking disponible toda la noche.</p>
       </div>
-      <div class="d">
-        <h3>Recepción</h3>
-        <p>Salón principal, Estancia Las Magnolias, Camino a San Roque km 8.</p>
+      <div class="detail-photo">
+        <img src="https://images.unsplash.com/photo-1563251478-9a8d4817a2c5?auto=format&fit=crop&w=900&q=80" alt="Estatua dorada, detalle decorativo de estilo Art Decó">
       </div>
     </div>
-    <div style="margin-top:30px;">
-      <div class="dresscode">Código de vestimenta — Formal / Etiqueta</div>
+    <div class="badge-row">
+      <div class="badge-bt"><span>Black tie</span></div>
     </div>
   </div>
 
-  <div class="rsvp">
-    <h2>Confirmar asistencia</h2>
-    <p>Por favor confirmá antes del 1 de Noviembre, 2026.</p>
-    <a class="btn" href="#" onclick="alert('Esto es una invitación de muestra — el RSVP real se activa en tu invitación.'); return false;">Confirmar mi asistencia</a>
+  <div class="rsvp reveal">
+    <h2>¿Nos acompañás?</h2>
+    <p>Confirmá tu asistencia antes del 1 de Noviembre, 2026.</p>
+    <a class="btn" href="https://wa.me/5491100000000?text=Hola!%20Confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Valentina%20%26%20Bruno." target="_blank" rel="noopener">Confirmar mi asistencia</a>
     <p class="rsvp-note">Esta es una invitación de muestra del estilo "Glam / Art Decó".</p>
   </div>
 </div>
 
 <footer>
   <div class="container">
-    <p>¿Te imaginás tu boda con este estilo? Lo armamos a tu medida: tus colores, tu historia, tu lugar.</p>
+    <p>¿Tu boda pide esta puesta en escena? La adaptamos a tu salón, tu paleta y tu historia.</p>
     <a class="btn btn-light" href="https://wa.me/5492944152161?text=Hola!%20Me%20gust%C3%B3%20el%20estilo%20Glam%20%2F%20Art%20Dec%C3%B3%2C%20quiero%20mi%20invitaci%C3%B3n" target="_blank" rel="noopener">Quiero esta, a mi medida</a>
     <small>Diseño de muestra — Convitia, un estudio de Flesh Studio</small>
   </div>
@@ -180,6 +239,21 @@
     tick();
     setInterval(tick, 1000);
   }catch(e){ console.warn("countdown failed", e); }
+
+  try{
+    var items = document.querySelectorAll(".reveal");
+    if("IntersectionObserver" in window){
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){ entry.target.classList.add("is-visible"); obs.unobserve(entry.target); }
+        });
+      }, {threshold:.15});
+      items.forEach(function(el){ obs.observe(el); });
+    } else {
+      items.forEach(function(el){ el.classList.add("is-visible"); });
+    }
+    setTimeout(function(){ items.forEach(function(el){ el.classList.add("is-visible"); }); }, 6000);
+  }catch(e){ console.warn("reveal failed", e); }
 })();
 </script>
 </body>
