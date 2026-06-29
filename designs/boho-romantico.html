@@ -24,8 +24,12 @@
 
   .topbar{position:fixed;top:0;left:0;right:0;z-index:50;padding:16px 0;background:rgba(251,245,236,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
   .topbar .container{display:flex;align-items:center;justify-content:space-between;}
-  .back{font-size:13px;color:var(--ink-soft);}
-  .back:hover{color:var(--ink);}
+  .back{
+    font-size:12.5px;font-weight:600;color:var(--terracotta-d);display:inline-flex;align-items:center;gap:6px;
+    border:1px solid var(--terracotta-d);border-radius:999px;padding:8px 16px;
+    transition:background .25s var(--ease), color .25s var(--ease);
+  }
+  .back:hover{background:var(--terracotta-d);color:#fff;}
   .sample-badge{font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:var(--terracotta-d);color:#fff;padding:6px 14px;border-radius:999px;}
 
   .hero{padding:150px 0 50px;text-align:center;position:relative;overflow:hidden;}
@@ -102,7 +106,7 @@
 
 <div class="topbar">
   <div class="container">
-    <a class="back" href="../index.html">← Convitia</a>
+    <a class="back" href="../index.html#work-boho">← Volver a sitio web</a>
     <span class="sample-badge">Muestra de diseño</span>
   </div>
 </div>
