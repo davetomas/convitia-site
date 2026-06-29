@@ -311,7 +311,18 @@
     gate.addEventListener("click", function(){
       gate.classList.add("splash-hidden");
       document.body.classList.remove("splash-active");
-      setTimeout(function(){ if(gate.parentNode) gate.parentNode.removeChild(gate); }, 650);
+      setTimeout(function(){
+        if(gate.parentNode) gate.parentNode.removeChild(gate);
+        /* While the gate was up, body had overflow:hidden, so the browser's
+           native scroll-to-#hash (e.g. coming back from a demo page via
+           "Volver a sitio web") silently failed. Retry it now that
+           scrolling is unlocked, so the user actually lands on the right
+           card instead of the top of the page. */
+        if(location.hash){
+          var target = document.querySelector(location.hash);
+          if(target) target.scrollIntoView({ block:"start" });
+        }
+      }, 650);
     });
   }
 
