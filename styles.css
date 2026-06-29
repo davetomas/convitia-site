@@ -461,7 +461,7 @@ section{ padding:120px 0; position:relative; }
 .style-font-clasica{ font-family:var(--font-display); font-style:italic; font-weight:600; }
 .style-font-moderno{ font-family:'Space Grotesk', var(--font-body); font-style:normal; font-weight:600; letter-spacing:.01em; }
 .style-font-boho{ font-family:'Tangerine', cursive; font-style:normal; font-weight:700; font-size:2.3em; line-height:.9; }
-.style-font-glam{ font-family:'Cinzel Decorative', var(--font-display); font-style:normal; font-weight:700; letter-spacing:.04em; text-transform:uppercase; font-size:.85em; }
+.style-font-glam{ font-family:'Playfair Display', var(--font-display); font-style:normal; font-weight:700; letter-spacing:.04em; text-transform:uppercase; font-size:.85em; }
 /* "Ver demo" — botón siempre visible del lado derecho de cada stack-card (ver [[convitia_design_themes]]). */
 .stack-card-link{
   position:absolute; top:28px; right:24px; z-index:4; font-family:var(--font-body); font-size:11px; font-weight:600;
