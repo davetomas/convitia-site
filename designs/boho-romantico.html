@@ -5,9 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Coti &amp; Iván — Muestra de diseño Boho Romántico | Convitia</title>
 <meta name="robots" content="noindex">
+<meta name="description" content="Invitación de boda de Coti e Iván. Confirmá tu asistencia, conocé el programa del día, la ubicación y todos los detalles.">
+<meta name="theme-color" content="#9C5536">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
   :root{
     --cream:#FBF5EC; --paper:#FFFCF6; --ink:#3A332C; --ink-soft:#7A6F62;
@@ -17,33 +20,45 @@
     --ease:cubic-bezier(.16,.84,.32,1);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html.no-scroll, html.no-scroll body{overflow:hidden;height:100%;}
   body{font-family:var(--font-b);background:var(--cream);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;font-weight:500;}
   img,svg{display:block;max-width:100%;}
   a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
   .container{max-width:740px;margin:0 auto;padding:0 26px;}
 
-  .topbar{position:fixed;top:0;left:0;right:0;z-index:50;padding:16px 0;background:rgba(251,245,236,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
-  .topbar .container{display:flex;align-items:center;justify-content:space-between;}
-  .back{
-    font-size:12.5px;font-weight:600;color:var(--terracotta-d);display:inline-flex;align-items:center;gap:6px;
-    border:1px solid var(--terracotta-d);border-radius:999px;padding:8px 16px;
-    transition:background .25s var(--ease), color .25s var(--ease);
-  }
-  .back:hover{background:var(--terracotta-d);color:#fff;}
-  .sample-badge{font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:var(--terracotta-d);color:#fff;padding:6px 14px;border-radius:999px;}
+  /* ============ NAV ============ */
+  .site-nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:18px 0;background:rgba(251,245,236,0);transition:background .35s var(--ease), padding .35s var(--ease), box-shadow .35s var(--ease);}
+  .site-nav.scrolled{background:rgba(251,245,236,.92);backdrop-filter:blur(10px);padding:13px 0;box-shadow:0 1px 0 var(--line);}
+  .site-nav .container{display:flex;align-items:center;justify-content:space-between;}
+  .nav-logo img{height:26px;width:auto;display:block;}
+  .nav-toggle{display:flex;flex-direction:column;gap:5px;width:26px;z-index:600;}
+  .nav-toggle span{height:2px;width:100%;background:var(--terracotta-d);border-radius:2px;transition:var(--ease) .3s;}
+  .nav-links{position:fixed;top:0;right:-100%;width:min(360px,86vw);height:100vh;background:var(--sage-d);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:24px;padding:0 48px;transition:right .5s var(--ease);z-index:550;}
+  .nav-links.open{right:0;}
+  .nav-links a{color:#fff;font-family:var(--font-script);font-style:italic;font-size:24px;font-weight:600;}
+  .nav-overlay{position:fixed;inset:0;background:rgba(58,51,44,.4);opacity:0;visibility:hidden;transition:opacity .4s ease;z-index:540;}
+  .nav-overlay.open{opacity:1;visibility:visible;}
+  .nav-close{position:absolute;top:24px;right:30px;color:#fff;font-size:1.5rem;z-index:600;}
 
   .hero{padding:150px 0 50px;text-align:center;position:relative;overflow:hidden;}
-  .blob{position:absolute;border-radius:50%;filter:blur(4px);pointer-events:none;}
-  .blob.b1{top:-140px;left:-100px;width:340px;height:340px;background:radial-gradient(circle,rgba(140,154,124,.32),transparent 70%);}
-  .blob.b2{top:-60px;right:-140px;width:300px;height:300px;background:radial-gradient(circle,rgba(193,113,76,.28),transparent 70%);}
-  .leaf{margin:0 auto 10px;width:46px;color:var(--sage-d);}
-  .eyebrow{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta-d);font-weight:600;position:relative;z-index:2;}
-  .hero h1{font-family:var(--font-script);font-style:italic;font-weight:600;font-size:clamp(46px,9vw,90px);margin:14px 0 8px;position:relative;z-index:2;}
+  .blob{position:absolute;border-radius:50%;filter:blur(4px);pointer-events:none;animation:float 9s ease-in-out infinite;}
+  .blob.b1{top:-140px;left:-100px;width:340px;height:340px;background:radial-gradient(circle,rgba(140,154,124,.32),transparent 70%);animation-delay:0s;}
+  .blob.b2{top:-60px;right:-140px;width:300px;height:300px;background:radial-gradient(circle,rgba(193,113,76,.28),transparent 70%);animation-delay:1.2s;}
+  @keyframes float{0%,100%{transform:translate(0,0);}50%{transform:translate(14px,18px);}}
+  .petals-layer{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1;}
+  .petal{position:absolute;top:-40px;font-size:18px;opacity:.75;animation:fall linear infinite;}
+  @keyframes fall{to{transform:translateY(640px) rotate(340deg);opacity:0;}}
+  .leaf{margin:0 auto 10px;width:46px;color:var(--sage-d);position:relative;z-index:2;opacity:0;animation:fadeIn .8s ease .1s forwards;}
+  @keyframes fadeIn{to{opacity:1;}}
+  .eyebrow{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta-d);font-weight:600;position:relative;z-index:2;opacity:0;animation:fadeIn .8s ease .25s forwards;}
+  .hero h1{font-family:var(--font-script);font-style:italic;font-weight:600;font-size:clamp(46px,9vw,90px);margin:14px 0 8px;position:relative;z-index:2;opacity:0;animation:riseIn 1s var(--ease) .4s forwards;}
+  @keyframes riseIn{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:translateY(0);}}
   .hero h1 .amp{color:var(--sage-d);}
-  .hero .date{font-size:16px;font-weight:600;color:var(--ink);margin-top:8px;position:relative;z-index:2;}
-  .hero .venue{font-size:14px;color:var(--ink-soft);margin-top:4px;position:relative;z-index:2;}
+  .hero .date{font-size:16px;font-weight:600;color:var(--ink);margin-top:8px;position:relative;z-index:2;opacity:0;animation:fadeIn .8s ease .8s forwards;}
+  .hero .venue{font-size:14px;color:var(--ink-soft);margin-top:4px;position:relative;z-index:2;opacity:0;animation:fadeIn .8s ease .95s forwards;}
 
-  /* foto principal — banda rounded, sombra suave terracota, motivo organico */
   .photo-feature{position:relative;height:380px;border-radius:34px;overflow:hidden;box-shadow:0 26px 50px -22px rgba(156,85,54,.35);margin:8px 0 44px;}
   .photo-feature img{width:100%;height:100%;object-fit:cover;}
   .photo-feature .cap{
@@ -57,79 +72,154 @@
   }
   .note span{color:var(--terracotta-d);}
 
+  .sec-label{text-align:center;margin-bottom:30px;}
+  .sec-label .tag-eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage-d);font-weight:700;display:block;margin-bottom:8px;}
+  .sec-label h2{font-family:var(--font-script);font-style:italic;font-weight:600;font-size:32px;}
+
   .countdown{display:flex;justify-content:center;gap:14px;margin:46px 0;flex-wrap:wrap;}
   .countdown div{
     text-align:center;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px 22px;min-width:78px;
   }
   .countdown b{display:block;font-family:var(--font-script);font-style:italic;font-size:30px;color:var(--terracotta-d);}
   .countdown span{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+  .countdown-finished{font-family:var(--font-script);font-style:italic;font-size:24px;text-align:center;color:var(--terracotta-d);}
 
   .panel{
     background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:44px 36px;margin-bottom:34px;
   }
-  .panel .tag-eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage-d);font-weight:700;display:block;text-align:center;margin-bottom:10px;}
-  .panel h2{font-family:var(--font-script);font-style:italic;font-weight:600;font-size:30px;text-align:center;margin-bottom:26px;}
 
   .timeline{display:grid;gap:16px;max-width:420px;margin:0 auto;}
   .timeline .row{display:flex;align-items:center;gap:14px;font-size:14.5px;}
   .timeline .row .dot{width:9px;height:9px;border-radius:50%;background:var(--sage);flex-shrink:0;}
   .timeline .row b{font-family:var(--font-script);font-style:italic;font-size:17px;color:var(--terracotta-d);margin-left:auto;}
 
-  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;}
-  .detail-grid .d{text-align:center;}
-  .detail-grid .d h3{font-family:var(--font-script);font-style:italic;font-size:19px;margin-bottom:6px;color:var(--ink);}
-  .detail-grid .d p{font-size:13.5px;color:var(--ink-soft);}
-  .detail-photo{border-radius:20px;overflow:hidden;aspect-ratio:1/1;box-shadow:0 14px 28px -14px rgba(156,85,54,.3);}
-  .detail-photo img{width:100%;height:100%;object-fit:cover;}
+  /* ============ UBICACIÓN ============ */
+  .loc-wrap{display:grid;gap:24px;}
+  .loc-text{text-align:center;}
+  .loc-text p{font-size:14px;color:var(--ink-soft);max-width:420px;margin:8px auto 20px;}
+  #map{width:100%;height:260px;border-radius:24px;border:1px solid var(--line);}
+  .loc-photo{margin-top:20px;border-radius:24px;overflow:hidden;height:240px;box-shadow:0 18px 32px -16px rgba(156,85,54,.32);position:relative;}
+  .loc-photo img{width:100%;height:100%;object-fit:cover;}
+  .loc-photo .cap{position:absolute;left:16px;bottom:16px;background:rgba(255,252,246,.92);border-radius:999px;padding:7px 16px;font-family:var(--font-script);font-style:italic;font-size:13px;color:var(--terracotta-d);}
 
-  .dresscode{
-    display:flex;justify-content:center;gap:10px;margin-top:22px;flex-wrap:wrap;
-  }
-  .swatch{display:inline-flex;align-items:center;gap:8px;background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:12.5px;color:var(--ink-soft);}
-  .swatch .c{width:14px;height:14px;border-radius:50%;}
-
-  .rsvp{text-align:center;padding:50px 0;}
-  .rsvp h2{font-family:var(--font-script);font-style:italic;font-weight:600;font-size:32px;margin-bottom:12px;}
-  .rsvp p{color:var(--ink-soft);font-size:14px;margin-bottom:24px;}
   .btn{
     display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:999px;font-size:14px;font-weight:600;
     background:var(--terracotta);color:#fff;box-shadow:0 14px 28px -10px rgba(193,113,76,.55);transition:transform .3s var(--ease);
   }
   .btn:hover{transform:translateY(-2px);}
-  .rsvp-note{font-size:12px;color:var(--ink-soft);margin-top:14px;font-style:italic;font-family:var(--font-script);}
+  .btn-outline{background:transparent;color:var(--terracotta-d);border:1.5px solid var(--terracotta-d);box-shadow:none;}
+  .btn-outline:hover{background:var(--terracotta-d);color:#fff;}
 
-  footer{background:var(--sage-d);color:rgba(255,255,255,.92);padding:54px 0;text-align:center;border-radius:40px 40px 0 0;margin-top:20px;}
-  footer .container{display:flex;flex-direction:column;align-items:center;gap:18px;}
+  /* ============ DRESS CODE ============ */
+  .palette-boho{display:flex;justify-content:center;gap:12px;margin:6px 0 28px;flex-wrap:wrap;}
+  .swatch-circle{width:38px;height:38px;border-radius:50%;border:3px solid var(--paper);box-shadow:0 0 0 1px var(--line);}
+  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;}
+  .detail-grid .d{text-align:center;}
+  .detail-grid .d h3{font-family:var(--font-script);font-style:italic;font-size:19px;margin-bottom:6px;color:var(--ink);}
+  .detail-grid .d p{font-size:13.5px;color:var(--ink-soft);}
+
+  .dresscode{display:flex;justify-content:center;gap:10px;margin-top:22px;flex-wrap:wrap;}
+  .swatch{display:inline-flex;align-items:center;gap:8px;background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:12.5px;color:var(--ink-soft);}
+  .swatch .c{width:14px;height:14px;border-radius:50%;}
+
+  /* ============ MENÚ ============ */
+  .menu-grid-boho{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px;}
+  .menu-card-boho{background:var(--cream);border:1px solid var(--line);border-radius:22px;padding:24px 22px;text-align:center;}
+  .menu-card-boho .mleaf{font-size:20px;margin-bottom:8px;}
+  .menu-card-boho h4{font-family:var(--font-script);font-style:italic;font-size:19px;margin-bottom:6px;color:var(--terracotta-d);}
+  .menu-card-boho p{font-size:13px;color:var(--ink-soft);}
+  @media(max-width:560px){.menu-grid-boho{grid-template-columns:1fr;}}
+
+  /* ============ PLAYLIST ============ */
+  .playlist-frame{border-radius:24px;overflow:hidden;box-shadow:0 18px 32px -16px rgba(156,85,54,.32);margin-top:24px;}
+  .playlist-frame iframe{width:100%;display:block;}
+  .playlist-actions{text-align:center;margin-top:22px;}
+
+  /* ============ DETALLES ============ */
+  .details-list{max-width:460px;margin:30px auto 0;display:grid;gap:14px;}
+  .details-row{display:flex;justify-content:space-between;gap:16px;font-size:14px;border-bottom:1px dashed var(--line);padding-bottom:12px;}
+  .details-row span:first-child{color:var(--sage-d);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;flex-shrink:0;}
+  .details-row span:last-child{color:var(--ink-soft);text-align:right;}
+
+  /* ============ RSVP ============ */
+  .rsvp{text-align:center;padding:50px 0;}
+  .rsvp h2{font-family:var(--font-script);font-style:italic;font-weight:600;font-size:32px;margin-bottom:12px;}
+  .rsvp > .container > p{color:var(--ink-soft);font-size:14px;margin-bottom:30px;}
+  .rsvp-form{text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:40px 34px;}
+  .form-row{margin-bottom:20px;}
+  .form-row label{display:block;font-size:12.5px;font-weight:700;margin-bottom:7px;color:var(--ink-soft);}
+  .form-row input[type="text"], .form-row input[type="tel"], .form-row input[type="email"], .form-row input[type="number"], .form-row textarea{
+    width:100%;padding:12px 16px;border:1px solid var(--line);border-radius:14px;font-family:var(--font-b);font-size:14.5px;background:var(--cream);color:var(--ink);transition:border-color .3s ease;
+  }
+  .form-row input:focus, .form-row textarea:focus{outline:none;border-color:var(--terracotta);}
+  .form-row textarea{resize:vertical;min-height:70px;}
+  .required-mark{color:var(--terracotta-d);}
+  .radio-group{display:flex;gap:12px;flex-wrap:wrap;}
+  .radio-option{flex:1;min-width:160px;border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:9px;cursor:pointer;transition:all .3s ease;font-size:13.5px;background:var(--cream);}
+  .radio-option:hover{border-color:var(--terracotta);}
+  .radio-option input{accent-color:var(--terracotta);width:16px;height:16px;}
+  .radio-option.checked{background:var(--terracotta);color:#fff;border-color:var(--terracotta);}
+  .submit-btn{width:100%;justify-content:center;border:none;margin-top:8px;position:relative;}
+  .submit-btn .loader{display:none;width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;animation:spin .7s linear infinite;}
+  .submit-btn.loading .btn-text{display:none;}
+  .submit-btn.loading .loader{display:inline-block;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .form-message{margin-top:16px;padding:13px 16px;font-size:13.5px;display:none;border-radius:14px;}
+  .form-message.success{display:block;background:rgba(140,154,124,.18);color:var(--sage-d);}
+  .form-message.error{display:block;background:rgba(193,113,76,.16);color:var(--terracotta-d);}
+  .rsvp-note{font-size:12px;color:var(--ink-soft);margin-top:18px;font-style:italic;font-family:var(--font-script);text-align:center;}
+
+  footer{background:var(--sage-d);color:rgba(255,255,255,.92);padding:54px 0 36px;text-align:center;border-radius:40px 40px 0 0;margin-top:20px;}
+  footer .container{display:flex;flex-direction:column;align-items:center;gap:8px;}
+  footer .footer-names{font-family:var(--font-script);font-style:italic;font-size:28px;font-weight:600;margin-bottom:4px;}
   footer p{font-size:14px;max-width:380px;color:rgba(255,255,255,.85);}
-  .btn-light{background:#fff;color:var(--sage-d);box-shadow:none;}
+  .btn-light{background:#fff;color:var(--sage-d);box-shadow:none;margin-top:10px;}
   .btn-light:hover{transform:translateY(-2px);}
-  footer small{color:rgba(255,255,255,.6);font-size:12px;}
+  footer small{color:rgba(255,255,255,.6);font-size:12px;margin-top:6px;}
+  .convitia-cta{margin-top:24px;padding-top:24px;border-top:1px solid rgba(255,255,255,.2);width:100%;display:flex;flex-direction:column;align-items:center;}
 
-  /* scroll-reveal */
+  .badge-back{position:fixed;bottom:22px;right:22px;z-index:1000;display:inline-flex;align-items:center;gap:8px;background:var(--terracotta-d);color:#fff;font-size:11.5px;letter-spacing:.04em;font-weight:600;border-radius:999px;padding:11px 20px;box-shadow:0 14px 28px -12px rgba(156,85,54,.55);transition:transform .3s var(--ease);}
+  .badge-back:hover{transform:translateY(-2px);}
+  @media(max-width:560px){.badge-back{bottom:14px;right:14px;left:14px;justify-content:center;}}
+
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease), transform .8s var(--ease);}
   .reveal.is-visible{opacity:1;transform:none;}
 
   @media (max-width:560px){
     .detail-grid{grid-template-columns:1fr;}
-    .detail-photo{aspect-ratio:16/9;}
     .countdown div{min-width:64px;padding:14px 14px;}
     .countdown b{font-size:24px;}
     .photo-feature{height:280px;border-radius:24px;}
+    .rsvp-form{padding:30px 22px;}
   }
 </style>
 </head>
 <body>
 
-<div class="topbar">
+<nav class="site-nav" id="siteNav">
   <div class="container">
-    <a class="back" href="../index.html#work-boho">← Volver a sitio web</a>
-    <span class="sample-badge">Muestra de diseño</span>
+    <a class="nav-logo" href="#hero"><img src="../assets/logo/logo1.svg" alt="Convitia"></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
   </div>
+</nav>
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="nav-links" id="navLinks">
+  <button class="nav-close" id="navClose" aria-label="Cerrar menú">✕</button>
+  <a href="#hero">Inicio</a>
+  <a href="#countdown">Cuenta regresiva</a>
+  <a href="#programa">Programa</a>
+  <a href="#ubicacion">Ubicación</a>
+  <a href="#dresscode">Dress code</a>
+  <a href="#menu">Menú</a>
+  <a href="#playlist">Playlist</a>
+  <a href="#detalles">Detalles</a>
+  <a href="#rsvp">Confirmar</a>
 </div>
 
-<section class="hero">
+<section class="hero" id="hero">
   <div class="blob b1"></div>
   <div class="blob b2"></div>
+  <div class="petals-layer" id="petalsLayer"></div>
   <div class="container">
     <svg class="leaf" viewBox="0 0 48 48" fill="none"><path d="M24 4C14 10 8 20 8 30c0 8 7 14 16 14s16-6 16-14c0-10-6-20-16-26Z" stroke="currentColor" stroke-width="1.4"/><path d="M24 8v34" stroke="currentColor" stroke-width="1.2"/></svg>
     <div class="eyebrow">Nos casamos al aire libre</div>
@@ -145,8 +235,9 @@
     <span class="cap">Finca Las Acacias, Sierras de Córdoba</span>
   </div>
 
-  <p class="note">"Encontramos nuestro lugar <span>bajo los árboles</span>, y ahí queremos celebrar."</p>
+  <p class="note reveal">"Encontramos nuestro lugar <span>bajo los árboles</span>, y ahí queremos celebrar."</p>
 
+  <div id="countdown-anchor"></div>
   <div class="countdown reveal" id="countdown">
     <div><b id="cd-d">00</b><span>Días</span></div>
     <div><b id="cd-h">00</b><span>Hs</span></div>
@@ -154,27 +245,49 @@
     <div><b id="cd-s">00</b><span>Seg</span></div>
   </div>
 
-  <div class="panel reveal">
-    <span class="tag-eyebrow">El día</span>
-    <h2>Cómo va a ser</h2>
+  <div class="panel reveal" id="programa">
+    <div class="sec-label"><span class="tag-eyebrow">El día</span><h2>Cómo va a ser</h2></div>
     <div class="timeline">
       <div class="row"><span class="dot"></span><span>Ceremonia entre los árboles</span><b>17:00</b></div>
       <div class="row"><span class="dot" style="background:var(--terracotta)"></span><span>Brindis al atardecer</span><b>18:30</b></div>
       <div class="row"><span class="dot"></span><span>Cena bajo las luces</span><b>20:30</b></div>
-      <div class="row"><span class="dot" style="background:var(--terracotta)"></span><span>Música y baile</span><b>22:30</b></div>
+      <div class="row"><span class="dot" style="background:var(--terracotta)"></span><span>Apertura de pista</span><b>22:30</b></div>
+      <div class="row"><span class="dot"></span><span>Fiesta hasta el amanecer</span><b>23:00 — 05:00</b></div>
     </div>
   </div>
 
-  <div class="panel reveal">
-    <span class="tag-eyebrow">Detalles</span>
-    <h2>Para tener en cuenta</h2>
+  <div class="panel reveal" id="ubicacion">
+    <div class="sec-label"><span class="tag-eyebrow">Cómo llegar</span><h2>Ubicación</h2></div>
+    <div class="loc-wrap">
+      <div class="loc-text">
+        <p>Finca Las Acacias, Ruta E-66 km 14, Sierras de Córdoba. Terreno natural — recomendamos calzado cómodo. Estacionamiento amplio sobre el campo.</p>
+        <a href="#" id="googleMapsBtn" class="btn" target="_blank" rel="noopener">Ver en Google Maps</a>
+      </div>
+      <div id="map"></div>
+      <div class="loc-photo">
+        <img src="https://images.unsplash.com/photo-1692152914555-0a11a8ab3fe5?auto=format&fit=crop&w=2000&q=80" alt="Granero rústico de campo, lugar de la celebración">
+        <span class="cap">Finca Las Acacias</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel reveal" id="dresscode">
+    <div class="sec-label"><span class="tag-eyebrow">Vestimenta</span><h2>Dress code</h2></div>
+    <div class="palette-boho">
+      <div class="swatch-circle" style="background:var(--terracotta);"></div>
+      <div class="swatch-circle" style="background:var(--sage);"></div>
+      <div class="swatch-circle" style="background:#E4D4A7;"></div>
+      <div class="swatch-circle" style="background:#FBF5EC;"></div>
+      <div class="swatch-circle" style="background:#7A6F62;"></div>
+    </div>
     <div class="detail-grid">
       <div class="d">
-        <h3>Ubicación</h3>
-        <p>Finca Las Acacias, Ruta E-66 km 14. Terreno natural — recomendamos calzado cómodo.</p>
+        <h3>Caballeros</h3>
+        <p>Lino o algodón, colores tierra. Nada de traje formal: pensá en una tarde de campo entre amigos.</p>
       </div>
-      <div class="detail-photo">
-        <img src="https://images.unsplash.com/photo-1605101417781-b069480f938a?auto=format&fit=crop&w=900&q=80" alt="Flores secas color terracota sobre hojas, detalle decorativo boho">
+      <div class="d">
+        <h3>Damas</h3>
+        <p>Vestido largo y liviano, tonos térreos o verdes. Calzado bajo — el piso es de pasto y tierra.</p>
       </div>
     </div>
     <div class="dresscode">
@@ -184,55 +297,255 @@
     </div>
   </div>
 
-  <div class="rsvp reveal">
-    <h2>¿Nos acompañás?</h2>
-    <p>Confirmá tu asistencia antes del 1 de Octubre, 2026.</p>
-    <a class="btn" href="https://wa.me/5491100000000?text=Hola!%20Confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Coti%20%26%20Iv%C3%A1n%20%F0%9F%8C%BF" target="_blank" rel="noopener">Sí, ahí estaré 🌿</a>
+  <div class="panel reveal" id="menu">
+    <div class="sec-label"><span class="tag-eyebrow">Para disfrutar</span><h2>Menú &amp; Tragos</h2></div>
+    <div class="menu-grid-boho">
+      <div class="menu-card-boho"><div class="mleaf">🌾</div><h4>Entrada</h4><p>Tabla de quesos de cabra y miel de campo</p></div>
+      <div class="menu-card-boho"><div class="mleaf">🔥</div><h4>Plato principal</h4><p>Cordero a la estaca con papas rústicas</p></div>
+      <div class="menu-card-boho"><div class="mleaf">🍓</div><h4>Postre</h4><p>Pavlova de frutos rojos</p></div>
+      <div class="menu-card-boho"><div class="mleaf">🍹</div><h4>Cóctel de bienvenida</h4><p>Gin tonic con romero y cítricos + sangría de la casa</p></div>
+    </div>
+  </div>
+
+  <div class="panel reveal" id="playlist">
+    <div class="sec-label"><span class="tag-eyebrow">Para bailar</span><h2>Playlist</h2></div>
+    <p style="text-align:center;font-size:14px;color:var(--ink-soft);max-width:420px;margin:0 auto;">Armamos esta playlist para bailar bajo las estrellas. Sumá los temas que no pueden faltar.</p>
+    <div class="playlist-frame">
+      <iframe src="https://open.spotify.com/embed/playlist/2jD7fjo5QIfCllwkgTWwcQ?utm_source=generator" height="380" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Playlist colaborativa Coti e Iván"></iframe>
+    </div>
+    <div class="playlist-actions">
+      <a href="https://open.spotify.com/playlist/2jD7fjo5QIfCllwkgTWwcQ" target="_blank" rel="noopener" class="btn btn-outline">Sumá tus canciones 🎶</a>
+    </div>
+  </div>
+
+  <div class="panel reveal" id="detalles">
+    <div class="sec-label"><span class="tag-eyebrow">Para tener en cuenta</span><h2>Detalles especiales</h2></div>
+    <div class="details-list">
+      <div class="details-row"><span>Estacionamiento</span><span>Amplio, sobre el campo, señalizado a la entrada</span></div>
+      <div class="details-row"><span>Transporte</span><span>Combis desde Villa General Belgrano, 16:00 hs</span></div>
+      <div class="details-row"><span>Regalos</span><span>Lo único que pedimos es tu presencia. Si querés un gesto, dejanos un sobre</span></div>
+      <div class="details-row"><span>Hashtag</span><span>#CotiyIvanBoho2026</span></div>
+      <div class="details-row"><span>Niños</span><span>Bienvenidos, va a haber un rincón de juegos al aire libre</span></div>
+    </div>
+  </div>
+
+  <div class="rsvp reveal" id="rsvp">
+    <div class="container">
+      <h2>¿Nos acompañás?</h2>
+      <p>Confirmá tu asistencia antes del <strong id="rsvpDeadlineText">1 de Octubre, 2026</strong></p>
+    </div>
+    <form class="rsvp-form" id="rsvpForm">
+      <div class="form-row">
+        <label for="fullName">Nombre completo <span class="required-mark">*</span></label>
+        <input type="text" id="fullName" name="fullName" required autocomplete="name">
+      </div>
+      <div class="form-row">
+        <label for="phone">Teléfono / WhatsApp <span class="required-mark">*</span></label>
+        <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="Ej: +54 9 11 1234 5678">
+      </div>
+      <div class="form-row">
+        <label for="email">Email (opcional)</label>
+        <input type="email" id="email" name="email" autocomplete="email">
+      </div>
+      <div class="form-row">
+        <label>¿Venís? <span class="required-mark">*</span></label>
+        <div class="radio-group">
+          <label class="radio-option" data-option><input type="radio" name="attend" value="Sí, ahí estaré 🌿" required>Sí, ahí estaré 🌿</label>
+          <label class="radio-option" data-option><input type="radio" name="attend" value="No podré asistir" required>No podré asistir</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="guestCount">Cantidad de personas que confirman</label>
+        <input type="number" id="guestCount" name="guestCount" min="1" max="10" value="1">
+      </div>
+      <div class="form-row">
+        <label for="dietary">Restricciones alimentarias</label>
+        <textarea id="dietary" name="dietary" placeholder="Vegetariano, celíaco, alergias, etc."></textarea>
+      </div>
+      <div class="form-row">
+        <label for="message">Mensaje para los novios (opcional)</label>
+        <textarea id="message" name="message" placeholder="Dejales un mensaje"></textarea>
+      </div>
+      <button type="submit" class="btn submit-btn" id="submitBtn">
+        <span class="btn-text">Sí, ahí estaré 🌿</span>
+        <span class="loader"></span>
+      </button>
+      <div class="form-message" id="formMessage"></div>
+    </form>
     <p class="rsvp-note">Esta es una invitación de muestra del estilo "Boho Romántico".</p>
   </div>
 </div>
 
 <footer>
   <div class="container">
-    <p>¿Tu boda tiene esta onda? Armamos tu invitación con tu paleta, tu lugar y tu historia.</p>
-    <a class="btn btn-light" href="https://wa.me/5492944152161?text=Hola!%20Me%20gust%C3%B3%20el%20estilo%20Boho%20Rom%C3%A1ntico%2C%20quiero%20mi%20invitaci%C3%B3n" target="_blank" rel="noopener">Quiero esta, a mi medida</a>
-    <small>Diseño de muestra — Convitia, un estudio de Flesh Studio</small>
+    <p class="footer-names">Coti &amp; Iván</p>
+    <p>Gracias por ser parte de este día</p>
+    <p style="margin-top:2px;">28 de Noviembre, 2026</p>
+    <small>© 2026 Todos los derechos reservados · Diseño web by <a href="https://www.flesh-studio.com/" target="_blank" rel="noopener" style="text-decoration:underline;">FLESH STUDIO</a></small>
+    <div class="convitia-cta">
+      <p>¿Tu boda tiene esta onda? Armamos tu invitación con tu paleta, tu lugar y tu historia.</p>
+      <a class="btn btn-light" href="https://wa.me/5492944152161?text=Hola!%20Me%20gust%C3%B3%20el%20estilo%20Boho%20Rom%C3%A1ntico%2C%20quiero%20mi%20invitaci%C3%B3n" target="_blank" rel="noopener">Quiero esta, a mi medida</a>
+      <small>Diseño de muestra — Convitia, un estudio de Flesh Studio</small>
+    </div>
   </div>
 </footer>
 
+<a class="badge-back" href="../index.html#work-boho">← Muestra de diseño · Boho Romántico</a>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 (function(){
   "use strict";
-  try{
-    var target = new Date("2026-11-28T17:00:00-03:00").getTime();
+
+  var WEDDING_CONFIG = {
+    weddingDate: '2026-11-28T17:00:00',
+    rsvpDeadlineText: '1 de Octubre, 2026',
+    whatsappNumber: '5491100000000',
+    formspreeEndpoint: 'https://formspree.io/f/YOUR_FORM_ID',
+    venueCoords: { lat: -32.0500, lng: -64.5500 },
+    venueAddress: 'Finca Las Acacias, Ruta E-66 km 14, Sierras de Córdoba',
+    googleMapsUrl: ''
+  };
+
+  function safe(fn, label){ try{ fn(); }catch(e){ console.warn('[Boda] Error en "'+label+'":', e); } }
+
+  function initNav(){
+    var nav = document.getElementById('siteNav');
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    var overlay = document.getElementById('navOverlay');
+    var closeBtn = document.getElementById('navClose');
+    function openMenu(){ links.classList.add('open'); overlay.classList.add('open'); }
+    function closeMenu(){ links.classList.remove('open'); overlay.classList.remove('open'); }
+    toggle.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', closeMenu);
+    links.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+    window.addEventListener('scroll', function(){
+      if(window.scrollY > 60){ nav.classList.add('scrolled'); } else{ nav.classList.remove('scrolled'); }
+    });
+  }
+
+  function initPetals(){
+    var layer = document.getElementById('petalsLayer');
+    if(!layer) return;
+    var emojis = ['🍃','🌸','🌾'];
+    for(var i=0;i<14;i++){
+      var p = document.createElement('span');
+      p.className = 'petal';
+      p.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      p.style.left = Math.random()*100 + '%';
+      p.style.fontSize = (12 + Math.random()*12) + 'px';
+      p.style.animationDuration = (7 + Math.random()*6) + 's';
+      p.style.animationDelay = (Math.random()*6) + 's';
+      layer.appendChild(p);
+    }
+  }
+
+  function initCountdown(){
+    var target = new Date(WEDDING_CONFIG.weddingDate).getTime();
+    var elD = document.getElementById('cd-d'), elH = document.getElementById('cd-h'), elM = document.getElementById('cd-m'), elS = document.getElementById('cd-s');
+    var grid = document.getElementById('countdown');
+    function pad(n){ return String(n).padStart(2,'0'); }
     function tick(){
       var diff = target - Date.now();
-      if(diff < 0) diff = 0;
-      var d = Math.floor(diff/86400000);
-      var h = Math.floor((diff%86400000)/3600000);
-      var m = Math.floor((diff%3600000)/60000);
-      var s = Math.floor((diff%60000)/1000);
-      var el = function(id,v){ var node=document.getElementById(id); if(node) node.textContent = String(v).padStart(2,"0"); };
-      el("cd-d", d); el("cd-h", h); el("cd-m", m); el("cd-s", s);
+      if(diff <= 0){ grid.innerHTML = '<div class="countdown-finished" style="width:100%;">¡Hoy es el gran día! 🌿</div>'; clearInterval(timer); return; }
+      elD.textContent = pad(Math.floor(diff/86400000));
+      elH.textContent = pad(Math.floor((diff%86400000)/3600000));
+      elM.textContent = pad(Math.floor((diff%3600000)/60000));
+      elS.textContent = pad(Math.floor((diff%60000)/1000));
     }
     tick();
-    setInterval(tick, 1000);
-  }catch(e){ console.warn("countdown failed", e); }
+    var timer = setInterval(tick, 1000);
+  }
 
-  try{
-    var items = document.querySelectorAll(".reveal");
-    if("IntersectionObserver" in window){
-      var obs = new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){
-          if(entry.isIntersecting){ entry.target.classList.add("is-visible"); obs.unobserve(entry.target); }
+  function initReveal(){
+    var targets = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){ targets.forEach(function(t){ t.classList.add('is-visible'); }); return; }
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){ if(entry.isIntersecting){ entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
+    }, { threshold:.12, rootMargin:'0px 0px -40px 0px' });
+    targets.forEach(function(t){ observer.observe(t); });
+    setTimeout(function(){ document.querySelectorAll('.reveal:not(.is-visible)').forEach(function(t){ t.classList.add('is-visible'); }); }, 6000);
+  }
+
+  function initMap(){
+    var mapEl = document.getElementById('map');
+    if(!mapEl || typeof L === 'undefined') return;
+    if(mapEl.children.length > 0) return;
+    var coords = WEDDING_CONFIG.venueCoords;
+    var map = L.map('map', { scrollWheelZoom:false }).setView([coords.lat, coords.lng], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom:19
+    }).addTo(map);
+    var leafIcon = L.divIcon({ className:'pin-boho', html:'<div style="font-size:26px;line-height:1;transform:translate(-2px,-22px);">🌿</div>', iconSize:[26,26], iconAnchor:[13,26] });
+    L.marker([coords.lat, coords.lng], { icon: leafIcon }).addTo(map).bindPopup(WEDDING_CONFIG.venueAddress);
+    setTimeout(function(){ map.invalidateSize(); }, 600);
+  }
+
+  function initGoogleMapsButton(){
+    var btn = document.getElementById('googleMapsBtn');
+    if(!btn) return;
+    if(WEDDING_CONFIG.googleMapsUrl){ btn.href = WEDDING_CONFIG.googleMapsUrl; return; }
+    var coords = WEDDING_CONFIG.venueCoords;
+    var query = encodeURIComponent(WEDDING_CONFIG.venueAddress);
+    btn.href = 'https://www.google.com/maps/search/?api=1&query=' + query + '&center=' + coords.lat + ',' + coords.lng;
+  }
+
+  function initForm(){
+    var form = document.getElementById('rsvpForm');
+    if(!form) return;
+    document.getElementById('rsvpDeadlineText').textContent = WEDDING_CONFIG.rsvpDeadlineText;
+    form.querySelectorAll('.radio-option').forEach(function(label){
+      var input = label.querySelector('input[type="radio"]');
+      input.addEventListener('change', function(){
+        form.querySelectorAll('[data-option]').forEach(function(l){ l.classList.remove('checked'); });
+        if(input.checked) label.classList.add('checked');
+      });
+    });
+    var submitBtn = document.getElementById('submitBtn');
+    var formMessage = document.getElementById('formMessage');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var attendInput = form.querySelector('input[name="attend"]:checked');
+      if(!attendInput){ showMessage('Por favor seleccioná si vas a venir.', 'error'); return; }
+      var data = {
+        fullName: form.fullName.value.trim(), phone: form.phone.value.trim(), email: form.email.value.trim(),
+        attend: attendInput.value, guestCount: form.guestCount.value, dietary: form.dietary.value.trim(), message: form.message.value.trim()
+      };
+      var lines = [
+        'Hola! Quiero confirmar mi asistencia a la boda de *Coti & Iván*', '',
+        '*Nombre:* ' + data.fullName, '*Teléfono:* ' + data.phone, '*Email:* ' + (data.email || '-'),
+        '*Asiste:* ' + data.attend, '*Cantidad de personas:* ' + data.guestCount,
+        '*Restricciones alimentarias:* ' + (data.dietary || 'Ninguna'), '*Mensaje:* ' + (data.message || '-')
+      ];
+      var whatsappUrl = 'https://wa.me/' + WEDDING_CONFIG.whatsappNumber + '?text=' + encodeURIComponent(lines.join('\n'));
+      submitBtn.classList.add('loading'); submitBtn.disabled = true;
+      var waWindow = window.open(whatsappUrl, '_blank');
+      var formData = new FormData(form);
+      fetch(WEDDING_CONFIG.formspreeEndpoint, { method:'POST', body:formData, headers:{ 'Accept':'application/json' } })
+        .catch(function(err){ console.warn('[Boda] No se pudo enviar a Formspree:', err); })
+        .finally(function(){
+          setTimeout(function(){
+            submitBtn.classList.remove('loading'); submitBtn.disabled = false;
+            showMessage('¡Gracias ' + (data.fullName.split(' ')[0] || '') + '! Te esperamos bajo los árboles. Si no se abrió WhatsApp, revisá los pop-ups del navegador.', 'success');
+            form.reset(); form.querySelectorAll('[data-option]').forEach(function(l){ l.classList.remove('checked'); });
+          }, 700);
         });
-      }, {threshold:.15});
-      items.forEach(function(el){ obs.observe(el); });
-    } else {
-      items.forEach(function(el){ el.classList.add("is-visible"); });
-    }
-    setTimeout(function(){ items.forEach(function(el){ el.classList.add("is-visible"); }); }, 6000);
-  }catch(e){ console.warn("reveal failed", e); }
+      if(!waWindow){ console.warn('[Boda] El navegador bloqueó la apertura de WhatsApp.'); }
+    });
+    function showMessage(text, type){ formMessage.textContent = text; formMessage.className = 'form-message ' + type; }
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    safe(initNav, 'initNav');
+    safe(initPetals, 'initPetals');
+    safe(initCountdown, 'initCountdown');
+    safe(initReveal, 'initReveal');
+    safe(initMap, 'initMap');
+    safe(initGoogleMapsButton, 'initGoogleMapsButton');
+    safe(initForm, 'initForm');
+  });
 })();
 </script>
 </body>

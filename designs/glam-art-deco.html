@@ -5,9 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Valentina &amp; Bruno — Muestra de diseño Glam / Art Decó | Convitia</title>
 <meta name="robots" content="noindex">
+<meta name="description" content="Invitación de boda de Valentina y Bruno. Confirmá tu asistencia, conocé el programa de la noche, la ubicación y todos los detalles.">
+<meta name="theme-color" content="#0E0E0E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
   :root{
     --bg:#0E0E0E; --panel:#1A1816; --gold:#D4AF37; --gold-d:#9C7A2F; --ivory:#F5F0E6; --ivory-soft:rgba(245,240,230,.6);
@@ -16,22 +19,29 @@
     --ease:cubic-bezier(.16,.84,.32,1);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html.no-scroll, html.no-scroll body{overflow:hidden;height:100%;}
   body{font-family:var(--font-b);font-weight:300;background:var(--bg);color:var(--ivory);line-height:1.7;-webkit-font-smoothing:antialiased;}
   img,svg{display:block;max-width:100%;}
   a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
   .container{max-width:760px;margin:0 auto;padding:0 26px;position:relative;z-index:2;}
 
-  .topbar{position:fixed;top:0;left:0;right:0;z-index:50;padding:16px 0;background:rgba(14,14,14,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
-  .topbar .container{display:flex;align-items:center;justify-content:space-between;}
-  .back{
-    font-size:11.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-family:var(--font-b);
-    display:inline-flex;align-items:center;gap:6px;border:1px solid var(--gold-d);padding:8px 16px;
-    transition:background .3s var(--ease), color .3s var(--ease);
-  }
-  .back:hover{background:var(--gold);color:#0E0E0E;}
-  .sample-badge{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;background:var(--gold);color:#0E0E0E;padding:6px 14px;font-weight:600;}
+  /* ============ NAV ============ */
+  .site-nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:18px 0;background:rgba(14,14,14,0);transition:background .35s var(--ease), padding .35s var(--ease), border-color .35s var(--ease);border-bottom:1px solid transparent;}
+  .site-nav.scrolled{background:rgba(14,14,14,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:13px 0;}
+  .site-nav .container{display:flex;align-items:center;justify-content:space-between;}
+  .nav-logo img{height:24px;width:auto;display:block;filter:brightness(0) invert(1) sepia(1) saturate(8) hue-rotate(0deg);}
+  .nav-toggle{display:flex;flex-direction:column;gap:5px;width:26px;z-index:600;}
+  .nav-toggle span{height:1.5px;width:100%;background:var(--gold);transition:var(--ease) .3s;}
+  .nav-links{position:fixed;top:0;right:-100%;width:min(360px,86vw);height:100vh;background:#0E0E0E;border-left:1px solid var(--line);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:22px;padding:0 48px;transition:right .5s var(--ease);z-index:550;}
+  .nav-links.open{right:0;}
+  .nav-links a{color:var(--gold);font-family:var(--font-b);font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;}
+  .nav-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;visibility:hidden;transition:opacity .4s ease;z-index:540;}
+  .nav-overlay.open{opacity:1;visibility:visible;}
+  .nav-close{position:absolute;top:24px;right:30px;color:var(--gold);font-size:1.4rem;z-index:600;}
 
-  /* deco corner brackets — esquinas rectas con filete dorado en las puntas */
+  /* deco corner brackets */
   .deco-corners{position:relative;}
   .deco-corners::before,.deco-corners::after{content:"";position:absolute;width:20px;height:20px;border:2px solid var(--gold);pointer-events:none;z-index:3;}
   .deco-corners::before{top:-1px;left:-1px;border-right:none;border-bottom:none;}
@@ -41,23 +51,29 @@
   .sunburst{
     position:absolute;top:-260px;left:50%;transform:translateX(-50%);width:920px;height:920px;border-radius:50%;
     background:repeating-conic-gradient(from 0deg, rgba(212,175,55,.09) 0deg 3.5deg, transparent 3.5deg 18deg);
-    pointer-events:none;z-index:1;
+    pointer-events:none;z-index:1;animation:spinSunburst 90s linear infinite;
   }
-  .eyebrow{font-size:12.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+  @keyframes spinSunburst{to{transform:translateX(-50%) rotate(360deg);}}
+  .sparkles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1;}
+  .spark{position:absolute;width:3px;height:3px;background:var(--gold);border-radius:50%;opacity:0;animation:twinkle 3.2s ease-in-out infinite;}
+  @keyframes twinkle{0%,100%{opacity:0;transform:scale(.4);}50%{opacity:.9;transform:scale(1.3);}}
+  .eyebrow{font-size:12.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:500;position:relative;z-index:2;opacity:0;animation:fadeIn .8s ease .1s forwards;}
+  @keyframes fadeIn{to{opacity:1;}}
   .hero h1{
     font-family:var(--font-deco);font-weight:700;font-size:clamp(38px,8vw,72px);text-transform:uppercase;letter-spacing:.04em;
-    margin:22px 0 6px;background:linear-gradient(135deg,var(--gold-d) 0%,var(--gold) 35%,#F2E2A6 50%,var(--gold) 65%,var(--gold-d) 100%);
+    margin:22px 0 6px;background:linear-gradient(120deg,var(--gold-d) 0%,var(--gold) 30%,#F2E2A6 45%,var(--gold) 60%,var(--gold-d) 100%);
+    background-size:240% 100%; background-position:0% 0%;
     -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.25;position:relative;z-index:2;
+    opacity:0;animation:revealShine 2.4s var(--ease) .35s forwards;
   }
+  @keyframes revealShine{0%{opacity:0;background-position:80% 0%;}25%{opacity:1;}100%{opacity:1;background-position:0% 0%;}}
   .hero h1 .amp{font-size:.6em;color:var(--ivory-soft);-webkit-text-fill-color:var(--ivory-soft);}
-  .hero .date{font-family:var(--font-b);font-size:15px;font-weight:500;letter-spacing:.08em;color:var(--ivory);margin-top:14px;position:relative;z-index:2;}
-  .hero .venue{font-size:13px;color:var(--ivory-soft);margin-top:4px;letter-spacing:.04em;position:relative;z-index:2;}
+  .hero .date{font-family:var(--font-b);font-size:15px;font-weight:500;letter-spacing:.08em;color:var(--ivory);margin-top:14px;position:relative;z-index:2;opacity:0;animation:fadeIn .8s ease 1.6s forwards;}
+  .hero .venue{font-size:13px;color:var(--ivory-soft);margin-top:4px;letter-spacing:.04em;position:relative;z-index:2;opacity:0;animation:fadeIn .8s ease 1.8s forwards;}
 
-  /* chevron divider */
   .chevron{display:flex;justify-content:center;gap:6px;margin:30px 0;}
   .chevron span{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:7px solid var(--gold-d);}
 
-  /* foto principal — fachada dorada, marco doble fino, esquinas rectas con filete */
   .photo-feature{position:relative;height:380px;overflow:hidden;border:1px solid var(--line);outline:1px solid var(--line);outline-offset:6px;margin:6px 0 50px;}
   .photo-feature img{width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05) brightness(.82) sepia(.12);}
   .photo-feature .cap{
@@ -71,7 +87,6 @@
   }
   .note span{color:var(--ivory);}
 
-  /* countdown — marco rectangular fino */
   .countdown-wrap{border:1px solid var(--gold-d);padding:2px;margin:46px 0;}
   .countdown-wrap-inner{border:1px solid rgba(212,175,55,.22);}
   .countdown{display:grid;grid-template-columns:repeat(4,1fr);}
@@ -82,6 +97,7 @@
     text-shadow:0 1px 0 rgba(0,0,0,.6), 0 -1px 0 rgba(245,240,230,.25);
   }
   .countdown span{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ivory-soft);}
+  .countdown-finished{grid-column:1/-1;text-align:center;padding:26px;font-family:var(--font-deco);font-size:18px;color:var(--gold);text-transform:uppercase;letter-spacing:.06em;}
 
   .panel{background:var(--panel);border:1px solid var(--line);padding:46px 36px;margin-bottom:30px;position:relative;}
   .panel .tag-eyebrow{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:500;display:block;text-align:center;margin-bottom:10px;}
@@ -92,40 +108,93 @@
   .timeline .row:last-child{border-bottom:none;}
   .timeline .row b{font-family:var(--font-b);font-weight:500;color:var(--gold);letter-spacing:.04em;}
 
-  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center;}
-  .detail-grid .d{text-align:center;}
-  .detail-grid .d h3{font-family:var(--font-deco);font-weight:700;font-size:16px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px;color:var(--gold);}
-  .detail-grid .d p{font-size:13px;color:var(--ivory-soft);}
-  .detail-photo{position:relative;aspect-ratio:1/1;overflow:hidden;border:1px solid var(--line);outline:1px solid var(--line);outline-offset:5px;}
-  .detail-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.8) contrast(1.05) brightness(.85) sepia(.1);}
+  /* ============ UBICACIÓN ============ */
+  .loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:stretch;margin-top:10px;}
+  .loc-text p{font-size:13.5px;color:var(--ivory-soft);margin-bottom:22px;}
+  #map{width:100%;height:240px;border:1px solid var(--line);outline:1px solid var(--line);outline-offset:5px;filter:saturate(.9) brightness(.95);}
+  .loc-photo{margin-top:24px;height:230px;overflow:hidden;border:1px solid var(--line);outline:1px solid var(--line);outline-offset:5px;position:relative;}
+  .loc-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.8) contrast(1.05) brightness(.85) sepia(.1);}
+  @media(max-width:620px){.loc-grid{grid-template-columns:1fr;}}
 
-  .badge-row{display:flex;justify-content:center;margin-top:28px;}
-  .badge-bt{
-    display:inline-block;padding:3px;border:1px solid var(--gold-d);
-  }
-  .badge-bt span{
-    display:block;border:1px solid var(--gold);padding:9px 24px;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:500;
-  }
-
-  .rsvp{text-align:center;padding:56px 0;}
-  .rsvp h2{font-family:var(--font-deco);font-weight:700;font-size:26px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:14px;color:var(--ivory);}
-  .rsvp p{color:var(--ivory-soft);font-size:13.5px;margin-bottom:26px;}
   .btn{
     display:inline-flex;align-items:center;gap:10px;padding:16px 34px;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
     background:#0E0E0E;color:var(--gold);border:1px solid var(--gold);font-weight:500;transition:background .3s var(--ease), color .3s var(--ease);
   }
   .btn:hover{background:var(--gold);color:#0E0E0E;}
+
+  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center;}
+  .detail-grid .d{text-align:center;}
+  .detail-grid .d h3{font-family:var(--font-deco);font-weight:700;font-size:16px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px;color:var(--gold);}
+  .detail-grid .d p{font-size:13px;color:var(--ivory-soft);}
+
+  .badge-row{display:flex;justify-content:center;margin-top:28px;}
+  .badge-bt{display:inline-block;padding:3px;border:1px solid var(--gold-d);}
+  .badge-bt span{display:block;border:1px solid var(--gold);padding:9px 24px;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+
+  /* ============ DRESS CODE ============ */
+  .palette-glam{display:flex;justify-content:center;gap:14px;margin:6px 0 30px;flex-wrap:wrap;}
+  .swatch-deco{width:40px;height:40px;border:1px solid var(--gold-d);outline:1px solid var(--line);outline-offset:3px;}
+
+  /* ============ MENÚ ============ */
+  .menu-grid-glam{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:30px;}
+  .menu-card-glam{border:1px solid var(--line);padding:24px 20px;text-align:center;background:rgba(212,175,55,.04);}
+  .menu-card-glam h4{font-family:var(--font-deco);font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.04em;color:var(--gold);margin-bottom:8px;}
+  .menu-card-glam p{font-size:12.5px;color:var(--ivory-soft);}
+  @media(max-width:560px){.menu-grid-glam{grid-template-columns:1fr;}}
+
+  /* ============ PLAYLIST ============ */
+  .playlist-frame{border:1px solid var(--line);outline:1px solid var(--line);outline-offset:6px;margin-top:30px;}
+  .playlist-frame iframe{width:100%;display:block;filter:saturate(.9);}
+  .playlist-actions{text-align:center;margin-top:26px;}
+
+  /* ============ DETALLES ============ */
+  .details-list{max-width:460px;margin:30px auto 0;display:grid;gap:14px;}
+  .details-row{display:flex;justify-content:space-between;gap:16px;font-size:13.5px;border-bottom:1px solid var(--line);padding-bottom:12px;}
+  .details-row span:first-child{color:var(--gold);font-weight:500;font-size:11px;letter-spacing:.1em;text-transform:uppercase;flex-shrink:0;}
+  .details-row span:last-child{color:var(--ivory-soft);text-align:right;}
+
+  /* ============ RSVP ============ */
+  .rsvp{text-align:center;padding:56px 0;}
+  .rsvp h2{font-family:var(--font-deco);font-weight:700;font-size:26px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:14px;color:var(--ivory);}
+  .rsvp > p{color:var(--ivory-soft);font-size:13.5px;margin-bottom:30px;}
+  .rsvp-form{text-align:left;border:1px solid var(--line);padding:40px 34px;background:var(--panel);}
+  .form-row{margin-bottom:22px;}
+  .form-row label{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;margin-bottom:8px;color:var(--gold);}
+  .form-row input[type="text"], .form-row input[type="tel"], .form-row input[type="email"], .form-row input[type="number"], .form-row textarea{
+    width:100%;padding:12px 0;border:none;border-bottom:1px solid var(--line);font-family:var(--font-b);font-size:14.5px;background:transparent;color:var(--ivory);transition:border-color .3s ease;
+  }
+  .form-row input:focus, .form-row textarea:focus{outline:none;border-color:var(--gold);}
+  .form-row textarea{resize:vertical;min-height:70px;}
+  .required-mark{color:var(--gold);}
+  .radio-group{display:flex;gap:12px;flex-wrap:wrap;}
+  .radio-option{flex:1;min-width:160px;border:1px solid var(--line);padding:12px 14px;display:flex;align-items:center;gap:9px;cursor:pointer;transition:all .3s ease;font-size:13px;color:var(--ivory-soft);}
+  .radio-option:hover{border-color:var(--gold);}
+  .radio-option input{accent-color:var(--gold);width:16px;height:16px;}
+  .radio-option.checked{background:var(--gold);color:#0E0E0E;border-color:var(--gold);}
+  .submit-btn{width:100%;justify-content:center;margin-top:8px;position:relative;display:flex;}
+  .submit-btn .loader{display:none;width:16px;height:16px;border-radius:50%;border:2px solid rgba(212,175,55,.35);border-top-color:var(--gold);animation:spin .7s linear infinite;}
+  .submit-btn.loading .btn-text{display:none;}
+  .submit-btn.loading .loader{display:inline-block;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .form-message{margin-top:18px;padding:14px;font-size:13px;display:none;border:1px solid var(--line);}
+  .form-message.success{display:block;color:var(--gold);}
+  .form-message.error{display:block;color:#D4763C;}
   .rsvp-note{font-size:11.5px;color:var(--ivory-soft);margin-top:16px;font-style:italic;font-family:var(--font-script);}
 
   footer{background:#0E0E0E;border-top:1px solid var(--gold-d);position:relative;padding:54px 0 40px;text-align:center;}
   footer::before{content:"";position:absolute;top:6px;left:0;right:0;height:1px;background:rgba(212,175,55,.22);}
-  footer .container{display:flex;flex-direction:column;align-items:center;gap:18px;}
+  footer .container{display:flex;flex-direction:column;align-items:center;gap:10px;}
+  footer .footer-names{font-family:var(--font-deco);font-weight:700;font-size:24px;text-transform:uppercase;letter-spacing:.03em;color:var(--gold);margin-bottom:4px;}
   footer p{font-size:13.5px;max-width:380px;color:var(--ivory-soft);}
   .btn-light{background:var(--gold);color:#0E0E0E;border:1px solid var(--gold);}
   .btn-light:hover{background:#0E0E0E;color:var(--gold);}
   footer small{color:rgba(245,240,230,.4);font-size:11px;letter-spacing:.04em;}
+  .convitia-cta{margin-top:20px;padding-top:24px;border-top:1px solid var(--line);width:100%;display:flex;flex-direction:column;align-items:center;gap:10px;}
 
-  /* scroll-reveal */
+  .badge-back{position:fixed;bottom:22px;right:22px;z-index:1000;display:inline-flex;align-items:center;gap:8px;background:#0E0E0E;color:var(--gold);border:1px solid var(--gold);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;padding:11px 18px;transition:background .3s var(--ease), color .3s var(--ease);}
+  .badge-back:hover{background:var(--gold);color:#0E0E0E;}
+  @media(max-width:560px){.badge-back{bottom:14px;right:14px;left:14px;justify-content:center;}}
+
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease), transform .8s var(--ease);}
   .reveal.is-visible{opacity:1;transform:none;}
 
@@ -134,20 +203,35 @@
     .countdown div{padding:18px 6px;}
     .countdown b{font-size:23px;}
     .photo-feature{height:260px;}
+    .rsvp-form{padding:28px 22px;}
   }
 </style>
 </head>
 <body>
 
-<div class="topbar">
+<nav class="site-nav" id="siteNav">
   <div class="container">
-    <a class="back" href="../index.html#work-glam">← Volver a sitio web</a>
-    <span class="sample-badge">Muestra de diseño</span>
+    <a class="nav-logo" href="#hero"><img src="../assets/logo/logo1.svg" alt="Convitia"></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
   </div>
+</nav>
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="nav-links" id="navLinks">
+  <button class="nav-close" id="navClose" aria-label="Cerrar menú">✕</button>
+  <a href="#hero">Inicio</a>
+  <a href="#countdown">Cuenta regresiva</a>
+  <a href="#programa">Programa</a>
+  <a href="#ubicacion">Ubicación</a>
+  <a href="#dresscode">Dress code</a>
+  <a href="#menu">Menú</a>
+  <a href="#playlist">Playlist</a>
+  <a href="#detalles">Detalles</a>
+  <a href="#rsvp">Confirmar</a>
 </div>
 
-<section class="hero">
+<section class="hero" id="hero">
   <div class="sunburst"></div>
+  <div class="sparkles" id="sparkles"></div>
   <div class="container">
     <div class="eyebrow">Una noche de gala</div>
     <h1>Valentina <span class="amp">&amp;</span> Bruno</h1>
@@ -164,7 +248,7 @@
     <span class="cap">Estancia Las Magnolias — Salón principal</span>
   </div>
 
-  <p class="note">"Después de tantos años buscándonos, <span>elegimos quedarnos</span>."</p>
+  <p class="note reveal">"Después de tantos años buscándonos, <span>elegimos quedarnos</span>."</p>
 
   <div class="countdown-wrap deco-corners reveal" id="countdown">
     <div class="countdown-wrap-inner">
@@ -177,7 +261,7 @@
     </div>
   </div>
 
-  <div class="panel deco-corners reveal">
+  <div class="panel deco-corners reveal" id="programa">
     <span class="tag-eyebrow">Programa</span>
     <h2>Cómo va a ser la noche</h2>
     <div class="timeline">
@@ -185,19 +269,42 @@
       <div class="row"><span>Ceremonia simbólica</span><b>21:00</b></div>
       <div class="row"><span>Cena de gala</span><b>22:00</b></div>
       <div class="row"><span>Banda en vivo y pista abierta</span><b>00:00</b></div>
+      <div class="row"><span>Cierre de la velada</span><b>03:00</b></div>
     </div>
   </div>
 
-  <div class="panel deco-corners reveal">
-    <span class="tag-eyebrow">Detalles</span>
-    <h2>Lo que necesitás saber</h2>
+  <div class="panel deco-corners reveal" id="ubicacion">
+    <span class="tag-eyebrow">Cómo llegar</span>
+    <h2>Ubicación</h2>
+    <div class="loc-grid">
+      <div class="loc-text">
+        <p>Estancia Las Magnolias, Camino a Ascochinga km 8, Córdoba. Valet parking disponible toda la noche.</p>
+        <a href="#" id="googleMapsBtn" class="btn" target="_blank" rel="noopener">Ver en Google Maps</a>
+      </div>
+      <div id="map"></div>
+    </div>
+    <div class="loc-photo" style="margin-top:30px;">
+      <img src="https://images.unsplash.com/photo-1764776709859-09e142936d1c?auto=format&fit=crop&w=2000&q=80" alt="Candelabros de cristal en un salón de gala, estética glamorosa">
+    </div>
+  </div>
+
+  <div class="panel deco-corners reveal" id="dresscode">
+    <span class="tag-eyebrow">Vestimenta</span>
+    <h2>Dress code</h2>
+    <div class="palette-glam">
+      <div class="swatch-deco" style="background:#0E0E0E;"></div>
+      <div class="swatch-deco" style="background:var(--gold);"></div>
+      <div class="swatch-deco" style="background:var(--ivory);"></div>
+      <div class="swatch-deco" style="background:#5C4A1E;"></div>
+    </div>
     <div class="detail-grid">
       <div class="d">
-        <h3>Ceremonia &amp; Recepción</h3>
-        <p>Estancia Las Magnolias, Salón Jardín de Invierno. Valet parking disponible toda la noche.</p>
+        <h3>Caballeros</h3>
+        <p>Smoking o traje oscuro de gala. Moño o corbata negra.</p>
       </div>
-      <div class="detail-photo">
-        <img src="https://images.unsplash.com/photo-1563251478-9a8d4817a2c5?auto=format&fit=crop&w=900&q=80" alt="Estatua dorada, detalle decorativo de estilo Art Decó">
+      <div class="d">
+        <h3>Damas</h3>
+        <p>Vestido largo de gala. Tonos joya, metálicos o negro.</p>
       </div>
     </div>
     <div class="badge-row">
@@ -205,55 +312,254 @@
     </div>
   </div>
 
-  <div class="rsvp reveal">
+  <div class="panel deco-corners reveal" id="menu">
+    <span class="tag-eyebrow">Para disfrutar</span>
+    <h2>Menú de gala</h2>
+    <div class="menu-grid-glam">
+      <div class="menu-card-glam"><h4>Entrada</h4><p>Carpaccio de res con alcaparras y parmesano</p></div>
+      <div class="menu-card-glam"><h4>Plato principal</h4><p>Magret de pato con risotto de hongos</p></div>
+      <div class="menu-card-glam"><h4>Postre</h4><p>Soufflé de chocolate con oro comestible</p></div>
+      <div class="menu-card-glam"><h4>Bienvenida</h4><p>Champagne + barra de whisky premium</p></div>
+    </div>
+  </div>
+
+  <div class="panel deco-corners reveal" id="playlist">
+    <span class="tag-eyebrow">Para bailar</span>
+    <h2>Playlist</h2>
+    <p style="text-align:center;font-size:13.5px;color:var(--ivory-soft);max-width:420px;margin:0 auto;">Armamos esta playlist para la pista abierta. Sumá los temas que no pueden faltar en la noche.</p>
+    <div class="playlist-frame">
+      <iframe src="https://open.spotify.com/embed/playlist/2jD7fjo5QIfCllwkgTWwcQ?utm_source=generator" height="380" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Playlist colaborativa Valentina y Bruno"></iframe>
+    </div>
+    <div class="playlist-actions">
+      <a href="https://open.spotify.com/playlist/2jD7fjo5QIfCllwkgTWwcQ" target="_blank" rel="noopener" class="btn">Sumá tus canciones</a>
+    </div>
+  </div>
+
+  <div class="panel deco-corners reveal" id="detalles">
+    <span class="tag-eyebrow">Para tener en cuenta</span>
+    <h2>Detalles especiales</h2>
+    <div class="details-list">
+      <div class="details-row"><span>Estacionamiento</span><span>Valet parking disponible toda la noche</span></div>
+      <div class="details-row"><span>Transporte</span><span>Traslado privado desde Córdoba Capital, 19:00 hs</span></div>
+      <div class="details-row"><span>Regalos</span><span>Su presencia es nuestro mayor regalo</span></div>
+      <div class="details-row"><span>Hashtag</span><span>#ValeyBrunoGala2026</span></div>
+      <div class="details-row"><span>Niños</span><span>Evento exclusivo para adultos</span></div>
+    </div>
+  </div>
+
+  <div class="rsvp reveal" id="rsvp">
     <h2>¿Nos acompañás?</h2>
-    <p>Confirmá tu asistencia antes del 1 de Noviembre, 2026.</p>
-    <a class="btn" href="https://wa.me/5491100000000?text=Hola!%20Confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Valentina%20%26%20Bruno." target="_blank" rel="noopener">Confirmar mi asistencia</a>
+    <p>Confirmá tu asistencia antes del <strong id="rsvpDeadlineText">1 de Noviembre, 2026</strong></p>
+    <form class="rsvp-form" id="rsvpForm">
+      <div class="form-row">
+        <label for="fullName">Nombre completo <span class="required-mark">*</span></label>
+        <input type="text" id="fullName" name="fullName" required autocomplete="name">
+      </div>
+      <div class="form-row">
+        <label for="phone">Teléfono / WhatsApp <span class="required-mark">*</span></label>
+        <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="Ej: +54 9 11 1234 5678">
+      </div>
+      <div class="form-row">
+        <label for="email">Email (opcional)</label>
+        <input type="email" id="email" name="email" autocomplete="email">
+      </div>
+      <div class="form-row">
+        <label>¿Asistís? <span class="required-mark">*</span></label>
+        <div class="radio-group">
+          <label class="radio-option" data-option><input type="radio" name="attend" value="Sí, ahí estaré" required>Sí, ahí estaré</label>
+          <label class="radio-option" data-option><input type="radio" name="attend" value="No podré asistir" required>No podré asistir</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="guestCount">Cantidad de personas que confirman</label>
+        <input type="number" id="guestCount" name="guestCount" min="1" max="10" value="1">
+      </div>
+      <div class="form-row">
+        <label for="dietary">Restricciones alimentarias</label>
+        <textarea id="dietary" name="dietary" placeholder="Vegetariano, celíaco, alergias, etc."></textarea>
+      </div>
+      <div class="form-row">
+        <label for="message">Mensaje para los novios (opcional)</label>
+        <textarea id="message" name="message" placeholder="Dejales un mensaje"></textarea>
+      </div>
+      <button type="submit" class="btn submit-btn" id="submitBtn">
+        <span class="btn-text">Confirmar mi asistencia</span>
+        <span class="loader"></span>
+      </button>
+      <div class="form-message" id="formMessage"></div>
+    </form>
     <p class="rsvp-note">Esta es una invitación de muestra del estilo "Glam / Art Decó".</p>
   </div>
 </div>
 
 <footer>
   <div class="container">
-    <p>¿Tu boda pide esta puesta en escena? La adaptamos a tu salón, tu paleta y tu historia.</p>
-    <a class="btn btn-light" href="https://wa.me/5492944152161?text=Hola!%20Me%20gust%C3%B3%20el%20estilo%20Glam%20%2F%20Art%20Dec%C3%B3%2C%20quiero%20mi%20invitaci%C3%B3n" target="_blank" rel="noopener">Quiero esta, a mi medida</a>
-    <small>Diseño de muestra — Convitia, un estudio de Flesh Studio</small>
+    <p class="footer-names">Valentina &amp; Bruno</p>
+    <p>Gracias por ser parte de esta noche</p>
+    <p style="margin-top:2px;">12 de Diciembre, 2026</p>
+    <small>© 2026 Todos los derechos reservados · Diseño web by <a href="https://www.flesh-studio.com/" target="_blank" rel="noopener" style="text-decoration:underline;">FLESH STUDIO</a></small>
+    <div class="convitia-cta">
+      <p>¿Tu boda pide esta puesta en escena? La adaptamos a tu salón, tu paleta y tu historia.</p>
+      <a class="btn btn-light" href="https://wa.me/5492944152161?text=Hola!%20Me%20gust%C3%B3%20el%20estilo%20Glam%20%2F%20Art%20Dec%C3%B3%2C%20quiero%20mi%20invitaci%C3%B3n" target="_blank" rel="noopener">Quiero esta, a mi medida</a>
+      <small>Diseño de muestra — Convitia, un estudio de Flesh Studio</small>
+    </div>
   </div>
 </footer>
 
+<a class="badge-back" href="../index.html#work-glam">← Muestra de diseño · Glam / Art Decó</a>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 (function(){
   "use strict";
-  try{
-    var target = new Date("2026-12-12T18:00:00-03:00").getTime();
+
+  var WEDDING_CONFIG = {
+    weddingDate: '2026-12-12T20:00:00',
+    rsvpDeadlineText: '1 de Noviembre, 2026',
+    whatsappNumber: '5491100000000',
+    formspreeEndpoint: 'https://formspree.io/f/YOUR_FORM_ID',
+    venueCoords: { lat: -31.1500, lng: -64.3500 },
+    venueAddress: 'Estancia Las Magnolias, Camino a Ascochinga km 8, Córdoba',
+    googleMapsUrl: ''
+  };
+
+  function safe(fn, label){ try{ fn(); }catch(e){ console.warn('[Boda] Error en "'+label+'":', e); } }
+
+  function initNav(){
+    var nav = document.getElementById('siteNav');
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    var overlay = document.getElementById('navOverlay');
+    var closeBtn = document.getElementById('navClose');
+    function openMenu(){ links.classList.add('open'); overlay.classList.add('open'); }
+    function closeMenu(){ links.classList.remove('open'); overlay.classList.remove('open'); }
+    toggle.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', closeMenu);
+    links.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+    window.addEventListener('scroll', function(){
+      if(window.scrollY > 60){ nav.classList.add('scrolled'); } else{ nav.classList.remove('scrolled'); }
+    });
+  }
+
+  function initSparkles(){
+    var layer = document.getElementById('sparkles');
+    if(!layer) return;
+    for(var i=0;i<24;i++){
+      var s = document.createElement('span');
+      s.className = 'spark';
+      s.style.left = Math.random()*100 + '%';
+      s.style.top = (Math.random()*70) + '%';
+      s.style.animationDelay = (Math.random()*3.2) + 's';
+      s.style.animationDuration = (2.4 + Math.random()*2.4) + 's';
+      layer.appendChild(s);
+    }
+  }
+
+  function initCountdown(){
+    var target = new Date(WEDDING_CONFIG.weddingDate).getTime();
+    var elD = document.getElementById('cd-d'), elH = document.getElementById('cd-h'), elM = document.getElementById('cd-m'), elS = document.getElementById('cd-s');
+    var grid = document.querySelector('#countdown .countdown');
+    function pad(n){ return String(n).padStart(2,'0'); }
     function tick(){
       var diff = target - Date.now();
-      if(diff < 0) diff = 0;
-      var d = Math.floor(diff/86400000);
-      var h = Math.floor((diff%86400000)/3600000);
-      var m = Math.floor((diff%3600000)/60000);
-      var s = Math.floor((diff%60000)/1000);
-      var el = function(id,v){ var node=document.getElementById(id); if(node) node.textContent = String(v).padStart(2,"0"); };
-      el("cd-d", d); el("cd-h", h); el("cd-m", m); el("cd-s", s);
+      if(diff <= 0){ grid.innerHTML = '<div class="countdown-finished">¡Hoy es el gran día!</div>'; clearInterval(timer); return; }
+      elD.textContent = pad(Math.floor(diff/86400000));
+      elH.textContent = pad(Math.floor((diff%86400000)/3600000));
+      elM.textContent = pad(Math.floor((diff%3600000)/60000));
+      elS.textContent = pad(Math.floor((diff%60000)/1000));
     }
     tick();
-    setInterval(tick, 1000);
-  }catch(e){ console.warn("countdown failed", e); }
+    var timer = setInterval(tick, 1000);
+  }
 
-  try{
-    var items = document.querySelectorAll(".reveal");
-    if("IntersectionObserver" in window){
-      var obs = new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){
-          if(entry.isIntersecting){ entry.target.classList.add("is-visible"); obs.unobserve(entry.target); }
+  function initReveal(){
+    var targets = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){ targets.forEach(function(t){ t.classList.add('is-visible'); }); return; }
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){ if(entry.isIntersecting){ entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
+    }, { threshold:.12, rootMargin:'0px 0px -40px 0px' });
+    targets.forEach(function(t){ observer.observe(t); });
+    setTimeout(function(){ document.querySelectorAll('.reveal:not(.is-visible)').forEach(function(t){ t.classList.add('is-visible'); }); }, 6000);
+  }
+
+  function initMap(){
+    var mapEl = document.getElementById('map');
+    if(!mapEl || typeof L === 'undefined') return;
+    if(mapEl.children.length > 0) return;
+    var coords = WEDDING_CONFIG.venueCoords;
+    var map = L.map('map', { scrollWheelZoom:false }).setView([coords.lat, coords.lng], 13);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>', maxZoom:19, subdomains:'abcd'
+    }).addTo(map);
+    var goldIcon = L.divIcon({ className:'pin-glam', html:'<div style="width:12px;height:12px;background:#D4AF37;border:2px solid #0E0E0E;box-shadow:0 0 0 1px #D4AF37;transform:rotate(45deg);"></div>', iconSize:[12,12], iconAnchor:[6,6] });
+    L.marker([coords.lat, coords.lng], { icon: goldIcon }).addTo(map).bindPopup(WEDDING_CONFIG.venueAddress);
+    setTimeout(function(){ map.invalidateSize(); }, 600);
+  }
+
+  function initGoogleMapsButton(){
+    var btn = document.getElementById('googleMapsBtn');
+    if(!btn) return;
+    if(WEDDING_CONFIG.googleMapsUrl){ btn.href = WEDDING_CONFIG.googleMapsUrl; return; }
+    var coords = WEDDING_CONFIG.venueCoords;
+    var query = encodeURIComponent(WEDDING_CONFIG.venueAddress);
+    btn.href = 'https://www.google.com/maps/search/?api=1&query=' + query + '&center=' + coords.lat + ',' + coords.lng;
+  }
+
+  function initForm(){
+    var form = document.getElementById('rsvpForm');
+    if(!form) return;
+    document.getElementById('rsvpDeadlineText').textContent = WEDDING_CONFIG.rsvpDeadlineText;
+    form.querySelectorAll('.radio-option').forEach(function(label){
+      var input = label.querySelector('input[type="radio"]');
+      input.addEventListener('change', function(){
+        form.querySelectorAll('[data-option]').forEach(function(l){ l.classList.remove('checked'); });
+        if(input.checked) label.classList.add('checked');
+      });
+    });
+    var submitBtn = document.getElementById('submitBtn');
+    var formMessage = document.getElementById('formMessage');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var attendInput = form.querySelector('input[name="attend"]:checked');
+      if(!attendInput){ showMessage('Por favor seleccioná si vas a asistir.', 'error'); return; }
+      var data = {
+        fullName: form.fullName.value.trim(), phone: form.phone.value.trim(), email: form.email.value.trim(),
+        attend: attendInput.value, guestCount: form.guestCount.value, dietary: form.dietary.value.trim(), message: form.message.value.trim()
+      };
+      var lines = [
+        'Hola! Quiero confirmar mi asistencia a la boda de *Valentina & Bruno*', '',
+        '*Nombre:* ' + data.fullName, '*Teléfono:* ' + data.phone, '*Email:* ' + (data.email || '-'),
+        '*Asiste:* ' + data.attend, '*Cantidad de personas:* ' + data.guestCount,
+        '*Restricciones alimentarias:* ' + (data.dietary || 'Ninguna'), '*Mensaje:* ' + (data.message || '-')
+      ];
+      var whatsappUrl = 'https://wa.me/' + WEDDING_CONFIG.whatsappNumber + '?text=' + encodeURIComponent(lines.join('\n'));
+      submitBtn.classList.add('loading'); submitBtn.disabled = true;
+      var waWindow = window.open(whatsappUrl, '_blank');
+      var formData = new FormData(form);
+      fetch(WEDDING_CONFIG.formspreeEndpoint, { method:'POST', body:formData, headers:{ 'Accept':'application/json' } })
+        .catch(function(err){ console.warn('[Boda] No se pudo enviar a Formspree:', err); })
+        .finally(function(){
+          setTimeout(function(){
+            submitBtn.classList.remove('loading'); submitBtn.disabled = false;
+            showMessage('¡Gracias ' + (data.fullName.split(' ')[0] || '') + '! Te esperamos para esta noche de gala. Si no se abrió WhatsApp, revisá los pop-ups del navegador.', 'success');
+            form.reset(); form.querySelectorAll('[data-option]').forEach(function(l){ l.classList.remove('checked'); });
+          }, 700);
         });
-      }, {threshold:.15});
-      items.forEach(function(el){ obs.observe(el); });
-    } else {
-      items.forEach(function(el){ el.classList.add("is-visible"); });
-    }
-    setTimeout(function(){ items.forEach(function(el){ el.classList.add("is-visible"); }); }, 6000);
-  }catch(e){ console.warn("reveal failed", e); }
+      if(!waWindow){ console.warn('[Boda] El navegador bloqueó la apertura de WhatsApp.'); }
+    });
+    function showMessage(text, type){ formMessage.textContent = text; formMessage.className = 'form-message ' + type; }
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    safe(initNav, 'initNav');
+    safe(initSparkles, 'initSparkles');
+    safe(initCountdown, 'initCountdown');
+    safe(initReveal, 'initReveal');
+    safe(initMap, 'initMap');
+    safe(initGoogleMapsButton, 'initGoogleMapsButton');
+    safe(initForm, 'initForm');
+  });
 })();
 </script>
 </body>
