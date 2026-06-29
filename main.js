@@ -667,9 +667,18 @@
 
     for(var i = 0; i < cards.length; i++){
       (function(card){
+        var link = card.querySelector("a.stack-card-link");
         card.addEventListener("mouseenter", function(){ setActive(card); });
         card.addEventListener("focus", function(){ setActive(card); });
-        card.addEventListener("click", function(){ setActive(card); });
+        card.addEventListener("click", function(e){
+          setActive(card);
+          // Navega al demo correspondiente en la misma pestaña, salvo que el
+          // click haya sido sobre el propio botón "Ver demo" (ya navega solo,
+          // como link normal) o que la tarjeta no tenga demo aún (Glam).
+          if(link && (!e.target.closest || !e.target.closest(".stack-card-link"))){
+            window.location.href = link.href;
+          }
+        });
       })(cards[i]);
     }
   }

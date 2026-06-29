@@ -460,14 +460,17 @@ section{ padding:120px 0; position:relative; }
    como al .work-name de la grilla de la home — mismas 4 clases, mismo criterio. ---------- */
 .style-font-clasica{ font-family:var(--font-display); font-style:italic; font-weight:600; }
 .style-font-moderno{ font-family:'Space Grotesk', var(--font-body); font-style:normal; font-weight:600; letter-spacing:.01em; }
-.style-font-boho{ font-family:'Caveat', cursive; font-style:normal; font-weight:700; font-size:1.3em; line-height:1; }
+.style-font-boho{ font-family:'Tangerine', cursive; font-style:normal; font-weight:700; font-size:2.3em; line-height:.9; }
 .style-font-glam{ font-family:'Cinzel Decorative', var(--font-display); font-style:normal; font-weight:700; letter-spacing:.04em; text-transform:uppercase; font-size:.85em; }
+/* "Ver demo" — botón siempre visible del lado derecho de cada stack-card (ver [[convitia_design_themes]]). */
 .stack-card-link{
-  position:absolute; left:26px; bottom:28px; font-family:var(--font-body); font-size:12.5px; font-weight:600;
-  letter-spacing:.03em; color:var(--terracotta-d); text-decoration:none;
-  opacity:0; transform:translateY(8px); transition:opacity .35s var(--ease), transform .35s var(--ease);
+  position:absolute; top:28px; right:24px; z-index:4; font-family:var(--font-body); font-size:11px; font-weight:600;
+  letter-spacing:.03em; color:var(--terracotta-d); text-decoration:none; white-space:nowrap;
+  border:1px solid var(--terracotta-d); border-radius:999px; padding:6px 13px; background:var(--paper);
+  transition:background .25s var(--ease), color .25s var(--ease), transform .25s var(--ease);
 }
-.stack-card-link.disabled{ color:var(--ink-soft); pointer-events:none; }
+.stack-card-link:hover{ background:var(--terracotta-d); color:#fff; transform:translateY(-2px); }
+.stack-card-link.disabled{ color:var(--ink-soft); border-color:var(--line); background:var(--paper); opacity:.75; pointer-events:none; }
 .stack-card-photo{
   position:absolute; right:-10px; bottom:-10px; width:148px; height:188px; border-radius:12px; overflow:hidden;
   border:5px solid var(--paper); box-shadow:0 24px 40px -16px rgba(43,36,32,.4);
@@ -476,12 +479,23 @@ section{ padding:120px 0; position:relative; }
 .stack-card-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
 .stack-card:hover, .stack-card.active{ transform:translateY(-14px) scale(1.04); box-shadow:0 36px 70px -26px rgba(43,36,32,.32); z-index:5; }
 .stack-card:hover .stack-card-photo, .stack-card.active .stack-card-photo{ transform:rotate(0deg) translateY(-6px) scale(1.05); }
-.stack-card:hover .stack-card-link, .stack-card.active .stack-card-link{ opacity:1; transform:translateY(0); }
 
 /* ---------- Full-bleed type break ---------- */
 .type-break{ background:var(--ink); color:var(--cream); padding:100px 0; text-align:center; }
 .type-break p{ font-family:var(--font-display); font-style:italic; font-weight:500; font-size:clamp(26px,4vw,52px); max-width:900px; margin:0 auto; line-height:1.3; }
 .type-break em{ color:var(--gold); font-style:italic; }
+.type-break-cta{ margin-top:38px; white-space:normal; }
+
+/* ---------- "Ver demo" — botón visible en cada work-tile de la home (#trabajos) ---------- */
+.work-demo-btn{
+  position:absolute; top:20px; right:20px; z-index:3; font-family:var(--font-body); font-size:11.5px; font-weight:600;
+  letter-spacing:.03em; color:#fff; text-decoration:none; white-space:nowrap;
+  border:1px solid rgba(255,255,255,.55); border-radius:999px; padding:7px 15px;
+  background:rgba(20,16,14,.32);
+  transition:background .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease);
+}
+.work-tile:hover .work-demo-btn{ background:rgba(20,16,14,.6); border-color:#fff; transform:translateY(-2px); }
+.work-demo-btn.disabled{ opacity:.75; }
 
 /* ---------- Sticky-label sections (Miles Capabilities/Process pattern) ---------- */
 .sticky-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:60px; align-items:start; }
@@ -651,8 +665,9 @@ footer{ background:var(--ink); color:rgba(251,246,238,.78); padding:90px 0 30px;
   .stack-card{ width:148px; height:230px; padding:18px 16px; }
   .stack-card-title{ font-size:18px; max-width:100px; }
   .stack-card-sub{ font-size:11.5px; max-width:100px; }
-  .stack-card-link{ left:16px; bottom:16px; font-size:11px; }
+  .stack-card-link{ top:16px; right:14px; font-size:9.5px; padding:5px 10px; }
   .stack-card-photo{ width:92px; height:118px; right:-6px; bottom:-6px; }
+  .work-demo-btn{ top:14px; right:14px; font-size:10px; padding:5px 11px; }
 }
 
 /* Mobile nav drawer */
